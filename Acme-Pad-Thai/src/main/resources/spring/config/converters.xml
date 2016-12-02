@@ -22,6 +22,33 @@
 			Add your own converters using entries of the following form: 
 			<bean class="converters.Class1ToClass2" /> 
 		-->
+		<bean class="converters.CategoryToStringConverter" />
+		<bean class="converters.StringToCategoryConverter" />
+		
+		<bean class="converters.CommentToStringConverter" />
+		<bean class="converters.StringToCommentConverter" />
+		
+		<bean class="converters.IngredientToStringConverter" />
+		<bean class="converters.StringToIngredientConverter" />
+		
+		<bean class="converters.LikeSAToStringConverter" />
+		<bean class="converters.StringToLikeSAConverter" />
+		
+		<bean class="converters.QuantityToStringConverter" />
+		<bean class="converters.StringToQuantityConverter" />
+		
+		<bean class="converters.RecipeToStringConverter" />
+		<bean class="converters.StringToRecipeConverter" />
+		
+		<bean class="converters.StepToStringConverter" />
+		<bean class="converters.StringToStepConverter" />
+		
+		<bean class="converters.UnitToStringConverter" />
+		<bean class="converters.StringToUnitConverter" />
+		
+		<bean class="converters.UserToStringConverter" />
+		<bean class="converters.StringToUserConverter" />
+		
 	</util:list>
 	
 </beans>
