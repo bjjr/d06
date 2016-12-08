@@ -51,23 +51,20 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li class="arrow"></li>
-			<li><a class="fNiv" href="masterClass/list.do"><spring:message code="master.page.anonymous.masterClass.list" /></a></li>
-			<li><a href="nutritionist/create.do"><spring:message code="master.page.nutritionist.create" /></a></li>
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
 			<li><a href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>	
+			<li><a class="fNiv" href="masterClass/list.do"><spring:message code="master.page.anonymous.masterClass.list" /></a></li>
+			<li><a href="user/create.do"><spring:message code="master.page.user.create" /></a></li>
+			<li><a href="nutritionist/create.do"><spring:message code="master.page.nutritionist.create" /></a></li>
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+		<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
+					<li><a href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>
 			<li>
 				<a class="fNiv" href="masterClass/list-unregistered.do">
 					<spring:message code="master.page.masterClass.lu" />
-				</a>
-			</li>
-			<li>
-				<a class="fNiv"> 
-					<spring:message code="master.page.profile" /> 
-			        (<security:authentication property="principal.username" />)
 				</a>
 			</li>
 			<li>
@@ -76,13 +73,17 @@
 				</a>
 			</li>
 			<li>
+				<a class="fNiv"> 
+					<spring:message code="master.page.profile" /> 
+			        (<security:authentication property="principal.username" />)
+				</a>
+			</li>			
+			<li>
 				<a class="fNiv" href="j_spring_security_logout">
 					<spring:message code="master.page.logout" />				
 					(<security:authentication property="principal.username" />)					 
 				</a>
 			</li>
-			<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
-					<li><a href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>
 		</security:authorize>
 	</ul>
 </div>

@@ -10,8 +10,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <!-- Search Form -->
-<form:form action="recipe/search.do" modelAttribute="recipe">
-	<form:input path="keyword"/>
+<form:form action="" modelAttribute="recipe">
+	<input type="text" name="recipe"/>
 	<input type="submit" name="search" value="<spring:message code="recipe.search"/>"/>
 </form:form>
 	

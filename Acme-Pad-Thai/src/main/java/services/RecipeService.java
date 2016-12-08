@@ -104,6 +104,15 @@ public class RecipeService {
 		recipeRepository.flush();
 	}
 	
+	public Recipe findOne(int recipeID){
+		Recipe result;
+		
+		result = recipeRepository.findOne(recipeID);
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
 	public void delete(Recipe recipe){
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		Assert.notNull(recipe);
@@ -274,14 +283,14 @@ public class RecipeService {
 		return result;
 	}
 	
-	public Collection<LikeSA> findLikes(Recipe recipe){
-		Collection<LikeSA> result;
+	public Integer findLikes(Recipe recipe){
+		Integer result;
 		
-		result = new ArrayList<LikeSA>();
+		result = 0;
 		
 		for(LikeSA l : recipe.getLikesSA()){
 			if(l.isLikeSA()){
-				result.add(l);
+				result++;
 			}
 		}
 		
@@ -289,14 +298,14 @@ public class RecipeService {
 		
 	}
 	
-	public Collection<LikeSA> findDislikes(Recipe recipe){
-		Collection<LikeSA> result;
+	public Integer findDislikes(Recipe recipe){
+		Integer result;
 		
-		result = new ArrayList<LikeSA>();
+		result = 0;
 		
 		for(LikeSA l : recipe.getLikesSA()){
 			if(!l.isLikeSA()){
-				result.add(l);
+				result++;
 			}
 		}
 		

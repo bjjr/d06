@@ -8,7 +8,13 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-	
+
+<!-- Search form -->	
+<form:form action="" modelAttribute="user">
+	<input type="text" name="user"/>
+	<input type="submit" name="search" value="<spring:message code="user.search"/>"/>
+</form:form>	
+
 <!-- Listing grid -->
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="users" requestURI="${requestURI}" id="row">
@@ -27,5 +33,14 @@
 	
 	<spring:message code="user.postalAddress" var="postalAddressHeader" />
 	<display:column property="postalAddress" title="${postalAddressHeader}" sortable="false" />
+	
+	<spring:message code="user.recipes" var="recipesHeader" />
+	<display:column title="${recipesHeader}">
+		<jstl:forEach items="${row.recipes }" var="rec">
+			<a href="recipe/display.do?recipeId=${rec.id}">${rec.title}</a>
+			<br />
+		</jstl:forEach>
+	</display:column> 
+	
 		
 </display:table>
