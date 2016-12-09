@@ -18,10 +18,79 @@
 	">
 
 	<util:list id="converters">
-		<!-- 
-			Add your own converters using entries of the following form: 
-			<bean class="converters.Class1ToClass2" /> 
-		-->
+		<bean class="converters.SponsorToStringConverter" />
+		<bean class="converters.StringToSponsorConverter" />
+		
+		<bean class="converters.CampaignToStringConverter" />
+		<bean class="converters.StringToCampaignConverter" />
+		
+		<bean class="converters.BillToStringConverter" />
+		<bean class="converters.StringToBillConverter" />
+		
+		<bean class="converters.ContestToStringConverter" />
+		<bean class="converters.StringToContestConverter" />
+		
+		<bean class="converters.RecipeCopyToStringConverter" />
+		<bean class="converters.StringToRecipeCopyConverter" />
+		
+		<bean class="converters.FeeToStringConverter" />
+		<bean class="converters.StringToFeeConverter" />
+		
+		<bean class="converters.SocialIdentityToStringConverter" />
+		<bean class="converters.StringToSocialIdentityConverter" />
+		
+		<bean class="converters.MessageToStringConverter" />
+		<bean class="converters.StringToMessageConverter" />
+		
+		<bean class="converters.FolderToStringConverter" />
+		<bean class="converters.StringToFolderConverter" />
+		
+		<bean class="converters.SpamWordToStringConverter" />
+		<bean class="converters.StringToSpamWordConverter" />
+		
+		<bean class="converters.NutritionistToStringConverter" />
+		<bean class="converters.StringToNutritionistConverter" />
+		
+		<bean class="converters.CurriculumToStringConverter" />
+		<bean class="converters.StringToCurriculumConverter" />
+		
+		<bean class="converters.EndorserToStringConverter" />
+		<bean class="converters.StringToEndorserConverter" />
+		
+		<bean class="converters.AdministratorToStringConverter" />
+		<bean class="converters.StringToAdministratorConverter" />
+		
+		<bean class="converters.PriorityToStringConverter" />
+		<bean class="converters.StringToPriorityConverter" />
+		
+		<bean class="converters.AuthorityToStringConverter" />
+		<bean class="converters.StringToAuthorityConverter" />
+		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.StringToActorConverter" />
+		
+		<bean class="converters.CookToStringConverter" />
+		<bean class="converters.StringToCookConverter" />
+		
+		<bean class="converters.LearningMaterialToStringConverter" />
+		<bean class="converters.StringToLearningMaterialConverter" />
+		
+		<bean class="converters.MasterClassToStringConverter" />
+		<bean class="converters.StringToMasterClassConverter" />
+		
+		<bean class="converters.PresentationToStringConverter" />
+		<bean class="converters.StringToPresentationConverter" />
+		
+		<bean class="converters.PropertyToStringConverter" />
+		<bean class="converters.StringToPropertyConverter" />
+		
+		<bean class="converters.SocialActorToStringConverter" />
+		<bean class="converters.StringToSocialActorConverter" />
+		
+		<bean class="converters.TextToStringConverter" />
+		<bean class="converters.StringToTextConverter" />
+		
+		<bean class="converters.VideoToStringConverter" />
+		<bean class="converters.StringToVideoConverter" />
 		<bean class="converters.CategoryToStringConverter" />
 		<bean class="converters.StringToCategoryConverter" />
 		
@@ -50,5 +119,4 @@
 		<bean class="converters.StringToUserConverter" />
 		
 	</util:list>
-	
 </beans>

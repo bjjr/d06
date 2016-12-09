@@ -50,6 +50,18 @@
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
 	
+			<security:intercept-url pattern="/fee/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
+
+		<security:intercept-url pattern="/contest/list.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/recipeCopy/list.do" access="permitAll" /> 
+
+		<security:intercept-url pattern="/contest/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/contest/administrator/create.do" access="hasRole('ADMINISTRATOR')" /> 
+
+		<security:intercept-url pattern="/sponsor/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/sponsor/edit.do" access="permitAll" /> 
+	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
 		<security:form-login 
