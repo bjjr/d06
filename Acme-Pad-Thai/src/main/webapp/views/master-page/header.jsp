@@ -51,20 +51,19 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li class="arrow"></li>
 			<li><a class="fNiv" href="masterClass/list.do"><spring:message code="master.page.anonymous.masterClass.list" /></a></li>
 			<li><a href="nutritionist/create.do"><spring:message code="master.page.nutritionist.create" /></a></li>
 			<li><a href="sponsor/create.do"><spring:message code="master.page.sponsor.create" /></a></li>
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
-			<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
-			<li><a href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>	
+			<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
+			<li><a class="fNiv" href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>	
 		</security:authorize>
 		<security:authorize access="permitAll">
 					<li><a href="contest/list.do"><spring:message code="master.page.contests" /></a></li>
 		</security:authorize>
 		<security:authorize access="isAuthenticated()">
 			<li>
-				<a class="fNiv" href="masterClass/list-unregistered.do">
+				<a class="fNiv" href="masterClass/actor/list-unregistered.do">
 					<spring:message code="master.page.masterClass.lu" />
 				</a>
 			</li>
@@ -75,7 +74,7 @@
 				</a>
 			</li>
 			<li>
-				<a class="fNiv" href="masterClass/list-registered.do">
+				<a class="fNiv" href="masterClass/actor/list-registered.do">
 					<spring:message code="master.page.masterClass.lr" />
 				</a>
 			</li>

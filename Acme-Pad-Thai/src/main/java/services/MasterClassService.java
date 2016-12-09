@@ -72,6 +72,16 @@ public class MasterClassService {
 		return res;
 	}
 	
+	public Collection<MasterClass> findAll() {
+		Collection<MasterClass> res;
+		
+		res = masterClassRepository.findAll();
+		
+		Assert.notNull(res);
+		
+		return res;
+	}
+	
 	public Boolean exists(Integer masterClassId) {
 		Assert.isTrue(masterClassId != 0);
 		
@@ -121,8 +131,11 @@ public class MasterClassService {
 
 	public MasterClass save(MasterClass m) {
 		// TODO Añadir a lista de cambios
-		Assert.isTrue(actorService.checkAuthority("COOK") ||
-					  actorService.checkAuthority("ADMINISTRATOR"));
+		Assert.isTrue(actorService.checkAuthority("USER")
+				|| actorService.checkAuthority("ADMINISTRATOR")
+				|| actorService.checkAuthority("NUTRITIONIST")
+				|| actorService.checkAuthority("SPONSOR")
+				|| actorService.checkAuthority("COOK"));
 		Assert.notNull(m, "The masterClass to be saved must cannot be null.");
 
 		MasterClass res;
@@ -188,18 +201,25 @@ public class MasterClassService {
 
 	// Other business methods ----------------------
 
-	public void registerActor(MasterClass m) {
+	public void registerActor(int masterClassId) {
 		Assert.isTrue(actorService.checkAuthority("USER")
 				|| actorService.checkAuthority("ADMINISTRATOR")
 				|| actorService.checkAuthority("NUTRITIONIST")
 				|| actorService.checkAuthority("SPONSOR")
 				|| actorService.checkAuthority("COOK"));
+		
+		MasterClass m;
+		Actor actor;
+		
+		actor = actorService.findByPrincipal();
+		m = masterClassRepository.findOne(masterClassId);
+		
 		Assert.notNull(m);
-
-		Actor a;
-		a = actorService.findByPrincipal();
-
-		a.addMasterClass(m);
+		
+		m.addActor(actor);
+		
+		actorService.save(actor);
+		save(m);
 	}
 
 	public Collection<Actor> findAttenders(MasterClass m) {
@@ -292,5 +312,41 @@ public class MasterClassService {
 		m.removeLearningMaterial(l);
 		save(m);
 	}
-
+	
+	public Collection<MasterClass> findPrincipalRegisteredMasterClasses() {
+		Assert.isTrue(actorService.checkAuthority("USER")
+				|| actorService.checkAuthority("ADMINISTRATOR")
+				|| actorService.checkAuthority("NUTRITIONIST")
+				|| actorService.checkAuthority("SPONSOR")
+				|| actorService.checkAuthority("COOK"));
+		
+		Collection<MasterClass> res;
+		Actor actor;
+		
+		actor = actorService.findByPrincipal();
+		res = masterClassRepository.findPrincipalRegisteredMasterClasses(actor.getId());
+		
+		Assert.notNull(res);
+		
+		return res;
+	}
+	
+	public Collection<MasterClass> findPrincipalNotRegisteredMasterClasses() {
+		Assert.isTrue(actorService.checkAuthority("USER")
+				|| actorService.checkAuthority("ADMINISTRATOR")
+				|| actorService.checkAuthority("NUTRITIONIST")
+				|| actorService.checkAuthority("SPONSOR")
+				|| actorService.checkAuthority("COOK"));
+		
+		Collection<MasterClass> res;
+		Actor actor;
+		
+		actor = actorService.findByPrincipal();
+		res = masterClassRepository.findPrincipalNotRegisteredMasterClasses(actor.getId());
+		
+		Assert.notNull(res);
+		
+		return res;
+	}
+	
 }
