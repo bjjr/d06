@@ -19,7 +19,7 @@
 	<form:hidden path="receivedMessages" />
 	<form:hidden path="masterClasses" />
 	<form:hidden path="socialIdentities" />
-	<form:hidden path="userAccount.authorities" />
+	<form:hidden path="userAccount.authorities" id="authorities" />
 
 	<form:errors cssClass="error" path="folders" />
 	<br />

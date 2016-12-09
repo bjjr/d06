@@ -40,6 +40,7 @@ public class SponsorService {
 	public Sponsor create() {
 		Sponsor res;
 		res = new Sponsor();
+		
 		Collection<Folder> folders;
 		folders = folderService.createFolderObligatory(res);
 		res.setFolders(folders);
