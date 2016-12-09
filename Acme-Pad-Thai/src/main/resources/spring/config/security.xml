@@ -44,6 +44,7 @@
 		<security:intercept-url pattern="/user/display.do" access="permitAll" /> 
 		<security:intercept-url pattern="/recipe/list.do" access="permitAll" /> 
 		<security:intercept-url pattern="/recipe/display.do" access="permitAll" /> 
+		<security:intercept-url pattern="/user/create.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
