@@ -10,9 +10,10 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<h2><spring:message code="recipe.information"/></h2>
+<br />
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="recipe" requestURI="${requestURI}" id="row">
-
 
 	<spring:message code="recipe.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}"
@@ -74,6 +75,8 @@
 	
 </display:table>
 
+<h2><spring:message code="recipe.ingredients"/></h2>
+<br />
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="quantities" requestURI="${requestURI}" id="row">
 	
@@ -91,6 +94,8 @@
 	
 </display:table>
 
+<h2><spring:message code="recipe.steps"/></h2>
+<br />
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="steps" requestURI="${requestURI}" id="row">
 	
@@ -114,6 +119,8 @@
 	
 </display:table>
 
+<h2><spring:message code="recipe.comments"/></h2>
+<br />
 <display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="comments" requestURI="${requestURI}" id="row">
 	

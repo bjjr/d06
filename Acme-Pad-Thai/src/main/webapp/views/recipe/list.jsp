@@ -20,9 +20,6 @@
 	name="recipes" requestURI="${requestURI}" id="row">
 	<!-- Attributes -->
 	
-	<spring:message code="recipe.user.name" var="nameHeader" />
-	<display:column property="user.name" title="${nameHeader}" sortable="true"></display:column>
-	
 	<spring:message code="recipe.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" sortable="false" />
 	
@@ -30,6 +27,11 @@
 	<display:column property="ticker" title="${tickerHeader}" sortable="false" />
 	
 	<!-- Action links -->
+	<spring:message code="recipe.user.name" var="nameHeader" />
+	<display:column title="${nameHeader}">
+			<a href="user/display.do?userId=${row.user.id}">${row.user.name}</a>
+	</display:column> 
+	
 	<display:column>
 			<a href="recipe/display.do?recipeId=${row.id}">
 				<spring:message	code="recipe.display" />

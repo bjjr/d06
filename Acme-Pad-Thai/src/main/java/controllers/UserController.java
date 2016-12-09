@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.UserService;
 
+import domain.SocialIdentity;
 import domain.User;
 
 @Controller
@@ -67,6 +68,24 @@ public class UserController extends AbstractController{
 		
 		return result;		
 	}
+	
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam int userId) {
+		ModelAndView result;
+		User user;
+		Collection<SocialIdentity> socialIdentities;
+		
+
+		user = userService.findOne(userId);
+		socialIdentities = user.getSocialIdentities();
+		
+		result = new ModelAndView("user/display");
+		result.addObject("requestURI", "user/display.do");
+		result.addObject("user", user);
+		result.addObject("socialIdentities", socialIdentities);
+
+		return result;
+	}	
 }
 
 

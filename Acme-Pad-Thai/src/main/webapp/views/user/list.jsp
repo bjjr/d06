@@ -24,16 +24,8 @@
 	
 	<spring:message code="user.surname" var="surnameHeader" />
 	<display:column property="surname" title="${surnameHeader}" sortable="false" />
-
-	<spring:message code="user.email" var="emailHeader" />
-	<display:column property="email" title="${emailHeader}" sortable="false" />
-
-	<spring:message code="user.phone" var="phoneHeader" />
-	<display:column property="phone" title="${phoneHeader}" sortable="false" />
 	
-	<spring:message code="user.postalAddress" var="postalAddressHeader" />
-	<display:column property="postalAddress" title="${postalAddressHeader}" sortable="false" />
-	
+	<!-- Action links -->
 	<spring:message code="user.recipes" var="recipesHeader" />
 	<display:column title="${recipesHeader}">
 		<jstl:forEach items="${row.recipes }" var="rec">
@@ -42,5 +34,10 @@
 		</jstl:forEach>
 	</display:column> 
 	
-		
+	<display:column>
+			<a href="user/display.do?userId=${row.id}">
+				<spring:message	code="user.display" />
+			</a>
+	</display:column>
+	
 </display:table>
