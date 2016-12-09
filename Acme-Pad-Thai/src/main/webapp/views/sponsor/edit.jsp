@@ -19,11 +19,9 @@
 	<form:hidden path="receivedMessages" />
 	<form:hidden path="masterClasses" />
 	<form:hidden path="socialIdentities" />
-	<form:hidden path="followers" />
-	<form:hidden path="follows" />
-	<form:hidden path="comments" />
-	<form:hidden path="likesSA" />
-	<form:hidden path="curriculum" />
+
+	<form:errors cssClass="error" path="folders" />
+	<br />
 
 	<form:label path="name">
 		<spring:message code="sponsor.name" />
