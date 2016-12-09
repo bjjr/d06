@@ -59,5 +59,31 @@
 		
 		<bean class="converters.AuthorityToStringConverter" />
 		<bean class="converters.StringToAuthorityConverter" />
+		<bean class="converters.ActorToStringConverter" />
+		<bean class="converters.StringToActorConverter" />
+		
+		<bean class="converters.CookToStringConverter" />
+		<bean class="converters.StringToCookConverter" />
+		
+		<bean class="converters.LearningMaterialToStringConverter" />
+		<bean class="converters.StringToLearningMaterialConverter" />
+		
+		<bean class="converters.MasterClassToStringConverter" />
+		<bean class="converters.StringToMasterClassConverter" />
+		
+		<bean class="converters.PresentationToStringConverter" />
+		<bean class="converters.StringToPresentationConverter" />
+		
+		<bean class="converters.PropertyToStringConverter" />
+		<bean class="converters.StringToPropertyConverter" />
+		
+		<bean class="converters.SocialActorToStringConverter" />
+		<bean class="converters.StringToSocialActorConverter" />
+		
+		<bean class="converters.TextToStringConverter" />
+		<bean class="converters.StringToTextConverter" />
+		
+		<bean class="converters.VideoToStringConverter" />
+		<bean class="converters.StringToVideoConverter" />
 	</util:list>
 </beans>
