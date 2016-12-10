@@ -349,4 +349,27 @@ public class MasterClassService {
 		return res;
 	}
 	
+	public Collection<LearningMaterial> findLearningMaterials(int masterClassId) {
+		Assert.isTrue(actorService.checkAuthority("USER")
+				|| actorService.checkAuthority("ADMINISTRATOR")
+				|| actorService.checkAuthority("NUTRITIONIST")
+				|| actorService.checkAuthority("SPONSOR")
+				|| actorService.checkAuthority("COOK"));
+		
+		Collection<LearningMaterial> res;
+		MasterClass masterClass;
+		Actor principal;
+		
+		masterClass = masterClassRepository.findOne(masterClassId);
+		Assert.notNull(masterClass);
+		
+		principal = actorService.findByPrincipal();
+		Assert.isTrue(masterClass.getActors().contains(principal));
+		
+		res = masterClass.getLearningMaterials();
+		Assert.notNull(res);
+		
+		return res;
+	}
+	
 }

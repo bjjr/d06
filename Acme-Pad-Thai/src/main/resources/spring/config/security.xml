@@ -43,6 +43,8 @@
 		
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/learningMaterial/actor/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/text/actor/display.do" access="isAuthenticated()" />
 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		

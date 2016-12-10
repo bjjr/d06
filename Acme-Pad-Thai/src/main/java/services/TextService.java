@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.TextRepository;
+import domain.Actor;
+import domain.MasterClass;
 import domain.Text;
 
 @Service
@@ -24,6 +26,9 @@ public class TextService {
 	
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private MasterClassService masterClassService;
 	
 	// Constructors --------------------------------------
 	
@@ -88,6 +93,29 @@ public class TextService {
 		
 		Double res;
 		res = textRepository.findAvgNumText();
+		
+		return res;
+	}
+	
+	public Text findOne(int masterClassId, int textId) {
+		Assert.isTrue(actorService.checkAuthority("USER")
+				|| actorService.checkAuthority("ADMINISTRATOR")
+				|| actorService.checkAuthority("NUTRITIONIST")
+				|| actorService.checkAuthority("SPONSOR")
+				|| actorService.checkAuthority("COOK"));
+		
+		Text res;
+		Actor principal;
+		MasterClass masterClass;
+		
+		principal = actorService.findByPrincipal();
+		masterClass = masterClassService.findOne(masterClassId);
+		
+		Assert.isTrue(principal.getMasterClasses().contains(masterClass)
+					  || masterClass.getCook().equals(principal));
+		
+		res = textRepository.findOne(textId);
+		Assert.notNull(res);
 		
 		return res;
 	}

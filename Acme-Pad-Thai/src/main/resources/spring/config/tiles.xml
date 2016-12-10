@@ -32,6 +32,8 @@
 		<value>/views/nutritionist/tiles.xml</value>
 		<value>/views/recipe/tiles.xml</value>
 		<value>/views/user/tiles.xml</value>
+		<value>/views/learningMaterial/tiles.xml</value>
+		<value>/views/text/tiles.xml</value>
 	</util:list>
 
 </beans>
