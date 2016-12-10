@@ -199,10 +199,10 @@ public class RecipeService {
 		return result;
 	}
 	
-	public Recipe findByKeyword(String keyword){
+	public Collection<Recipe> findByKeyword(String keyword){
 		Assert.notNull(keyword);
 		
-		Recipe result;
+		Collection<Recipe> result;
 		
 		result = recipeRepository.findByKeyword(keyword);
 		Assert.notNull(result);
@@ -219,6 +219,18 @@ public class RecipeService {
 		int countLikes;
 		int countDislikes;
 		RecipeCopy recipeCopy;
+		User u;
+		String nameUser;
+		
+		u = userService.findByPrincipal();
+		nameUser = recipe.getUser().getName() + recipe.getUser().getSurname();
+		
+		Assert.isTrue(u.getRecipes().contains(recipe),"An user only could qualify his recipes");
+
+		for(RecipeCopy rc: contest.getRecipeCopies()){
+			Assert.isTrue(recipe.getTicker() != rc.getTicker(), "An user cannot qualify the same recipe in the same contest");
+			Assert.isTrue(nameUser != rc.getNameUser(), "An user cannot qualify two recipes in the same contest");
+		}
 		
 		countLikes = 0;
 		countDislikes = 0;
@@ -232,9 +244,6 @@ public class RecipeService {
 				countDislikes++;
 			}
 		}
-		
-		User u = userService.findByPrincipal();
-		Assert.isTrue(u.getRecipes().contains(recipe),"An user only could copy his recipes");
 
 		Assert.isTrue(countLikes >=5 && countDislikes == 0);
 		

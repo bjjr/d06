@@ -26,6 +26,14 @@
 	<spring:message code="recipe.ticker" var="tickerHeader" />
 	<display:column property="ticker" title="${tickerHeader}" sortable="false" />
 	
+	<spring:message code="recipe.categories" var="categoriesHeader" />
+	<display:column title="${categoriesHeader}">
+		<jstl:forEach items="${row.categories }" var="category">
+			<jstl:out value="${category.name }"></jstl:out>
+			<br />
+		</jstl:forEach>
+	</display:column>
+	
 	<!-- Action links -->
 	<spring:message code="recipe.user.name" var="nameHeader" />
 	<display:column title="${nameHeader}">

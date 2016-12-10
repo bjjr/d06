@@ -49,7 +49,7 @@ public class RecipeServiceTest extends AbstractTest {
 
 		super.authenticate("User1");
 
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(76);
 		saved = recipeService.save(recipe);
 		recipeService.flush();
 
@@ -64,7 +64,7 @@ public class RecipeServiceTest extends AbstractTest {
 
 		super.authenticate("User1");
 
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(76);
 
 		recipeService.delete(recipe);
 
@@ -127,7 +127,7 @@ public class RecipeServiceTest extends AbstractTest {
 	public void testFindRecipeByKeyword(){
 		Recipe recipe;
 		
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(76);
 		
 		System.out.println("Recipe" + recipe.getId() + "found");
 	}
@@ -139,7 +139,7 @@ public class RecipeServiceTest extends AbstractTest {
 		
 		super.authenticate("User4");
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
+		recipe = recipeService.findOne(85);
 		contest = contestService.findOne(254);
 		
 		recipeService.qualifyRecipe(recipe, contest);
@@ -169,7 +169,7 @@ public class RecipeServiceTest extends AbstractTest {
 		Integer likes;
 		Recipe recipe;
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
+		recipe = recipeService.findOne(85);
 		likes = recipeService.findLikes(recipe);
 		
 		System.out.println("This recipe has " + likes + " likes");
@@ -180,7 +180,7 @@ public class RecipeServiceTest extends AbstractTest {
 		Integer dislikes;
 		Recipe recipe;
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
+		recipe = recipeService.findOne(85);
 		dislikes = recipeService.findDislikes(recipe);
 		
 		System.out.println("This recipe has " + dislikes + " dislikes");

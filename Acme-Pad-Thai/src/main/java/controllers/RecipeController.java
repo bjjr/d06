@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,18 +53,15 @@ public class RecipeController extends AbstractController {
 		ModelAndView result;
 		Collection<Recipe> recipes;
 		Collection<Recipe> recipesWanted;
-		Recipe wanted;
 
 		recipes = recipeService.findAllRecipesGroupByCategory();
-		recipesWanted = new ArrayList<Recipe>();
 
 		if (recipe == "") {
 			result = new ModelAndView("recipe/list");
 			result.addObject("requestURI", "recipe/list.do");
 			result.addObject("recipes", recipes);
 		} else {
-			wanted = recipeService.findByKeyword(recipe);
-			recipesWanted.add(wanted);
+			recipesWanted = recipeService.findByKeyword(recipe);
 
 			result = new ModelAndView("recipe/list");
 			result.addObject("requestURI", "recipe/list.do");

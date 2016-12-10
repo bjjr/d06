@@ -123,9 +123,8 @@ public class UserController extends AbstractController {
 			try {
 
 				userService.save(user);
-				result = new ModelAndView("user/edit");
-				result.addObject("requestURI", "user/edit.do");
-				result.addObject("message", "user.commit.ok");
+				result = new ModelAndView("redirect:../security/login.do");
+				result.addObject("messageStatus", "user.commit.ok");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(user, "user.commit.error");
 			}
@@ -153,8 +152,9 @@ public class UserController extends AbstractController {
 		authority.setAuthority("USER");
 		authorities = new ArrayList<Authority>();
 		authorities.add(authority);
-		user.getUserAccount().setAuthorities(authorities);
 		result = new ModelAndView("user/edit");
+		result.addObject("requestURI", "user/edit.do");
+		result.addObject("authorities", authorities);
 		result.addObject(user);
 		result.addObject("message", message);
 

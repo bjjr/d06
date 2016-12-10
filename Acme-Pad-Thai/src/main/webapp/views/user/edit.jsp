@@ -22,6 +22,7 @@
 	<form:hidden path="comments"/>
 	<form:hidden path="likesSA"/>
 	<form:hidden path="recipes"/>
+	<form:hidden path="userAccount.authorities" id="authorities"/>
 		
 	<form:label path="name">
 		<spring:message code="user.name"/>

@@ -61,7 +61,7 @@ public class RecipeCopyServiceTest extends AbstractTest {
 	public void testSaveRecipeCopy() {
 		authenticate("user1");
 		Contest contest= contestService.findOne(255);
-		Recipe recipe= recipeService.findByKeyword("Recipe1");
+		Recipe recipe= recipeService.findOne(76);
 		
 		
 		Assert.isTrue(actorService.checkAuthority("USER"));

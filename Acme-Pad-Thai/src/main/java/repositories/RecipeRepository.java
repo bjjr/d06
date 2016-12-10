@@ -20,11 +20,11 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer>{
 	@Query("select max(u.recipes.size) from User u")
 	Double findMaxRecipesUser();
 	
-	@Query("select r from Recipe r join r.categories c group by c.name")
+	@Query("select r from Recipe r join r.categories c group by r.title order by c.name")
 	Collection<Recipe> findAllRecipesGroupByCategory();
 	
 	@Query("select r from Recipe r where r.ticker like %?1% or r.title like %?1% or r.summary like %?1% ")
-	Recipe findByKeyword(String keyword);
+	Collection<Recipe> findByKeyword(String keyword);
 
 
 }
