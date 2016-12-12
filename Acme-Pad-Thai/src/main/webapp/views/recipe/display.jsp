@@ -145,7 +145,6 @@
 		sortable="false" />
 	
 </display:table>
-
 <security:authorize access="hasRole('USER')">
 	<form:form action="" method="POST">
 	<spring:message code="recipe.contest"></spring:message>

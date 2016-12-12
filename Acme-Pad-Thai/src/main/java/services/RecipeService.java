@@ -1,9 +1,11 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -321,5 +323,39 @@ public class RecipeService {
 		return result;
 		
 	}
+
+	public String createTicker() {
+		String caracteresEspeciales; 
+		String result;
+		List<Recipe> recipes; 
+		Random random;
+		char[] r;
+		int z;
+		char c;
+		
+		caracteresEspeciales= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		result="";
+		recipes= (List<Recipe>) findAllRecipesGroupByCategory();
+		random= new Random();
+		result += Calendar.YEAR + Calendar.MONTH + Calendar.DAY_OF_MONTH;
+		
+		result += "-";
+		
+		for (int i = 0; i <= 3; i++) {
+			r =  new char[4];
+		    z = random.nextInt(caracteresEspeciales.length() - 1);
+		    c = caracteresEspeciales.charAt(z);
+			r[i] = c;
+			result += r[i];
+		}
+
+		for (Recipe recipe : recipes) {
+			if (result.equals(recipe.getTicker())) {
+				result = createTicker();
+			}
+		}
+		return result;
+	}
+
 
 }

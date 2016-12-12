@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -14,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.Authority;
+import security.UserAccount;
+import security.UserAccountService;
 import services.UserService;
 
 import domain.SocialIdentity;
@@ -28,6 +28,9 @@ public class UserController extends AbstractController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserAccountService userAccountService;
 
 	// Constructors
 
@@ -104,6 +107,19 @@ public class UserController extends AbstractController {
 	}
 
 	// Edition ----------------------------------------------------------------
+	
+	//Edition
+	
+		@RequestMapping(value = "/edit", method = RequestMethod.GET)
+		public ModelAndView edit() {
+			ModelAndView result;
+			User principal;
+
+			principal = userService.findByPrincipal();
+			result = createEditModelAndView(principal);
+
+			return result;
+		}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid User user, BindingResult binding) {
@@ -111,19 +127,22 @@ public class UserController extends AbstractController {
 		String password;
 		String newPassword;
 		Md5PasswordEncoder encoder;
-
-		encoder = new Md5PasswordEncoder();
-		password = user.getUserAccount().getPassword();
-		newPassword = encoder.encodePassword(password, null);
-		user.getUserAccount().setPassword(newPassword);
+		UserAccount ua;
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(user);
 		} else {
 			try {
-
+				ua = user.getUserAccount();
+				encoder = new Md5PasswordEncoder();
+				password = ua.getPassword();
+				newPassword = encoder.encodePassword(password, null);
+				user.getUserAccount().setPassword(newPassword);
+				userAccountService.save(ua);
+				user.setUserAccount(ua);
+				
 				userService.save(user);
-				result = new ModelAndView("redirect:../security/login.do");
+				result = new ModelAndView("redirect:../welcome/index.do");
 				result.addObject("messageStatus", "user.commit.ok");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(user, "user.commit.error");
@@ -145,17 +164,9 @@ public class UserController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(User user, String message) {
 		ModelAndView result;
-		Collection<Authority> authorities;
-		Authority authority;
-
-		authority = new Authority();
-		authority.setAuthority("USER");
-		authorities = new ArrayList<Authority>();
-		authorities.add(authority);
+		
 		result = new ModelAndView("user/edit");
-		result.addObject("requestURI", "user/edit.do");
-		result.addObject("authorities", authorities);
-		result.addObject(user);
+		result.addObject("user", user);
 		result.addObject("message", message);
 
 		return result;
