@@ -44,7 +44,6 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="curriculum/nutritionist/list.do"><spring:message code="master.page.nutritionist.curriculum.list" /></a></li>
-					<li><a href="nutritionist/edit.do"><spring:message code="master.page.nutritionist.edit" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
