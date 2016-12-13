@@ -9,13 +9,14 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="tg" uri="http://displaytag.sf.net"%>
 
-<form:form action="masterClass/edit.do" modelAttribute="masterClass">
+<form:form action="masterClass/cook/edit.do" modelAttribute="masterClass">
 
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	<form:hidden path="actors"/>
 	<form:hidden path="cook"/>
 	<form:hidden path="learningMaterials"/>
+	<form:hidden path="promoted"/>
 	
 	<div>
 		<form:label path="title">
@@ -74,7 +75,7 @@
 		
 			<spring:message code="masterClass.cancel" var="cancelText" />
 			<input type="button" name="cancel" value="${cancelText}"
-				onclick="window.location='masterClass/cook/list-managed.do'" />
+				onclick="window.location='masterClass/cook/list.do'" />
 		</security:authorize>
 		
 		<security:authorize access="hasRole('ADMINISTRATOR')">

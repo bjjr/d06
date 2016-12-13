@@ -25,6 +25,17 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="cook/create.do"><spring:message code="master.page.administrator.create.cook" /></a></li>
+					<li><a href="masterClass/admin/list.do"><spring:message code="master.page.administrator.list.masterClass" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('COOK')">
+			<li><a class="fNiv"><spring:message	code="master.page.cook" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="masterClass/cook/list.do"><spring:message code="master.page.cook.list.masterClass" /></a></li>
+					<li><a href="masterClass/cook/create.do"><spring:message code="master.page.cook.create.masterClass" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
