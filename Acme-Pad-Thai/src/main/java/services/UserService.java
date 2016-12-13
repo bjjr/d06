@@ -80,7 +80,6 @@ public class UserService {
 				folderService.save(f);
 			}
 			result.setFolders(folders);
-			result = userRepository.save(result);
 			
 		}
 		else{

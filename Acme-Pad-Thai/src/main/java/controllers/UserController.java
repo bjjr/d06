@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.UserAccount;
-import security.UserAccountService;
 import services.UserService;
 
 import domain.SocialIdentity;
@@ -28,9 +26,6 @@ public class UserController extends AbstractController {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private UserAccountService userAccountService;
 
 	// Constructors
 
@@ -127,19 +122,15 @@ public class UserController extends AbstractController {
 		String password;
 		String newPassword;
 		Md5PasswordEncoder encoder;
-		UserAccount ua;
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(user);
 		} else {
 			try {
-				ua = user.getUserAccount();
 				encoder = new Md5PasswordEncoder();
-				password = ua.getPassword();
+				password = user.getUserAccount().getPassword();
 				newPassword = encoder.encodePassword(password, null);
 				user.getUserAccount().setPassword(newPassword);
-				userAccountService.save(ua);
-				user.setUserAccount(ua);
 				
 				userService.save(user);
 				result = new ModelAndView("redirect:../welcome/index.do");
