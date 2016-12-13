@@ -9,7 +9,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <form:form action="user/edit.do" modelAttribute="user">
-
+	
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	<form:hidden path="folders"/>
@@ -79,7 +79,7 @@
 		value="<spring:message code="user.save"/>"/>&nbsp;
 	<input type="button" name="cancel"
 		value="<spring:message code="user.cancel" />"
-		onclick="javascript: relativeRedir('/');" />
+		onclick="window.location='/'" />
 	<br />
 		
 </form:form>

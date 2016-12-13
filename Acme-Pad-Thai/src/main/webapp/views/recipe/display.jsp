@@ -145,13 +145,3 @@
 		sortable="false" />
 	
 </display:table>
-<security:authorize access="hasRole('USER')">
-	<form:form action="" method="POST">
-	<spring:message code="recipe.contest"></spring:message>
-	<select id="contest" name="contest">
-		<form:options items="${contests}" itemValue="id" itemLabel="title" />
-	</select>
-		<input type="submit" name="qualify" value="<spring:message code="recipe.qualify" />" 
-		onclick="return confirm('<spring:message code="recipe.confirm.qualify" />')"/>&nbsp;
-	</form:form>
-</security:authorize>

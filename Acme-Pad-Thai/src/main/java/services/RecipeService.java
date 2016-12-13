@@ -213,30 +213,20 @@ public class RecipeService {
 		
 	}
 	
-	public void qualifyRecipe(Recipe recipe, Contest contest){
+	public RecipeCopy copyRecipe(Recipe recipe){
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		Assert.notNull(recipe);
-		Assert.notNull(contest);
 		
 		int countLikes;
 		int countDislikes;
 		RecipeCopy recipeCopy;
 		User u;
-		String nameUser;
 		
 		u = userService.findByPrincipal();
-		nameUser = recipe.getUser().getName() + recipe.getUser().getSurname();
-		
-		Assert.isTrue(u.getRecipes().contains(recipe),"An user only could qualify his recipes");
-
-		for(RecipeCopy rc: contest.getRecipeCopies()){
-			Assert.isTrue(recipe.getTicker() != rc.getTicker(), "An user cannot qualify the same recipe in the same contest");
-			Assert.isTrue(nameUser != rc.getNameUser(), "An user cannot qualify two recipes in the same contest");
-		}
-		
 		countLikes = 0;
 		countDislikes = 0;
-		recipeCopy = recipeCopyService.create();
+		
+		Assert.isTrue(u.getRecipes().contains(recipe),"An user only could qualify his recipes");
 		
 		for(LikeSA l : recipe.getLikesSA()){
 			if(l.isLikeSA()==true){
@@ -249,6 +239,8 @@ public class RecipeService {
 
 		Assert.isTrue(countLikes >=5 && countDislikes == 0);
 		
+		recipeCopy = recipeCopyService.create();
+		
 		recipeCopy.setTicker(recipe.getTicker());
 		recipeCopy.setTitle(recipe.getTitle());
 		recipeCopy.setSummary(recipe.getSummary());
@@ -260,12 +252,28 @@ public class RecipeService {
 		recipeCopy.setNameUser(recipe.getUser().getName() + recipe.getUser().getSurname());
 		recipeCopy.setLikesRC(countLikes);
 		recipeCopy.setDislikesRC(countDislikes);
+		
+		return recipeCopy;
+		
+	}
+	
+	public void qualifyRecipe(RecipeCopy recipeCopy, Contest contest){
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		Assert.notNull(contest);
+		
+		String nameUser;
+		
+		nameUser = recipeCopy.getNameUser();
+
+		for(RecipeCopy rc: contest.getRecipeCopies()){
+			Assert.isTrue(recipeCopy.getTicker() != rc.getTicker(), "An user cannot qualify the same recipe in the same contest");
+			Assert.isTrue(nameUser != rc.getNameUser(), "An user cannot qualify two recipes in the same contest");
+		}
+		
 		recipeCopy.setContest(contest);
-		
 		recipeCopyService.save(recipeCopy);
+		contest.addRecipeCopy(recipeCopy);
 		contestService.save(contest);
-		
-		
 	}
 	
 	public Collection<Recipe> recipesFollows(){

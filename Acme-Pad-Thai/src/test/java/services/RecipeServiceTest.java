@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import domain.Contest;
 import domain.Recipe;
+import domain.RecipeCopy;
 
 import utilities.AbstractTest;
 
@@ -135,6 +136,7 @@ public class RecipeServiceTest extends AbstractTest {
 	@Test
 	public void testQualifyRecipe(){
 		Recipe recipe;
+		RecipeCopy recipeCopy;
 		Contest contest;
 		
 		super.authenticate("User4");
@@ -142,7 +144,8 @@ public class RecipeServiceTest extends AbstractTest {
 		recipe = recipeService.findOne(85);
 		contest = contestService.findOne(254);
 		
-		recipeService.qualifyRecipe(recipe, contest);
+		recipeCopy = recipeService.copyRecipe(recipe);
+		recipeService.qualifyRecipe(recipeCopy, contest);
 		
 		System.out.println("The recipe has been qualified for the contest");
 		
