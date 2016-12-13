@@ -5,9 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Quantity;
-
 import repositories.QuantityRepository;
+import domain.Quantity;
 
 @Service
 @Transactional
@@ -16,7 +15,10 @@ public class QuantityService {
 	//Managed repository
 	@Autowired
 	private QuantityRepository quantityRepository;
-	
+	@Autowired
+	private IngredientService ingredientService;
+	@Autowired
+	private UnitService unitService;
 	// Supporting services
 	
 	//Constructors
@@ -67,4 +69,14 @@ public class QuantityService {
 		return result;
 	}
 
+	public Quantity createDeafultQuantity() {
+		Quantity res = create();
+		
+		res.setIngredient(ingredientService.findOne(150));
+		res.setQuantity(1.0);
+		res.setUnit(unitService.findOne(34));
+		
+		return res;
+	}
+	
 }
