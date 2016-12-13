@@ -50,6 +50,8 @@
 		
 		<security:intercept-url pattern="/text/actor/display.do" access="isAuthenticated()" />
 		
+		<security:intercept-url pattern="/recipe/user/**" access="hasRole('USER')" />
+		
 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		

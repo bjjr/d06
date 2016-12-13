@@ -69,12 +69,12 @@ public class MasterClassService {
 		
 		res = masterClassRepository.findOne(masterClassId);
 		
+		Assert.notNull(res);
+		
 		if (actorService.checkAuthority("COOK")) {
 			Assert.isTrue(cookService.findByPrincipal()
 						  .getMasterClassesTeach().contains(res));
 		}
-		
-		Assert.notNull(res);
 		
 		return res;
 	}

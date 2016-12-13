@@ -73,11 +73,17 @@ public class RecipeService {
 		
 		Recipe result;
 		User owner;
+		Collection<Step> steps = new ArrayList<>();
+		Collection<Quantity> quantities = new ArrayList<>();
+		Collection<Category> categories = new ArrayList<>();
 		
 		owner = userService.findByPrincipal();
 		result = new Recipe();
 		result.setUser(owner);
-		userService.save(owner);
+		result.setSteps(steps);
+		result.setQuantities(quantities);
+		result.setCategories(categories);
+//		userService.save(owner);
 		
 		return result;
 	}
@@ -89,13 +95,43 @@ public class RecipeService {
 		Recipe result;
 		Date momentCreated;
 		Date momentUpdated;
+		Step defaultStep;
+		Quantity defaultQuantity;
+		Category defaultCategory;
 		
-		momentCreated = new Date(System.currentTimeMillis()-1000);
+		if (recipe.getId() == 0) {
+			momentCreated = new Date(System.currentTimeMillis()-1000);
+			recipe.setMomentAuthored(momentCreated);
+			
+			defaultStep = stepService.createDefaultStep();
+			recipe.getSteps().add(defaultStep);
+			
+			defaultCategory = categoryService.findOne(104);
+			recipe.getCategories().add(defaultCategory);
+		}
+		
 		momentUpdated = new Date(System.currentTimeMillis()-1000);
-		recipe.setMomentAuthored(momentCreated);
 		recipe.setMomentLastUpdated(momentUpdated);
 		
-		result = recipeRepository.save(recipe);
+		if (recipe.getId() == 0) {
+			result = recipeRepository.save(recipe);
+			
+			recipe.getUser().addRecipe(result);
+			userService.save(recipe.getUser());
+			
+			defaultCategory.addRecipe(result);
+			categoryService.save(defaultCategory);
+			
+			defaultQuantity = quantityService.createDefaultQuantity();
+			result.getQuantities().add(defaultQuantity);
+			defaultQuantity.setRecipe(result);
+			quantityService.save(defaultQuantity);
+			
+			recipeRepository.save(result);
+			
+		} else {
+			result = recipeRepository.save(recipe);
+		}
 		
 		return result;
 	}
@@ -145,6 +181,20 @@ public class RecipeService {
 		
 		recipeRepository.delete(recipe);
 			
+	}
+	
+	public Recipe findOne(int recipeId) {
+		Assert.isTrue(recipeId != 0);
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		
+		Recipe res;
+		
+		res = recipeRepository.findOne(recipeId);
+		
+		Assert.notNull(res);
+		Assert.isTrue(userService.findByPrincipal().getRecipes().contains(res));
+		
+		return res;
 	}
 	
 	//Other business methods
