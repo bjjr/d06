@@ -19,7 +19,9 @@
 	<form:hidden path="receivedMessages" />
 	<form:hidden path="masterClasses" />
 	<form:hidden path="socialIdentities" />
-	<form:hidden path="userAccount.authorities" id="authorities" />
+	<form:hidden path="userAccount.id"/>
+	<form:hidden path="userAccount.version"/>
+	<form:hidden path="userAccount.authorities"/>
 
 	<form:errors cssClass="error" path="folders" />
 	<br />
@@ -133,7 +135,7 @@
 		value="<spring:message code="sponsor.save"/>" />&nbsp;
 	<input type="button" name="cancel"
 		value="<spring:message code="sponsor.cancel" />"
-		onclick="javascript: relativeRedir('/');" />
+		onclick="window.location='/Acme-Pad-Thai'" />
 	<br />
 
 </form:form>

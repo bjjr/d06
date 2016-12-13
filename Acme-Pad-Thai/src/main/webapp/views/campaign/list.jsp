@@ -1,4 +1,4 @@
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,17 +12,17 @@
 	requestURI="campaign/sponsor/list.do" pagesize="5" class="displaytag">
 
 	<spring:message code="campaign.start" var="start" />
-	<display:column property="start" title="${start}" sortable="true">
+	<display:column property="startMoment" title="${start}" sortable="true">
 		<jstl:out value="${row.startMoment}" />
 	</display:column>
 
 
 	<spring:message code="campaign.end" var="end" />
-	<display:column property="end" title="${end}" sortable="true">
+	<display:column property="endMoment" title="${end}" sortable="true">
 		<jstl:out value="${row.endMoment}" />
 	</display:column>
 
-	<spring:message code="campaign.banners" var="bannners" />
+	<spring:message code="campaign.banners" var="banners" />
 	<display:column property="banners" title="${banners}" sortable="true">
 		<jstl:out value="${row.banners}" />
 	</display:column>
@@ -50,4 +50,15 @@
 			</jstl:otherwise>
 		</jstl:catch>
 	</display:column>
+	
+	<spring:message code="campaign.edit" var="edit" />
+	<display:column title="${edit}">
+			<a href="campaign/sponsor/edit.do?campaignId=${row.id}">${edit}</a>
+		</display:column>
+
+<spring:message code="campaign.bills" var="bills" />
+		<display:column title="${bills}">
+			<a href="bill/sponsor/list.do?campaignId=${row.id}">${bills}</a>
+		</display:column>
+	
 </display:table>

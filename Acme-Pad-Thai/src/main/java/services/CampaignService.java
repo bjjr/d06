@@ -71,7 +71,7 @@ public class CampaignService {
 		Assert.isTrue(actorService.checkAuthority("SPONSOR"),
 				"Only an sponsor could delete campaign");
 		Assert.isTrue(new Date(System.currentTimeMillis()).compareTo(campaign
-				.getStartMoment()) < 0);
+				.getStartMoment()) < 0, "Could not delete a started campaign");
 
 		campaignRepository.delete(campaign);
 	}
@@ -92,7 +92,7 @@ public class CampaignService {
 
 		result = campaignRepository.findOne(id);
 		Assert.notNull(result);
-
+		Assert.isTrue(sponsorService.findByPrincipal().getCampaigns().contains(result), "Sponsor only could see his campaigns");
 		return result;
 	}
 

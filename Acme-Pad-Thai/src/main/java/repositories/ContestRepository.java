@@ -32,4 +32,6 @@ public interface ContestRepository extends JpaRepository<Contest, Integer>{
 	@Query("select r from Contest c join c.recipeCopies r where c.id = ?1 and r.winner = true")
 	Collection<RecipeCopy> findRecipeWinnerByContest(int id);
 	
+	@Query("select c from Contest c where c.openingTime > current_date and c.endMoment > current_date")
+	Collection<Contest> findOpenContests();
 }

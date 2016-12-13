@@ -52,6 +52,7 @@ public class ContestService {
 					"Only an admin or user could edit contest");
 
 		}
+		Assert.isTrue(contest.getOpeningTime().compareTo(contest.getClosingTime())<0, "Opening time must be before than closing time");
 		return contestRepository.save(contest);
 	}
 	
@@ -145,5 +146,10 @@ public class ContestService {
 		res = contestRepository.findRecipeWinnerByContest(id);
 		return res;
 	}
-
+	
+	public Collection<Contest> findOpenContests() {
+		Collection<Contest> res;
+		res = contestRepository.findOpenContests();
+		return res;
+	}
 }

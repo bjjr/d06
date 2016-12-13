@@ -107,6 +107,19 @@ public class BillService {
 		res = billRepository.exists(id);
 		return res;
 	}
+	
+	public void setPaid(int billId) {
+		Bill bill;
+		Date paidMoment;
+		
+		bill = billRepository.findOne(billId);		
+		Assert.notNull(bill);
+		Assert.isNull(bill.getPaidMoment(), "Bill already paid");
+		paidMoment = new Date(System.currentTimeMillis() - 1);
+		bill.setPaidMoment(paidMoment);
+		
+		billRepository.save(bill);
+}
 
 	// Other business methods -------------------------------------------------
 	/** Media facturas pagadas **/

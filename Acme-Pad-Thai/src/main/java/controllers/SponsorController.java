@@ -63,17 +63,18 @@ public class SponsorController extends AbstractController {
 		String password,newPassword;
 		Md5PasswordEncoder encoder;
 		
-		encoder = new Md5PasswordEncoder();
-		password = sponsor.getUserAccount().getPassword();
-		newPassword = encoder.encodePassword(password, null);
-		sponsor.getUserAccount().setPassword(newPassword);
-
+		
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(sponsor);
 		} else {
 			try {
+				encoder = new Md5PasswordEncoder();
+				password = sponsor.getUserAccount().getPassword();
+				newPassword = encoder.encodePassword(password, null);
+				sponsor.getUserAccount().setPassword(newPassword);
+
 				sponsorService.save(sponsor);
-				result = new ModelAndView("redirect:/security/login.do");
+				result = new ModelAndView("redirect:/security/logout.do");
 				result.addObject("message", "sponsor.commit.ok");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(sponsor, "sponsor.commit.error");
