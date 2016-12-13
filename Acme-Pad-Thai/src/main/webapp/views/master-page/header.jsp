@@ -50,8 +50,17 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('SPONSOR')">
+			<li><a class="fNiv"><spring:message code="master.page.sponsor" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="campaign/sponsor/list.do"><spring:message code="master.page.sponsor.campaign.list" /></a></li>
+					<li><a href="campaign/sponsor/create.do"><spring:message code="master.page.sponsor.campaign.create" /></a></li>
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="isAnonymous()">
-			<li class="arrow"></li>
 			<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
 			<li><a href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>	
 			<li><a class="fNiv" href="masterClass/list.do"><spring:message code="master.page.anonymous.masterClass.list" /></a></li>
@@ -67,13 +76,8 @@
 		<li><a href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
 					<li><a href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>
 			<li>
-				<a class="fNiv" href="masterClass/list-unregistered.do">
+				<a class="fNiv" href="masterClass/actor/list-unregistered.do">
 					<spring:message code="master.page.masterClass.lu" />
-				</a>
-			</li>
-			<li>
-				<a class="fNiv" href="masterClass/list-registered.do">
-					<spring:message code="master.page.masterClass.lr" />
 				</a>
 			</li>
 			<li>
@@ -82,6 +86,11 @@
 			        (<security:authentication property="principal.username" />)
 				</a>
 			</li>			
+			<li>
+				<a class="fNiv" href="masterClass/actor/list-registered.do">
+					<spring:message code="master.page.masterClass.lr" />
+				</a>
+			</li>
 			<li>
 				<a class="fNiv" href="j_spring_security_logout">
 					<spring:message code="master.page.logout" />				

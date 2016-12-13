@@ -57,7 +57,7 @@
   	</security:authorize>
   	
   	<security:authorize access="hasAnyRole('COOK','ADMINISTRATOR')">
-  		<jstl:if test=${registered == null}>
+  		<jstl:if test="${registered == null}">
 	  		<spring:message code="masterClass.promoted" var="promotedHeader" />
 		  	<display:column property="promoted" title="${promotedHeader}" />
 		  		
