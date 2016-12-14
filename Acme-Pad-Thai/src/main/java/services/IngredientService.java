@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,14 @@ public class IngredientService {
 	public Ingredient create(){
 		Assert.isTrue(actorService.checkAuthority("NUTRITIONIST"));
 		Ingredient result;
+		Collection<Property> properties;
+		Property property;
 		
+		properties = new ArrayList<Property>();
+		property = propertyService.findOne(173);
+		properties.add(property);
 		result = new Ingredient();
+		result.setProperties(properties);
 		
 		return result;
 	}
@@ -70,8 +77,21 @@ public class IngredientService {
 		Assert.notNull(ingredient);
 		
 		Ingredient result;
+		Collection<Property> properties;
+		Property property;
 		
-		result = ingredientRepository.save(ingredient);
+		if(ingredient.getId() == 0){
+			properties = new ArrayList<>();
+			property = propertyService.findOne(173);
+			properties.add(property);
+			ingredient.setProperties(properties);
+			result = ingredientRepository.save(ingredient);
+			property.addIngredient(result);
+			propertyService.save(property);
+		}
+		else{
+			result = ingredientRepository.save(ingredient);
+		}
 		
 		return result;
 	}
@@ -125,6 +145,24 @@ public class IngredientService {
 		return result;
 	}
 	
+	public void addProperty(Ingredient ingredient, Property property){
+		Assert.notNull(ingredient);
+		Assert.notNull(property);
+		
+		ingredient.addProperty(property);
+		save(ingredient);
+		propertyService.save(property);
 	
+	}
+	
+	public void removeProperty(Ingredient ingredient, Property property){
+		Assert.notNull(ingredient);
+		Assert.notNull(property);
+		
+		ingredient.removeProperty(property);
+		save(ingredient);
+		propertyService.save(property);
+	
+	}
 
 }

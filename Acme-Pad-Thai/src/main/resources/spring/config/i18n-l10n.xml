@@ -38,6 +38,7 @@
 		<value>/views/campaign/messages</value>		
 		<value>/views/bill/messages</value>		
 		<value>/views/step/messages</value>		
+		<value>/views/ingredient/messages</value>
 	</util:list>
 
 </beans>

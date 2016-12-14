@@ -49,9 +49,7 @@
 	<security:authorize access="hasRole('USER')">
 	<jstl:if test="${owner}">
 	<display:column>
-	<display:column>
 			<a href="recipe/user/qualify.do?recipeId=${row.id}"><spring:message code="recipe.user.qualify"/></a>
-	</display:column>
 	</display:column>
 	</jstl:if>
 	</security:authorize>

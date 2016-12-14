@@ -85,7 +85,7 @@ public class RecipeUserController extends AbstractController{
 		
 		try{
 			recipeCopy = recipeService.copyRecipe(recipe);
-			contests = contestService.findAll();
+			contests = contestService.findOpenContests();
 			result = new ModelAndView("recipe/qualify");
 			result.addObject("recipeCopy", recipeCopy);
 			result.addObject("contests", contests);
@@ -104,7 +104,7 @@ public class RecipeUserController extends AbstractController{
 		Contest contest;
 		Collection<Contest> contests;
 		
-		contests = contestService.findAll();
+		contests = contestService.findOpenContests();
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("recipe/qualify");

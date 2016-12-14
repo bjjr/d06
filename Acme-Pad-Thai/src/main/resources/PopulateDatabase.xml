@@ -2847,6 +2847,14 @@
 	</property>
 </bean>
 
+<bean id="property6" class="domain.Property">
+	<property name="name" value="Default" />
+	<property name="ingredients">
+		<list>
+		</list>
+	</property>
+</bean>
+
 
 	
 <!-- User's folders -->

@@ -49,6 +49,14 @@
 		<security:intercept-url pattern="/recipe/user/list.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/recipe/user/qualify.do" access="hasRole('USER')" /> 
 		
+		<security:intercept-url pattern="/ingredient/nutritionist/list.do" access="hasRole('NUTRITIONIST')" /> 
+		<security:intercept-url pattern="/ingredient/nutritionist/create.do" access="hasRole('NUTRITIONIST')" />
+		<security:intercept-url pattern="/ingredient/nutritionist/edit.do" access="hasRole('NUTRITIONIST')" />
+		<security:intercept-url pattern="/ingredient/nutritionist/addProperty.do" access="hasRole('NUTRITIONIST')" />
+		<security:intercept-url pattern="/ingredient/nutritionist/add.do" access="hasRole('NUTRITIONIST')" />
+		<security:intercept-url pattern="/ingredient/nutritionist/removeProperty.do" access="hasRole('NUTRITIONIST')" />
+		<security:intercept-url pattern="/ingredient/nutritionist/remove.do" access="hasRole('NUTRITIONIST')" />
+		
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />
 

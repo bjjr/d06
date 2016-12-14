@@ -101,8 +101,6 @@ public class UserController extends AbstractController {
 		return result;
 	}
 
-	// Edition ----------------------------------------------------------------
-	
 	//Edition
 	
 		@RequestMapping(value = "/edit", method = RequestMethod.GET)
