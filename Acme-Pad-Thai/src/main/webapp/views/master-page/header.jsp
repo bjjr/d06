@@ -74,6 +74,13 @@
 					<spring:message code="master.page.masterClass.lr" />
 				</a>
 			</li>
+			
+			<li>
+				<a class="fNiv" href="folder/list.do">
+					<spring:message code="master.page.folder.list" />
+				</a>
+			</li>
+			
 			<li>
 				<a class="fNiv" href="j_spring_security_logout">
 					<spring:message code="master.page.logout" />				

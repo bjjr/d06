@@ -31,6 +31,8 @@
 		<value>/views/nutritionist/messages</value>
 		<value>/views/recipe/messages</value>
 		<value>/views/user/messages</value>
+		<value>/views/folder/messages</value>
+		<value>/views/message/messages</value>
 		
 	</util:list>
 

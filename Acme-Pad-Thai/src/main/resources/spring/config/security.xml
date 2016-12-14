@@ -44,6 +44,9 @@
 		<security:intercept-url pattern="/curriculum/nutritionist/**" access="hasRole('NUTRITIONIST')" />
 		<security:intercept-url pattern="/endorser/nutritionist/**" access="hasRole('NUTRITIONIST')" />
 		<security:intercept-url pattern="/nutritionist/**" access="isAnonymous()" />
+		
+		<security:intercept-url pattern="/folder/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

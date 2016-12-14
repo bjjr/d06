@@ -76,8 +76,18 @@ public class FolderService {
 		Assert.notNull(folder);
 		
 		Folder result;
+		Actor actor;
 		
-		result = folderRepository.save(folder);
+		if(folder.getId()==0){
+			actor = actorService.findByPrincipal();
+			folder.setActor(actor);
+			result = folderRepository.save(folder);
+			actor.addFolder(result);
+			actorService.save(actor);
+		}
+		else{
+			result = folderRepository.save(folder);
+		}
 		
 		return result;
 	}
