@@ -17,6 +17,11 @@
 		<put-attribute name="body" value="/views/recipe/display.jsp" />
 	</definition>
 	
+	<definition name="recipe/qualify" extends="master.page">	
+		<put-attribute name="title" value="Presentar la receta a concurso" />
+		<put-attribute name="body" value="/views/recipe/qualify.jsp" />
+	</definition>
+	
 	<definition name="recipe/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar receta" />
 		<put-attribute name="body" value="/views/recipe/edit.jsp" />

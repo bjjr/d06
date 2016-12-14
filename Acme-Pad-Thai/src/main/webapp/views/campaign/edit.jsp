@@ -22,7 +22,7 @@
 	</div>
 	<div>
 		<spring:message code="campaign.end" />
-		<form:textarea path="endMoment" />
+		<form:input path="endMoment" />
 		<form:errors cssClass="error" path="endMoment" />
 	</div>
 	<div>
@@ -32,7 +32,7 @@
 	</div>
 	<div>
 		<spring:message code="campaign.maxDisplayed" />
-		<form:textarea path="maxDisplayed" />
+		<form:input path="maxDisplayed" />
 		<form:errors cssClass="error" path="maxDisplayed" />
 	</div>
 	<div>
@@ -45,7 +45,7 @@
 	</div>
 	<div>
 		<input type="submit" name="save"
-			value="<spring:message code="campaign.save" />" />;
+			value="<spring:message code="campaign.save" />" />
 		<jstl:if test="${campaign.id != 0}">
 			<input type="submit" name="delete"
 				value="<spring:message code="campaign.delete" />"
@@ -53,7 +53,7 @@
 	</jstl:if>
 		<input type="button" name="cancel"
 			value="<spring:message code="campaign.cancel" />"
-			onclick="relativeRedir('campaign/sponsor/list.do')" /> <br />
+			onclick="window.location='campaign/sponsor/list.do'" /> <br />
 	</div>
 
 

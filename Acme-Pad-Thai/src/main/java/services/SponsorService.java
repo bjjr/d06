@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class SponsorService {
 	public Sponsor create() {
 		Sponsor res;
 		res = new Sponsor();
+		
 		Collection<Folder> folders;
 		folders = folderService.createFolderObligatory(res);
 		res.setFolders(folders);
@@ -53,14 +55,25 @@ public class SponsorService {
 
 	public Sponsor save(Sponsor sponsor) {
 		Assert.notNull(sponsor);
-
-		if(sponsor.getId()!=0){
+		
+		Sponsor result;
+		Collection<Folder> folders;
+		
+		folders = new ArrayList<Folder>();
+		if (sponsor.getId() == 0) {
+			result = sponsorRepository.save(sponsor);
+			folders = folderService.createFolderObligatory(result);
+			for(Folder f: folders){
+				folderService.save(f);
+			}
+			result.setFolders(folders);
 			
 		}
-		Sponsor res;
-		res = sponsorRepository.save(sponsor);
+		else{
+			result = sponsorRepository.save(sponsor);
+		}
 		
-		return res;
+		return result;
 	}
 	
 	public void flush() {
@@ -112,6 +125,7 @@ public class SponsorService {
 
 		return res;
 	}
+
 
 	public Collection<String> companiesByNumCampaigns() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"),
