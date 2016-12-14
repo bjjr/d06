@@ -33,4 +33,10 @@ public interface MasterClassRepository extends JpaRepository<MasterClass, Intege
 	@Query("select stddev(c.masterClassesTeach.size) from Cook c")
 	Double findStddevNumMasterClassesPerCook();
 	
+	@Query("select m from MasterClass m, Actor a where a member of m.actors and a.id = ?1")
+	Collection<MasterClass> findPrincipalRegisteredMasterClasses(int actorId);
+	
+	@Query("select m from MasterClass m, Actor a where a not member of m.actors and a.id = ?1")
+	Collection<MasterClass> findPrincipalNotRegisteredMasterClasses(int actorId);
+	
 }

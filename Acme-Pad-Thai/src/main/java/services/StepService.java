@@ -5,9 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Step;
-
 import repositories.StepRepository;
+import domain.Step;
 
 
 @Service
@@ -100,6 +99,18 @@ public class StepService {
 		Assert.notNull(result);
 		
 		return result;
+	}
+	
+	public Step createDefaultStep() {
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		
+		Step res;
+		
+		res = create();
+		
+		res.setDescription("This is an example step / Esto es un paso de ejemplo");
+		
+		return res;
 	}
 	
 }

@@ -32,6 +32,15 @@
 		<value>/views/nutritionist/tiles.xml</value>
 		<value>/views/recipe/tiles.xml</value>
 		<value>/views/user/tiles.xml</value>
+		<value>/views/fee/tiles.xml</value>
+		<value>/views/contest/tiles.xml</value>
+		<value>/views/recipeCopy/tiles.xml</value>
+		<value>/views/sponsor/tiles.xml</value>
+		<value>/views/campaign/tiles.xml</value>
+		<value>/views/bill/tiles.xml</value>		
+		<value>/views/step/tiles.xml</value>
+		<value>/views/learningMaterial/tiles.xml</value>
+		<value>/views/text/tiles.xml</value>
 		<value>/views/folder/tiles.xml</value>
 		<value>/views/message/tiles.xml</value>
 	</util:list>

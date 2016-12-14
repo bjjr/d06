@@ -10,8 +10,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <!-- Search Form -->
-<form:form action="recipe/search.do" modelAttribute="recipe">
-	<form:input path="keyword"/>
+<form:form action="" modelAttribute="recipe">
+	<input type="text" name="recipe"/>
 	<input type="submit" name="search" value="<spring:message code="recipe.search"/>"/>
 </form:form>
 	
@@ -20,20 +20,40 @@
 	name="recipes" requestURI="${requestURI}" id="row">
 	<!-- Attributes -->
 	
-	<spring:message code="recipe.user.name" var="nameHeader" />
-	<display:column property="user.name" title="${nameHeader}" sortable="true"></display:column>
-	
 	<spring:message code="recipe.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" sortable="false" />
 	
 	<spring:message code="recipe.ticker" var="tickerHeader" />
 	<display:column property="ticker" title="${tickerHeader}" sortable="false" />
 	
+	<spring:message code="recipe.categories" var="categoriesHeader" />
+	<display:column title="${categoriesHeader}">
+		<jstl:forEach items="${row.categories }" var="category">
+			<jstl:out value="${category.name }"></jstl:out>
+			<br />
+		</jstl:forEach>
+	</display:column>
+	
 	<!-- Action links -->
+	<spring:message code="recipe.user.name" var="nameHeader" />
+	<display:column title="${nameHeader}">
+			<a href="user/display.do?userId=${row.user.id}">${row.user.name}</a>
+	</display:column> 
+	
 	<display:column>
 			<a href="recipe/display.do?recipeId=${row.id}">
 				<spring:message	code="recipe.display" />
 			</a>
 	</display:column>
+	
+	<security:authorize access="hasRole('USER')">
+	<jstl:if test="${owner}">
+	<display:column>
+	<display:column>
+			<a href="recipe/user/qualify.do?recipeId=${row.id}"><spring:message code="recipe.user.qualify"/></a>
+	</display:column>
+	</display:column>
+	</jstl:if>
+	</security:authorize>
 			
 </display:table>

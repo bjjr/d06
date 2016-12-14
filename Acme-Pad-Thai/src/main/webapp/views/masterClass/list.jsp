@@ -48,7 +48,7 @@
   	<security:authorize access="hasRole('COOK')">
   		<jstl:if test="${registered == null}">
 	  		<display:column>
-	  			<a href="learningMaterial/cook/list-managed.do=${masterClass.id}">
+	  			<a href="learningMaterial/cook/list.do?masterClassId=${masterClass.id}">
 		  			<spring:message code="masterClass.learningMaterials" var="learningMaterialsText" />
 		  			<jstl:out value="${learningMaterialsText}" />
 		  		</a>
@@ -57,17 +57,45 @@
   	</security:authorize>
   	
   	<security:authorize access="hasAnyRole('COOK','ADMINISTRATOR')">
-  		<jstl:if test=${registered == null}>
+  		<jstl:if test="${registered == null}">
 	  		<spring:message code="masterClass.promoted" var="promotedHeader" />
 		  	<display:column property="promoted" title="${promotedHeader}" />
-		  		
-	  		<display:column>
-		  		<a href="masterClass/edit.do?masterClassId=${masterClass.id}">
-		  			<spring:message code="masterClass.edit" var="editText" />
-		  			<jstl:out value="${editText}" />
-		  		</a>
-	  		</display:column>
   		</jstl:if>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('COOK')">
+		<jstl:if test="${registered == null}">
+			<display:column>
+				<a href="masterClass/cook/edit.do?masterClassId=${masterClass.id}">
+			  		<spring:message code="masterClass.edit" var="editText" />
+			  		<jstl:out value="${editText}" />
+			  	</a>
+	  		</display:column>
+	  	</jstl:if>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('ADMINISTRATOR')">
+		<jstl:if test="${registered == null}">
+			<display:column>
+				<jstl:if test="${masterClass.promoted == false}">
+					<spring:message code="masterClass.confirm.promote" var="confirmPromote" />
+					<a href="masterClass/admin/promote.do?masterClassId=${masterClass.id}"
+					 onclick="return confirm('${confirmPromote}')">
+						<spring:message code="masterClass.promote" var="promoteText" />
+						<jstl:out value="${promoteText}" />
+					</a>
+				</jstl:if>
+				
+				<jstl:if test="${masterClass.promoted == true}">
+					<spring:message code="masterClass.confirm.demote" var="confirmDemote" />
+					<a href="masterClass/admin/demote.do?masterClassId=${masterClass.id}"
+					 onclick="return confirm('${confirmDemote}')">
+				  		<spring:message code="masterClass.demote" var="demoteText" />
+				  		<jstl:out value="${demoteText}" />
+				  	</a>
+				</jstl:if>
+			</display:column>
+	  	</jstl:if>
 	</security:authorize>
 	
 </display:table>

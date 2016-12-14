@@ -22,10 +22,10 @@
 	</div>
 	<div>
 		<input type="submit" name="save"
-			value="<spring:message code="fee.save" />" />;
+			value="<spring:message code="fee.save" />" />
 		<input type="button" name="cancel"
 			value="<spring:message code="fee.cancel" />"
-			onclick="/views/welcome/index.jsp" /> <br />
+			onclick="window.location='/Acme-Pad-Thai'" /> <br />
 	</div>
 
 </form:form>

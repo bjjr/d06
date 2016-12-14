@@ -1,9 +1,11 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,11 +75,17 @@ public class RecipeService {
 		
 		Recipe result;
 		User owner;
+		Collection<Step> steps = new ArrayList<>();
+		Collection<Quantity> quantities = new ArrayList<>();
+		Collection<Category> categories = new ArrayList<>();
 		
 		owner = userService.findByPrincipal();
 		result = new Recipe();
 		result.setUser(owner);
-		userService.save(owner);
+		result.setSteps(steps);
+		result.setQuantities(quantities);
+		result.setCategories(categories);
+//		userService.save(owner);
 		
 		return result;
 	}
@@ -89,13 +97,43 @@ public class RecipeService {
 		Recipe result;
 		Date momentCreated;
 		Date momentUpdated;
+		Step defaultStep;
+		Quantity defaultQuantity;
+		Category defaultCategory;
 		
-		momentCreated = new Date(System.currentTimeMillis()-1000);
+		if (recipe.getId() == 0) {
+			momentCreated = new Date(System.currentTimeMillis()-1000);
+			recipe.setMomentAuthored(momentCreated);
+			
+			defaultStep = stepService.createDefaultStep();
+			recipe.getSteps().add(defaultStep);
+			
+			defaultCategory = categoryService.findOne(104);
+			recipe.getCategories().add(defaultCategory);
+		}
+		
 		momentUpdated = new Date(System.currentTimeMillis()-1000);
-		recipe.setMomentAuthored(momentCreated);
 		recipe.setMomentLastUpdated(momentUpdated);
 		
-		result = recipeRepository.save(recipe);
+		if (recipe.getId() == 0) {
+			result = recipeRepository.save(recipe);
+			
+			recipe.getUser().addRecipe(result);
+			userService.save(recipe.getUser());
+			
+			defaultCategory.addRecipe(result);
+			categoryService.save(defaultCategory);
+			
+			defaultQuantity = quantityService.createDefaultQuantity();
+			result.getQuantities().add(defaultQuantity);
+			defaultQuantity.setRecipe(result);
+			quantityService.save(defaultQuantity);
+			
+			recipeRepository.save(result);
+			
+		} else {
+			result = recipeRepository.save(recipe);
+		}
 		
 		return result;
 	}
@@ -147,6 +185,20 @@ public class RecipeService {
 			
 	}
 	
+	public Recipe findOne(int recipeId) {
+		Assert.isTrue(recipeId != 0);
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		
+		Recipe res;
+		
+		res = recipeRepository.findOne(recipeId);
+		
+		Assert.notNull(res);
+		Assert.isTrue(userService.findByPrincipal().getRecipes().contains(res));
+		
+		return res;
+	}
+	
 	//Other business methods
 	public Double findMinRecipesUser(){
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"));
@@ -190,10 +242,10 @@ public class RecipeService {
 		return result;
 	}
 	
-	public Recipe findByKeyword(String keyword){
+	public Collection<Recipe> findByKeyword(String keyword){
 		Assert.notNull(keyword);
 		
-		Recipe result;
+		Collection<Recipe> result;
 		
 		result = recipeRepository.findByKeyword(keyword);
 		Assert.notNull(result);
@@ -202,18 +254,20 @@ public class RecipeService {
 		
 	}
 	
-	public void qualifyRecipe(Recipe recipe, Contest contest){
+	public RecipeCopy copyRecipe(Recipe recipe){
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		Assert.notNull(recipe);
-		Assert.notNull(contest);
 		
 		int countLikes;
 		int countDislikes;
 		RecipeCopy recipeCopy;
+		User u;
 		
+		u = userService.findByPrincipal();
 		countLikes = 0;
 		countDislikes = 0;
-		recipeCopy = recipeCopyService.create();
+		
+		Assert.isTrue(u.getRecipes().contains(recipe),"An user only could qualify his recipes");
 		
 		for(LikeSA l : recipe.getLikesSA()){
 			if(l.isLikeSA()==true){
@@ -223,11 +277,10 @@ public class RecipeService {
 				countDislikes++;
 			}
 		}
-		
-		User u = userService.findByPrincipal();
-		Assert.isTrue(u.getRecipes().contains(recipe),"An user only could copy his recipes");
 
 		Assert.isTrue(countLikes >=5 && countDislikes == 0);
+		
+		recipeCopy = recipeCopyService.create();
 		
 		recipeCopy.setTicker(recipe.getTicker());
 		recipeCopy.setTitle(recipe.getTitle());
@@ -240,12 +293,28 @@ public class RecipeService {
 		recipeCopy.setNameUser(recipe.getUser().getName() + recipe.getUser().getSurname());
 		recipeCopy.setLikesRC(countLikes);
 		recipeCopy.setDislikesRC(countDislikes);
+		
+		return recipeCopy;
+		
+	}
+	
+	public void qualifyRecipe(RecipeCopy recipeCopy, Contest contest){
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		Assert.notNull(contest);
+		
+		String nameUser;
+		
+		nameUser = recipeCopy.getNameUser();
+
+		for(RecipeCopy rc: contest.getRecipeCopies()){
+			Assert.isTrue(recipeCopy.getTicker() != rc.getTicker(), "An user cannot qualify the same recipe in the same contest");
+			Assert.isTrue(nameUser != rc.getNameUser(), "An user cannot qualify two recipes in the same contest");
+		}
+		
 		recipeCopy.setContest(contest);
-		
 		recipeCopyService.save(recipeCopy);
+		contest.addRecipeCopy(recipeCopy);
 		contestService.save(contest);
-		
-		
 	}
 	
 	public Collection<Recipe> recipesFollows(){
@@ -274,14 +343,14 @@ public class RecipeService {
 		return result;
 	}
 	
-	public Collection<LikeSA> findLikes(Recipe recipe){
-		Collection<LikeSA> result;
+	public Integer findLikes(Recipe recipe){
+		Integer result;
 		
-		result = new ArrayList<LikeSA>();
+		result = 0;
 		
 		for(LikeSA l : recipe.getLikesSA()){
 			if(l.isLikeSA()){
-				result.add(l);
+				result++;
 			}
 		}
 		
@@ -289,19 +358,53 @@ public class RecipeService {
 		
 	}
 	
-	public Collection<LikeSA> findDislikes(Recipe recipe){
-		Collection<LikeSA> result;
+	public Integer findDislikes(Recipe recipe){
+		Integer result;
 		
-		result = new ArrayList<LikeSA>();
+		result = 0;
 		
 		for(LikeSA l : recipe.getLikesSA()){
 			if(!l.isLikeSA()){
-				result.add(l);
+				result++;
 			}
 		}
 		
 		return result;
 		
 	}
+
+	public String createTicker() {
+		String caracteresEspeciales; 
+		String result;
+		List<Recipe> recipes; 
+		Random random;
+		char[] r;
+		int z;
+		char c;
+		
+		caracteresEspeciales= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		result="";
+		recipes= (List<Recipe>) findAllRecipesGroupByCategory();
+		random= new Random();
+		result += Calendar.YEAR + Calendar.MONTH + Calendar.DAY_OF_MONTH;
+		
+		result += "-";
+		
+		for (int i = 0; i <= 3; i++) {
+			r =  new char[4];
+		    z = random.nextInt(caracteresEspeciales.length() - 1);
+		    c = caracteresEspeciales.charAt(z);
+			r[i] = c;
+			result += r[i];
+		}
+
+		for (Recipe recipe : recipes) {
+			if (result.equals(recipe.getTicker())) {
+				result = createTicker();
+			}
+		}
+		return result;
+	}
+
 
 }

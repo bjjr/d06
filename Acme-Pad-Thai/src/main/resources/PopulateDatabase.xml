@@ -2016,6 +2016,23 @@
 	</property>
 </bean>
 
+<bean id="defaultCategory" class="domain.Category">
+	<property name="name" value="Default Category" />
+	<property name="description" value="This is the default category / Esta es la categoría principal" />
+	<property name="picture" value="" />
+	<property name="tags">
+		<list>
+		</list>
+	</property>
+	<property name="recipes">
+		<list>
+		</list>
+	</property>
+	<property name="subcategories">
+		<list>
+		</list>
+	</property>
+</bean>
 
 <!-- Nutritionist's folders -->
 

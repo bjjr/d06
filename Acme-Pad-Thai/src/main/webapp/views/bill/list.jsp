@@ -12,12 +12,12 @@
 	requestURI="bill/sponsor/list.do" pagesize="5" class="displaytag">
 
 	<spring:message code="bill.creation" var="creation" />
-	<display:column property="creation" title="${creation}" sortable="true">
+	<display:column property="creationMoment" title="${creation}" sortable="true">
 		<jstl:out value="${row.creationMoment}" />
 	</display:column>
 
 	<spring:message code="bill.paidM" var="paidM" />
-	<display:column property="paidM" title="${paidM}" sortable="true">
+	<display:column property="paidMoment" title="${paidM}" sortable="true">
 		<jstl:out value="${row.paidMoment}" />
 	</display:column>
 
@@ -26,11 +26,10 @@
 		sortable="true">
 		<jstl:out value="${row.description}" />
 	</display:column>
-
-	<spring:message code="bill.campaign" var="campaign" />
-	<display:column property="campaign" title="${campaign}"
-		sortable="true">
-		<jstl:out value="${row.campaign}" />
-	</display:column>
-
+<spring:message code="bill.paid" var="paid" />
+		<display:column title="${paid}">
+<jstl:if test="${row.paidMoment ==null }">
+			<a href="bill/sponsor/paid.do?billId=${row.id}">${paid}</a>
+</jstl:if>
+		</display:column>
 </display:table>

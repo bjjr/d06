@@ -35,7 +35,7 @@ public class CommentServiceTest extends AbstractTest{
 		
 		super.authenticate("nutritionist1");
 		
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(76);
 		comment = commentService.create(recipe);
 		
 		super.authenticate(null);
