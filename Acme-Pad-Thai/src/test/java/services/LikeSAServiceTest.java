@@ -34,7 +34,7 @@ public class LikeSAServiceTest extends AbstractTest {
 
 		super.authenticate("Nutritionist1");
 
-		recipe = recipeService.findByKeyword("156897-TBtJ"); 
+		recipe = recipeService.findOne(83); 
 		likeSA = likeSAService.create(recipe);
 
 		super.authenticate(null);

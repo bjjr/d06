@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import domain.Contest;
-import domain.LikeSA;
 import domain.Recipe;
+import domain.RecipeCopy;
 
 import utilities.AbstractTest;
 
@@ -50,7 +50,7 @@ public class RecipeServiceTest extends AbstractTest {
 
 		super.authenticate("User1");
 
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(76);
 		saved = recipeService.save(recipe);
 		recipeService.flush();
 
@@ -65,7 +65,7 @@ public class RecipeServiceTest extends AbstractTest {
 
 		super.authenticate("User1");
 
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(76);
 
 		recipeService.delete(recipe);
 
@@ -128,7 +128,7 @@ public class RecipeServiceTest extends AbstractTest {
 	public void testFindRecipeByKeyword(){
 		Recipe recipe;
 		
-		recipe = recipeService.findByKeyword("123456-abCD");
+		recipe = recipeService.findOne(76);
 		
 		System.out.println("Recipe" + recipe.getId() + "found");
 	}
@@ -136,14 +136,16 @@ public class RecipeServiceTest extends AbstractTest {
 	@Test
 	public void testQualifyRecipe(){
 		Recipe recipe;
+		RecipeCopy recipeCopy;
 		Contest contest;
 		
 		super.authenticate("User4");
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
+		recipe = recipeService.findOne(85);
 		contest = contestService.findOne(254);
 		
-		recipeService.qualifyRecipe(recipe, contest);
+		recipeCopy = recipeService.copyRecipe(recipe);
+		recipeService.qualifyRecipe(recipeCopy, contest);
 		
 		System.out.println("The recipe has been qualified for the contest");
 		
@@ -167,24 +169,24 @@ public class RecipeServiceTest extends AbstractTest {
 	
 	@Test
 	public void testFindLikes(){
-		Collection<LikeSA> likes;
+		Integer likes;
 		Recipe recipe;
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
+		recipe = recipeService.findOne(85);
 		likes = recipeService.findLikes(recipe);
 		
-		System.out.println("This recipe has " + likes.size() + " likes");
+		System.out.println("This recipe has " + likes + " likes");
 	}
 	
 	@Test
 	public void testFindDislikes(){
-		Collection<LikeSA> dislikes;
+		Integer dislikes;
 		Recipe recipe;
 		
-		recipe = recipeService.findByKeyword("152677-gHsd");
+		recipe = recipeService.findOne(85);
 		dislikes = recipeService.findDislikes(recipe);
 		
-		System.out.println("This recipe has " + dislikes.size() + " dislikes");
+		System.out.println("This recipe has " + dislikes + " dislikes");
 	}
 
 }

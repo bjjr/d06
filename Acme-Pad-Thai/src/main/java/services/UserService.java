@@ -70,9 +70,22 @@ public class UserService {
 		Assert.notNull(user);
 
 		User result;
-
-		result = userRepository.save(user);
-
+		Collection<Folder> folders;
+		
+		folders = new ArrayList<Folder>();
+		if (user.getId() == 0) {
+			result = userRepository.save(user);
+			folders = folderService.createFolderObligatory(result);
+			for(Folder f: folders){
+				folderService.save(f);
+			}
+			result.setFolders(folders);
+			
+		}
+		else{
+			result = userRepository.save(user);
+		}
+		
 		return result;
 	}
 

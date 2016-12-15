@@ -6,19 +6,19 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import repositories.ActorRepository;
-import domain.Actor;
+import repositories.MasterClassRepository;
+import domain.MasterClass;
 
 @Component
 @Transactional
-public class StringToMasterClassConverter implements Converter<String, Actor>{
+public class StringToMasterClassConverter implements Converter<String, MasterClass>{
 
 	@Autowired
-	ActorRepository actorRepository;
+	MasterClassRepository masterClassRepository;
 	
 	@Override
-	public Actor convert(String text) {
-		Actor res;
+	public MasterClass convert(String text) {
+		MasterClass res;
 		int id;
 		
 		try {
@@ -26,7 +26,7 @@ public class StringToMasterClassConverter implements Converter<String, Actor>{
 				res = null;
 			else {
 				id = Integer.valueOf(text);
-				res = actorRepository.findOne(id);
+				res = masterClassRepository.findOne(id);
 			}
 		} catch (Throwable th) {
 			throw new IllegalArgumentException(th);
