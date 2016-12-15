@@ -89,10 +89,9 @@ public class IngredientNutritionistController extends AbstractController {
 				ingredientService.save(ingredient);
 
 				result = new ModelAndView("redirect:list.do");
-				result.addObject("messageStatus", "ingredient.commit.ok");
+				result.addObject("message", "ingredient.commit.ok");
 			} catch (Throwable oops) {
-				result = createEditModelAndView(ingredient,
-						"ingredient.commit.error");
+				result = createEditModelAndView(ingredient, "ingredient.commit.error");
 			}
 		}
 
@@ -142,10 +141,10 @@ public class IngredientNutritionistController extends AbstractController {
 			try {
 				ingredientService.addProperty(ingredient, property);
 				result = new ModelAndView("redirect:list.do");
-				result.addObject("messageStatus", "ingredient.commit.ok");
+				result.addObject("message", "ingredient.commit.ok");
 			} catch (Throwable oops) {
 				result = addProperty(ingredientId);
-				result.addObject("messageStatus", "ingredient.commit.error");
+				result.addObject("message", "ingredient.commit.error");
 			}
 
 		return result;
@@ -179,10 +178,10 @@ public class IngredientNutritionistController extends AbstractController {
 			try {
 				ingredientService.removeProperty(ingredient, property);
 				result = new ModelAndView("redirect:list.do");
-				result.addObject("messageStatus", "ingredient.commit.ok");
+				result.addObject("message", "ingredient.commit.ok");
 			} catch (Throwable oops) {
 				result = addProperty(ingredientId);
-				result.addObject("messageStatus", "ingredient.commit.error");
+				result.addObject("message", "ingredient.commit.error");
 			}
 
 		return result;

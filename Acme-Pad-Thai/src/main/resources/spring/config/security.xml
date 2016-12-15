@@ -72,6 +72,7 @@
 		<security:intercept-url pattern="/user/user/edit.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/likeSA/like.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
 		<security:intercept-url pattern="/likeSA/dislike.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
+		<security:intercept-url pattern="/comment/create.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
 		
 		<security:intercept-url pattern="/contest/list.do" access="permitAll" /> 
 

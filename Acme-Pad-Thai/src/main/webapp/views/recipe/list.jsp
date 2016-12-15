@@ -65,5 +65,11 @@
 			<a href="likeSA/dislike.do?recipeId=${row.id}"><spring:message code="likeSA.dislike"/></a>
 	</display:column>
 	</security:authorize>
+	
+	<security:authorize access="hasRole('USER') || hasRole('NUTRITIONIST')">
+	<display:column>
+			<a href="comment/create.do?recipeId=${row.id}"><spring:message code="comment.create"/></a>
+	</display:column>
+	</security:authorize>
 			
 </display:table>

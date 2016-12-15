@@ -132,7 +132,7 @@ public class UserController extends AbstractController {
 				
 				userService.save(user);
 				result = new ModelAndView("redirect:../welcome/index.do");
-				result.addObject("messageStatus", "user.commit.ok");
+				result.addObject("message", "user.commit.ok");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(user, "user.commit.error");
 			}

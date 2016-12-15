@@ -83,7 +83,7 @@ public class PropertyNutritionistController extends AbstractController {
 			try {
 				propertyService.save(property);
 				result = new ModelAndView("redirect:list.do");
-				result.addObject("messageStatus", "property.commit.ok");
+				result.addObject("message", "property.commit.ok");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(property, "property.commit.error");
 			}

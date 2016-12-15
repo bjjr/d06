@@ -114,7 +114,7 @@ public class RecipeUserController extends AbstractController{
 				contest = recipeCopy.getContest();
 				recipeService.qualifyRecipe(recipeCopy, contest);
 				result = list();
-				result.addObject("messageStatus", "recipe.commit.ok");
+				result.addObject("message", "recipe.commit.ok");
 			} catch (Throwable oops) {
 				result = new ModelAndView("recipe/qualify");
 				result.addObject("recipeCopy", recipeCopy);

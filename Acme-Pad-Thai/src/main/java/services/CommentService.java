@@ -41,21 +41,27 @@ public class CommentService {
 	
 	public Comment create(Recipe recipe){
 		Assert.isTrue(actorService.checkAuthority("USER") || 
-				actorService.checkAuthority("NUTRITIONIST"), "1");
+				actorService.checkAuthority("NUTRITIONIST"));
 		Assert.notNull(recipe);
-		Assert.isTrue(recipe.getId()!=0, "2");
+		Assert.isTrue(recipe.getId()!=0);
 		
 		Comment result;
+		Date moment;
 		SocialActor sc;
+		String identity;
 		
 		sc = socialActorService.findByPrincipal();
+		identity = sc.getName() + sc.getSurname();
 		result = new Comment();
 		result.setRecipe(recipe);
 		recipe.addComment(result);
 		recipeService.save(recipe);
 		result.setSocialActor(sc);
+		result.setIdentity(identity);
 		sc.addComment(result);
 		socialActorService.save(sc);
+		moment = new Date(System.currentTimeMillis()-1000);
+		result.setMoment(moment);
 				
 		return result;
 	}
