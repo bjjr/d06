@@ -35,6 +35,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="recipe/user/list.do"><spring:message code="master.page.recipe.user.list" /></a></li>
+					<li><a href="recipe/user/listFollow.do"><spring:message code="master.page.recipe.user.listFollow" /></a></li>
 					<li><a href="user/edit.do"><spring:message code="master.page.user.edit" /></a></li>
 				</ul>
 			</li>
@@ -44,6 +45,7 @@
 			<li><a class="fNiv"><spring:message code="master.page.nutritionist" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="recipe/nutritionist/listFollow.do"><spring:message code="master.page.recipe.nutritionist.listFollow" /></a></li>
 					<li><a href="curriculum/nutritionist/list.do"><spring:message code="master.page.nutritionist.curriculum.list" /></a></li>
 					<li><a href="nutritionist/edit.do"><spring:message code="master.page.nutritionist.edit" /></a></li>
 					<li><a href="ingredient/nutritionist/list.do"><spring:message code="master.page.nutritionist.ingredient.list" /></a></li>

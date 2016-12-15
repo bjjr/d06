@@ -73,6 +73,31 @@ public class RecipeUserController extends AbstractController{
 		return result;
 	}
 	
+	@RequestMapping(value = "/listFollow", method = RequestMethod.GET)
+	public ModelAndView listFollow() {
+		ModelAndView result;
+		Collection<Recipe> recipes;
+		Boolean owner;
+		
+		owner = true;
+		
+		recipes = recipeService.recipesFollows();
+		
+		for(Recipe r : recipes){
+			if(!userService.findByPrincipal().getRecipes().contains(r)){
+				owner = false;
+				break;
+			}
+		}
+		
+		result = new ModelAndView("recipe/list");
+		result.addObject("requestURI", "recipe/user/list.do");
+		result.addObject("recipes", recipes);
+		result.addObject("owner", owner);
+		
+		return result;
+	}
+	
 	@RequestMapping(value = "/qualify", method = RequestMethod.GET)
 	public ModelAndView copyRecipe(@RequestParam int recipeId) {
 		ModelAndView result;
