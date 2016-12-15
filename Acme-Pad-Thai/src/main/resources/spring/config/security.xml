@@ -56,6 +56,9 @@
 		<security:intercept-url pattern="/ingredient/nutritionist/add.do" access="hasRole('NUTRITIONIST')" />
 		<security:intercept-url pattern="/ingredient/nutritionist/removeProperty.do" access="hasRole('NUTRITIONIST')" />
 		<security:intercept-url pattern="/ingredient/nutritionist/remove.do" access="hasRole('NUTRITIONIST')" />
+		<security:intercept-url pattern="/property/nutritionist/list.do" access="hasRole('NUTRITIONIST')" /> 
+		<security:intercept-url pattern="/property/nutritionist/create.do" access="hasRole('NUTRITIONIST')" />
+		<security:intercept-url pattern="/property/nutritionist/edit.do" access="hasRole('NUTRITIONIST')" />
 		
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />
@@ -67,6 +70,8 @@
 		<security:intercept-url pattern="/fee/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
 	
 		<security:intercept-url pattern="/user/user/edit.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/likeSA/like.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
+		<security:intercept-url pattern="/likeSA/dislike.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
 		
 		<security:intercept-url pattern="/contest/list.do" access="permitAll" /> 
 

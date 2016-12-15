@@ -53,5 +53,17 @@
 	</display:column>
 	</jstl:if>
 	</security:authorize>
+	
+	<security:authorize access="hasRole('USER') || hasRole('NUTRITIONIST')">
+	<display:column>
+			<a href="likeSA/like.do?recipeId=${row.id}"><spring:message code="likeSA.like"/></a>
+	</display:column>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('USER') || hasRole('NUTRITIONIST')">
+	<display:column>
+			<a href="likeSA/dislike.do?recipeId=${row.id}"><spring:message code="likeSA.dislike"/></a>
+	</display:column>
+	</security:authorize>
 			
 </display:table>

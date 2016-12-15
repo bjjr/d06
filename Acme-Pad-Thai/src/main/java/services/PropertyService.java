@@ -71,6 +71,15 @@ public class PropertyService {
 		
 	}
 	
+	public Collection<Property> findAll() {
+		Collection<Property> result;
+		
+		result = propertyRepository.findAll();
+		Assert.notNull(result);
+
+		return result;
+	}
+	
 	public void flush() {
 		propertyRepository.flush();
 	}
@@ -94,7 +103,7 @@ public class PropertyService {
 		Collection<Property> result;
 		
 		used = ingredient.getProperties();
-		result = propertyRepository.findAll();
+		result = findAll();
 		result.removeAll(used);
 		
 		return result;
