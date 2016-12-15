@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Step;
-
 import repositories.StepRepository;
+import domain.Recipe;
+import domain.Step;
 
 
 @Service
@@ -97,6 +97,15 @@ public class StepService {
 		Double result;
 		
 		result = stepRepository.findStandardDeviationStepsRecipe();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Recipe findRecipeByStep(int stepId){
+		Recipe result;
+		
+		result = stepRepository.findRecipeByStep(stepId);
 		Assert.notNull(result);
 		
 		return result;

@@ -43,6 +43,8 @@ public class SocialIdentityService {
 		
 		result = new SocialIdentity();
 		
+		result.setActor(actorService.findByPrincipal());
+		
 		return result;
 	}
 	
@@ -56,6 +58,7 @@ public class SocialIdentityService {
 		
 		result = socialIdentityRepository.findOne(socialIdentityID);
 		Assert.notNull(result);
+		Assert.isTrue(actorService.findByPrincipal().getSocialIdentities().contains(result), "Only could edit yours social identities");
 		
 		return result;
 	}

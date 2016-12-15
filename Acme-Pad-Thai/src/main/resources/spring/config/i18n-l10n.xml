@@ -37,6 +37,7 @@
 		<value>/views/sponsor/messages</value>
 		<value>/views/campaign/messages</value>		
 		<value>/views/bill/messages</value>		
+		<value>/views/socialIdentity/messages</value>		
 		<value>/views/step/messages</value>		
 	</util:list>
 

@@ -13,7 +13,6 @@
 <form:form action="step/user/edit.do" modelAttribute="step">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="user" />
 	<div>
 		<spring:message code="step.description" />
 		<form:input path="description" />

@@ -70,6 +70,10 @@
 		
 		<security:intercept-url pattern="/bill/sponsor/**" access="hasRole('SPONSOR')" /> 
 	
+		<security:intercept-url pattern="/socialIdentity/actor/**" access="hasRole('ADMINISTRATOR')||hasRole('USER')||hasRole('SPONSOR')||hasRole('COOK')||hasRole('NUTRITIONIST')" /> 	
+
+		<security:intercept-url pattern="/step/user/**" access="hasRole('USER')" /> 	
+	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 		
 		
