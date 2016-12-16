@@ -43,7 +43,8 @@ public class IngredientService {
 	}
 	
 	public Collection<Ingredient> findAll(){
-		Assert.isTrue(actorService.checkAuthority("NUTRITIONIST"));
+		Assert.isTrue(actorService.checkAuthority("NUTRITIONIST") ||
+					  actorService.checkAuthority("USER"));
 		Collection<Ingredient> result;
 		
 		result = ingredientRepository.findAll();

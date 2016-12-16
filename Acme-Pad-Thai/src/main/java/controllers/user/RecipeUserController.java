@@ -143,7 +143,7 @@ public class RecipeUserController extends AbstractController {
 	
 	// Editing ---------------------------------------------
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int recipeId) {
 		ModelAndView res;
 		Recipe recipe;
@@ -183,7 +183,7 @@ public class RecipeUserController extends AbstractController {
 			recipeService.delete(recipe);
 			res = new ModelAndView("redirect:list.do");
 		} catch (Throwable th) {
-			res = createEditModelAndView(recipe, "masterClass.commit.error");
+			res = createEditModelAndView(recipe, "recipe.commit.error");
 		}
 
 		return res;

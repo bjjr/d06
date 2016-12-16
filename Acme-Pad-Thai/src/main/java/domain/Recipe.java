@@ -162,7 +162,9 @@ public class Recipe extends DomainEntity{
 	}
 
 	@NotEmpty
+	@Valid
 	@OneToMany(mappedBy = "recipe")
+	@NotNull
 	public Collection<Quantity> getQuantities() {
 		return quantities;
 	}

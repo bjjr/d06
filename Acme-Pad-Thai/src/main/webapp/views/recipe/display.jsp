@@ -12,7 +12,7 @@
 
 <h2><spring:message code="recipe.information"/></h2>
 <br />
-<display:table pagesize="5" class="displaytag" keepStatus="true"
+<display:table pagesize="5" class="displaytag"
 	name="recipe" requestURI="${requestURI}" id="row">
 
 	<spring:message code="recipe.title" var="titleHeader" />
@@ -77,27 +77,40 @@
 
 <h2><spring:message code="recipe.ingredients"/></h2>
 <br />
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="quantities" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" class="displaytag"
+	name="quantities" requestURI="${requestURI}" id="quantity">
 	
 	<spring:message code="ingredient.name" var="nameIngredientHeader" />
 	<display:column property="ingredient.name" title="${nameIngredientHeader}"
 		sortable="false" />
 	
 	<spring:message code="quantity.quantity" var="quantityHeader" />
-	<display:column property="quantity" title="${quantityHeader}"
+	<display:column property="value" title="${quantityHeader}"
 		sortable="false" />
 
 	<spring:message code="quantity.unit" var="unitHeader" />
 	<display:column property="unit.unit" title="${unitHeader}"
 		sortable="false" />
 	
+	<display:column>
+		<form action="/Acme-Pad-Thai/quantity/edit.do" method="post" >
+			<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
+			<input hidden="true" type="text" name="quantityId" value="${quantity.id}" />
+			<input type="submit" name="edit" value="<spring:message code="quantity.edit"/>"/>
+		</form>
+	</display:column>
+	
 </display:table>
+
+<form action="/Acme-Pad-Thai/quantity/create.do" method="post" >
+	<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
+	<input type="submit" name="add" value="<spring:message code="quantity.add"/>"/>
+</form>
 
 <h2><spring:message code="recipe.steps"/></h2>
 <br />
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="steps" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" class="displaytag"
+	name="steps" requestURI="${requestURI}" id="step">
 	
 	<spring:message code="step.description" var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}"
@@ -111,7 +124,7 @@
 	
 	<spring:message code="step.hints" var="stepHintsHeader" />
 	<display:column title="${stepHintsHeader}">
-		<jstl:forEach items="${row.hints }" var="hint">
+		<jstl:forEach items="${step.hints }" var="hint">
 			<jstl:out value="${hint }"></jstl:out>
 			<br />
 		</jstl:forEach>
@@ -121,8 +134,8 @@
 
 <h2><spring:message code="recipe.comments"/></h2>
 <br />
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="comments" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" class="displaytag"
+	name="comments" requestURI="${requestURI}" id="comment">
 	
 	<spring:message code="comment.title" var="commentTitleHeader" />
 	<display:column property="title" title="${commentTitleHeader}"

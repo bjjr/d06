@@ -7,19 +7,30 @@ import org.springframework.util.Assert;
 
 import repositories.QuantityRepository;
 import domain.Quantity;
+import domain.Recipe;
 
 @Service
 @Transactional
 public class QuantityService {
 	
 	//Managed repository
+	
 	@Autowired
 	private QuantityRepository quantityRepository;
+	
+	// Supporting services
+	
 	@Autowired
 	private IngredientService ingredientService;
+	
 	@Autowired
 	private UnitService unitService;
-	// Supporting services
+	
+	@Autowired
+	private RecipeService recipeService;
+	
+	@Autowired
+	private UserService userService;
 	
 	//Constructors
 	public QuantityService(){
@@ -27,10 +38,13 @@ public class QuantityService {
 	}
 	
 	// Simple CRUD methods
-	public Quantity create(){
+	public Quantity create(int recipeId){
 		Quantity result;
+		Recipe r;
 		
+		r = recipeService.findOne(recipeId);
 		result = new Quantity();
+		result.setRecipe(r);
 		
 		return result;
 	}
@@ -39,8 +53,15 @@ public class QuantityService {
 		Assert.notNull(quantity);
 		
 		Quantity result;
+		Recipe r;
 		
-		result = quantityRepository.save(quantity);
+		if (quantity.getId() == 0) {
+			r = quantity.getRecipe();
+			result = quantityRepository.save(quantity);
+			r.addQuantity(result);
+		} else {
+			result = quantityRepository.save(quantity);
+		}
 		
 		return result;
 	}
@@ -66,14 +87,18 @@ public class QuantityService {
 		result = quantityRepository.findOne(id);
 		Assert.notNull(result);
 		
+		Assert.isTrue(userService.findByPrincipal().getRecipes().contains(result.getRecipe()));
+		
 		return result;
 	}
 
-	public Quantity createDeafultQuantity() {
-		Quantity res = create();
+	public Quantity createDefaultQuantity() {
+		Quantity res;
 		
-		res.setIngredient(ingredientService.findOne(150));
-		res.setQuantity(1.0);
+		res = new Quantity();
+				
+		res.setIngredient(ingredientService.findOne(151));
+		res.setValue(1.0);
 		res.setUnit(unitService.findOne(34));
 		
 		return res;

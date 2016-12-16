@@ -47,7 +47,9 @@
 		<security:intercept-url pattern="/user/create.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/edit.do" access="permitAll" /> 
 		<security:intercept-url pattern="/recipe/user/list.do" access="hasRole('USER')" /> 
-		<security:intercept-url pattern="/recipe/user/qualify.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/recipe/user/qualify.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/quantity/create.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/quantity/edit.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />
