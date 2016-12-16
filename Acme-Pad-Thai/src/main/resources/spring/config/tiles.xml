@@ -38,6 +38,8 @@
 		<value>/views/sponsor/tiles.xml</value>
 		<value>/views/campaign/tiles.xml</value>
 		<value>/views/bill/tiles.xml</value>		
+		<value>/views/socialIdentity/tiles.xml</value>		
+		<value>/views/step/tiles.xml</value>		
 		<value>/views/step/tiles.xml</value>
 		<value>/views/learningMaterial/tiles.xml</value>
 		<value>/views/text/tiles.xml</value>

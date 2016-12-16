@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.StepRepository;
+import domain.Recipe;
 import domain.Step;
 
 
@@ -101,6 +102,14 @@ public class StepService {
 		return result;
 	}
 	
+	public Recipe findRecipeByStep(int stepId){
+		Recipe result;
+		
+		result = stepRepository.findRecipeByStep(stepId);
+		Assert.notNull(result);
+		
+		return result;
+}
 	public Step createDefaultStep() {
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		
