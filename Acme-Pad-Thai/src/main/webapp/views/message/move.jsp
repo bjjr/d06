@@ -6,60 +6,59 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<!-- Listing grid -->
+<form:form action="message/move.do" modelAttribute="message">
 
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="messages" requestURI="${requestURI}" id="row">
-	
-	<!-- Attributes -->
+	<form:hidden path="id" />
+	<form:hidden path="version" />
+	<form:hidden path="moment" />
+	<form:hidden path="subject" />
+	<form:hidden path="body" />
+	<form:hidden path="priority" />
+	<form:hidden path="sender" />
+	<form:hidden path="recipients" />
 
-	<spring:message code="message.moment" var="momentHeader" />
-	<display:column property="moment" title="${momentHeader}" sortable="false" />
-	
-	<spring:message code="message.subject" var="subjectHeader" />
-	<display:column property="subject" title="${subjectHeader}" sortable="false" />
-	
-	<spring:message code="message.body" var="bodyHeader" />
-	<display:column property="body" title="${bodyHeader}" sortable="false" />
-	
-	<spring:message code="message.priority" var="priorityHeader" />
-	<display:column property="priority" title="${priorityHeader}" sortable="true" />
-	
-	<spring:message code="message.sender" var="senderHeader" />
-	<display:column property="sender" title="${senderHeader}" sortable="true" />
-	
-	<spring:message code="message.recipients" var="recipientsHeader" />
-	<display:column property="recipients" title="${recipientsHeader}" sortable="false" />
-	<jstl:forEach var="m" items="${messages}">
-		<jstl:forEach var="r" items="${m.recipients}">
-			<jstl:out value="${r.name} ${r.surname}"></jstl:out>
-		</jstl:forEach>
-	</jstl:forEach>
-	
-	<display:column>
-		<a href="message/move.do?messageId=${row.id}">
-			<spring:message	code="message.move" />
-		</a>
-	</display:column>
-	
-	<display:column>
-		<jstl:if test="${trashbox == true}">
-			<input type="submit" name="delete"
-				value="<spring:message code="message.delete" />"
-				onclick="return confirm('<spring:message code="message.confirm.delete" />')" />&nbsp;
-		</jstl:if>
-		<jstl:if test="${trashbox == false}">
-			<input type="submit" name="moveToTrashbox"
-				value="<spring:message code="message.moveToTrashbox" />"
-				onclick="return confirm('<spring:message code="message.confirm.moveToTrashbox" />')" />&nbsp;
-		</jstl:if>
-	</display:column>
-
-</display:table>
-
+	<form:label path="photo">
+		<spring:message code="curriculum.photo" />:
+	</form:label>
+	<form:input path="photo" />
+	<form:errors cssClass="error" path="photo" />
 	<br />
+
+	<form:label path="educationSection">
+		<spring:message code="curriculum.educationSection" />:
+	</form:label>
+	<form:textarea path="educationSection" />
+	<form:errors cssClass="error" path="educationSection" />
 	<br />
-	<input type="button" name="createMessage"
-		value="<spring:message code="message.createMessage" />" 
-		onclick="window.location='message/create.do'" />&nbsp;
+
+	<form:label path="experienceSection">
+		<spring:message code="curriculum.experienceSection" />:
+	</form:label>
+	<form:textarea path="experienceSection" />
+	<form:errors cssClass="error" path="experienceSection" />
+	<br />
+	
+	<form:label path="hobbiesSection">
+		<spring:message code="curriculum.hobbiesSection" />:
+	</form:label>
+	<form:textarea path="hobbiesSection" />
+	<form:errors cssClass="error" path="hobbiesSection" />
+	<br />
+	
+	<!-- Buttons -->
+	
+	<input type="submit" name="save"
+		value="<spring:message code="curriculum.save" />" />&nbsp; 
 		
+	<jstl:if test="${curriculum.id != 0}">
+		<input type="submit" name="delete"
+			value="<spring:message code="curriculum.delete" />"
+			onclick="return confirm('<spring:message code="curriculum.confirm.delete" />')" />&nbsp;
+	</jstl:if>
+	
+	<input type="button" name="cancel"
+		value="<spring:message code="curriculum.cancel" />"
+		onclick="window.location='curriculum/nutritionist/list.do'" />
+	<br />
+
+</form:form>

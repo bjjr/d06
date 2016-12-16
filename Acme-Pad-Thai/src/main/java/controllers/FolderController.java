@@ -119,26 +119,26 @@ public class FolderController extends AbstractController{
 	
 	// Ancillary methods -------------------------------------
 	
-		protected ModelAndView createEditModelAndView(Folder folder){
-			ModelAndView result;
-			
-			result = createEditModelAndView(folder, null);
-			
-			return result;
-		}
+	protected ModelAndView createEditModelAndView(Folder folder){
+		ModelAndView result;
 		
-		protected ModelAndView createEditModelAndView(Folder folder, String message){
-			ModelAndView result;
-			Collection<Folder> folders;
+		result = createEditModelAndView(folder, null);
 			
-			folders = folderService.findAll();
+		return result;
+	}
+		
+	protected ModelAndView createEditModelAndView(Folder folder, String message){
+		ModelAndView result;
+		Collection<Folder> folders;
 			
-			result = new ModelAndView("folder/edit");
-			result.addObject("folder", folder);
-			result.addObject("folders", folders);
-			result.addObject("message", message);
+		folders = folderService.findAll();
 			
-			return result;
-		}
+		result = new ModelAndView("folder/edit");
+		result.addObject("folder", folder);
+		result.addObject("folders", folders);
+		result.addObject("message", message);
+			
+		return result;
+	}
 
 }

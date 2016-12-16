@@ -87,6 +87,7 @@
 		
 		<security:authorize access="isAuthenticated()">
 			<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
+			<li><a class="fNiv" href="nutritionist/list.do"><spring:message code="master.page.nutritionist.list" /></a></li>	
 			<li><a class="fNiv" href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>
 			<li><a class="fNiv" href="masterClass/actor/list-unregistered.do"><spring:message code="master.page.masterClass.lu" /></a></li>
 			<li><a class="fNiv"><spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)</a></li>

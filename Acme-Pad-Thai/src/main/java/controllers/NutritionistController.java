@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Actor;
 import domain.Nutritionist;
 
+import security.Authority;
+import services.ActorService;
 import services.NutritionistService;
 
 @Controller
@@ -26,6 +29,9 @@ public class NutritionistController extends AbstractController{
 	
 	@Autowired
 	private NutritionistService nutritionistService;
+	
+	@Autowired
+	private ActorService actorService;
 	
 	// Constructors -------------------------------------------
 	
@@ -42,6 +48,37 @@ public class NutritionistController extends AbstractController{
 		
 		nutritionist = nutritionistService.create();
 		result = createEditModelAndView(nutritionist);
+		
+		return result;
+	}
+	
+	// Listing -----------------------------------------------
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list(){
+		ModelAndView result;
+		Collection<Nutritionist> nutritionists;
+		Actor actor;
+		Boolean socialActor;
+		Collection<Authority> authorities;
+		
+		actor = actorService.findByPrincipal();
+		authorities = actor.getUserAccount().getAuthorities();
+		socialActor = false;
+		nutritionists = nutritionistService.findAll();
+		
+		for(Authority a:authorities){
+			if(a.getAuthority().equals("USER") || a.getAuthority().equals("NUTRITIONIST")){
+				socialActor = true;
+				break;
+			}
+		}
+		
+		result = new ModelAndView("nutritionist/list");
+		result.addObject("nutritionists", nutritionists);
+		result.addObject("actor", actor);
+		result.addObject("socialActor", socialActor);
+		result.addObject("requestURI", "nutritionist/list.do");
 		
 		return result;
 	}

@@ -14,7 +14,7 @@
 	<!-- Attributes -->
 
 	<spring:message code="message.moment" var="momentHeader" />
-	<display:column property="moment" title="${momentHeader}" sortable="false" />
+	<display:column property="moment" title="${momentHeader}" sortable="true" />
 	
 	<spring:message code="message.subject" var="subjectHeader" />
 	<display:column property="subject" title="${subjectHeader}" sortable="false" />
@@ -23,18 +23,21 @@
 	<display:column property="body" title="${bodyHeader}" sortable="false" />
 	
 	<spring:message code="message.priority" var="priorityHeader" />
-	<display:column property="priority" title="${priorityHeader}" sortable="true" />
+	<display:column property="priority.priority" title="${priorityHeader}" sortable="true" />
 	
 	<spring:message code="message.sender" var="senderHeader" />
-	<display:column property="sender" title="${senderHeader}" sortable="true" />
+	<display:column property="sender.email" title="${senderHeader}" sortable="true" />
 	
-	<spring:message code="message.recipients" var="recipientsHeader" />
-	<display:column property="recipients" title="${recipientsHeader}" sortable="false" />
-	<jstl:forEach var="m" items="${messages}">
-		<jstl:forEach var="r" items="${m.recipients}">
-			<jstl:out value="${r.name} ${r.surname}"></jstl:out>
-		</jstl:forEach>
-	</jstl:forEach>
+	<jstl:if test="${outbox == true}">
+		<spring:message code="message.recipients" var="recipientsHeader" />
+		<display:column title="${recipientsHeader}" sortable="false">
+			<jstl:forEach var="r" items="${row.recipients}">
+				<jstl:out value="${r.email}"></jstl:out>
+				<br />
+			</jstl:forEach>
+		</display:column>
+		
+	</jstl:if>	
 	
 	<display:column>
 		<a href="message/move.do?messageId=${row.id}">
@@ -56,9 +59,7 @@
 	</display:column>
 
 </display:table>
-
-	<br />
-	<br />
+<br />
 	<input type="button" name="createMessage"
 		value="<spring:message code="message.createMessage" />" 
 		onclick="window.location='message/create.do'" />&nbsp;

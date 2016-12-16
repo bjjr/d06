@@ -33,6 +33,15 @@ public class SocialActorService {
 	
 	// Simple CRUD methods ----------------------------------
 	
+	public SocialActor findOne(int socialActorID){
+		SocialActor result;
+		
+		result = socialActorRepository.findOne(socialActorID);
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
 	public SocialActor save(SocialActor socialActor){
 		Assert.notNull(socialActor);
 		

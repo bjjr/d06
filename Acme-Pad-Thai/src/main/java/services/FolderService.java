@@ -40,6 +40,7 @@ public class FolderService {
 		
 		result = new Folder();
 		result.setObligatory(false);
+		result.setActor(actorService.findByPrincipal());
 		
 		return result;
 	}
@@ -109,8 +110,12 @@ public class FolderService {
 		
 		Assert.isTrue(!folder.isObligatory(), "This folder is obligatory and can't be deleted");
 		
-		folder.getActor().removeFolder(folder);
-		actorService.save(folder.getActor());
+		Actor actor;
+		
+		actor = actorService.findByPrincipal();
+		
+		actor.removeFolder(folder);
+		actorService.save(actor);
 		folderRepository.delete(folder);
 	}
 	
