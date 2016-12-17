@@ -47,13 +47,21 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-	<jstl:if test="${owner}">
-	<display:column>
-	<display:column>
-			<a href="recipe/user/qualify.do?recipeId=${row.id}"><spring:message code="recipe.user.qualify"/></a>
-	</display:column>
-	</display:column>
-	</jstl:if>
+		<jstl:if test="${owner}">
+			<display:column>
+				<a href="recipe/user/qualify.do?recipeId=${row.id}"><spring:message code="recipe.user.qualify"/></a>
+			</display:column>
+			
+			<display:column>
+				<a href="recipe/user/edit.do?recipeId=${row.id}"><spring:message code="recipe.user.edit" /></a>
+			</display:column>
+		</jstl:if>
 	</security:authorize>
 			
 </display:table>
+
+<security:authorize access="hasRole('USER')">
+	<jstl:if test="${owner}">
+		<a href="recipe/user/create.do"><spring:message code="recipe.user.create" /></a>
+	</jstl:if>
+</security:authorize>

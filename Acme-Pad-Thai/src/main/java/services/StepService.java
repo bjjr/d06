@@ -23,6 +23,9 @@ public class StepService {
 	@Autowired
 	private ActorService actorService;
 	
+	@Autowired
+	private RecipeService recipeService;
+	
 	
 	//Constructors
 	
@@ -40,12 +43,16 @@ public class StepService {
 		return result;
 	}
 	
-	public Step save(Step step){
+	public Step save(Step step, int recipeId){
 		Assert.notNull(step);
 		
 		Step result;
+		Recipe recipe;
 		
+		recipe = recipeService.findOne(recipeId);
 		result = stepRepository.save(step);
+		recipe.addStep(result);
+		recipeService.save(recipe);
 		
 		return result;
 		

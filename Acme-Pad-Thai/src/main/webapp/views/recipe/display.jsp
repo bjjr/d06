@@ -92,20 +92,28 @@
 	<display:column property="unit.unit" title="${unitHeader}"
 		sortable="false" />
 	
-	<display:column>
-		<form action="/Acme-Pad-Thai/quantity/edit.do" method="post" >
-			<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
-			<input hidden="true" type="text" name="quantityId" value="${quantity.id}" />
-			<input type="submit" name="edit" value="<spring:message code="quantity.edit"/>"/>
-		</form>
-	</display:column>
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${owner}">
+			<display:column>
+				<form action="/Acme-Pad-Thai/quantity/edit.do" method="post" >
+					<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
+					<input hidden="true" type="text" name="quantityId" value="${quantity.id}" />
+					<input type="submit" name="edit" value="<spring:message code="quantity.edit"/>"/>
+				</form>
+			</display:column>
+		</jstl:if>
+	</security:authorize>
 	
 </display:table>
 
-<form action="/Acme-Pad-Thai/quantity/create.do" method="post" >
-	<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
-	<input type="submit" name="add" value="<spring:message code="quantity.add"/>"/>
-</form>
+<security:authorize access="hasRole('USER')">
+	<jstl:if test="${owner}">
+		<form action="/Acme-Pad-Thai/quantity/create.do" method="post" >
+			<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
+			<input type="submit" name="add" value="<spring:message code="quantity.add"/>"/>
+		</form>
+	</jstl:if>
+</security:authorize>
 
 <h2><spring:message code="recipe.steps"/></h2>
 <br />
@@ -130,7 +138,28 @@
 		</jstl:forEach>
 	</display:column>
 	
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${owner}">
+			<display:column>
+				<form action="/Acme-Pad-Thai/step/edit.do" method="post" >
+					<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
+					<input hidden="true" type="text" name="stepId" value="${step.id}" />
+					<input type="submit" name="edit" value="<spring:message code="step.edit"/>"/>
+				</form>
+			</display:column>
+		</jstl:if>
+	</security:authorize>
+	
 </display:table>
+
+<security:authorize access="hasRole('USER')">
+	<jstl:if test="${owner}">
+		<form action="/Acme-Pad-Thai/step/create.do" method="post" >
+			<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
+			<input type="submit" name="add" value="<spring:message code="step.add"/>"/>
+		</form>
+	</jstl:if>
+</security:authorize>
 
 <h2><spring:message code="recipe.comments"/></h2>
 <br />

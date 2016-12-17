@@ -46,11 +46,11 @@
 	</div>
 	<div>
 		<input type="submit" name="save"
-			value="<spring:message code="recipe.save" />" />;
+			value="<spring:message code="recipe.save" />" />
 		<jstl:if test="${recipe.id != 0}">
 			<input type="submit" name="delete"
 			 value="<spring:message code="recipe.delete" />"
-			 onclick="return confirm(<spring:message code="recipe.confirm.delete" />)"/>
+			 onclick="return confirm('<spring:message code="recipe.confirm.delete" />')"/>&nbsp;
 		</jstl:if>
 		<input type="button" name="cancel"
 			value="<spring:message code="recipe.cancel" />"

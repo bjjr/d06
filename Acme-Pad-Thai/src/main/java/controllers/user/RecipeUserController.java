@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -81,8 +80,7 @@ public class RecipeUserController extends AbstractController {
 		RecipeCopy recipeCopy;
 		Collection<Contest> contests;
 		
-		recipe = recipeService.findOne(recipeId);
-		Assert.notNull(recipe);
+		recipe = recipeService.findOneToEdit(recipeId);
 		
 		try{
 			recipeCopy = recipeService.copyRecipe(recipe);
@@ -148,7 +146,7 @@ public class RecipeUserController extends AbstractController {
 		ModelAndView res;
 		Recipe recipe;
 		
-		recipe = recipeService.findOne(recipeId);
+		recipe = recipeService.findOneToEdit(recipeId);
 		res = createEditModelAndView(recipe);
 		
 		return res;

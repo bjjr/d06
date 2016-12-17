@@ -208,6 +208,18 @@ public class RecipeService {
 	
 	public Recipe findOne(int recipeId) {
 		Assert.isTrue(recipeId != 0);
+		
+		Recipe res;
+		
+		res = recipeRepository.findOne(recipeId);
+		
+		Assert.notNull(res);
+		
+		return res;
+	}
+	
+	public Recipe findOneToEdit(int recipeId) {
+		Assert.isTrue(recipeId != 0);
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		
 		Recipe res;
@@ -429,6 +441,19 @@ public class RecipeService {
 			}
 		}
 		return result;
+	}
+	
+	public void deleteStep(Step step) {
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		Assert.isTrue(step != null);
+		
+		Recipe recipe;
+		recipe = stepService.findRecipeByStep(step.getId());
+		
+		recipe.getSteps().remove(step);
+		stepService.delete(step);
+		
+		save(recipe);
 	}
 
 
