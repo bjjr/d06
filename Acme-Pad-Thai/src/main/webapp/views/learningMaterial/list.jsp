@@ -63,5 +63,56 @@
 				<jstl:otherwise></jstl:otherwise>
 				
 			</jstl:choose>
-		</display:column>	
+	</display:column>
+	
+	<security:authorize access="hasRole('COOK')">
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${learningMaterial['class'].name == 'domain.Text'}">
+					<form action="text/edit.do" method="post">
+						<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
+						<input hidden="true" type="text" name="textId" value="${learningMaterial.id}" />
+						<input type="submit" name="edit" value="<spring:message code="learningMaterial.edit.text"/>"/>
+					</form>
+				</jstl:when>
+				
+				<jstl:when test="${learningMaterial['class'].name == 'domain.Presentation'}">
+					<form action="presentation/edit.do" method="post">
+						<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
+						<input hidden="true" type="text" name="presentationId" value="${learningMaterial.id}" />
+						<input type="submit" name="edit" value="<spring:message code="learningMaterial.edit.presentation"/>"/>
+					</form>
+				</jstl:when>
+				
+				<jstl:when test="${learningMaterial['class'].name == 'domain.Video'}">
+					<form action="video/edit.do" method="post">
+						<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
+						<input hidden="true" type="text" name="videoId" value="${learningMaterial.id}" />
+						<input type="submit" name="edit" value="<spring:message code="learningMaterial.edit.video"/>"/>
+					</form>
+				</jstl:when>
+				
+				<jstl:otherwise></jstl:otherwise>
+			</jstl:choose>
+		</display:column>
+	</security:authorize>
 </display:table>
+
+<security:authorize access="hasRole('COOK')">
+	<div>
+		<form action="text/create.do" method="post">
+			<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
+			<input type="submit" name="add" value="<spring:message code="learningMaterial.create.text"/>"/>
+		</form> &nbsp;
+		
+		<form action="presentation/create.do" method="post">
+			<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
+			<input type="submit" name="add" value="<spring:message code="learningMaterial.create.presentation"/>"/>
+		</form> &nbsp;
+		
+		<form action="video/edit.do" method="post">
+			<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
+			<input type="submit" name="add" value="<spring:message code="learningMaterial.create.video"/>"/>
+		</form>
+	</div>
+</security:authorize>

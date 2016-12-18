@@ -52,11 +52,12 @@ public class TextService {
 		return res;
 	}
 	
-	public Text save(Text t) {
+	public Text save(Text t, int masterClassId) {
 		Assert.isTrue(actorService.checkAuthority("COOK"));
 		Assert.notNull(t);
 		
 		Text res;
+		
 		res = textRepository.save(t);
 		
 		return res;
@@ -66,13 +67,18 @@ public class TextService {
 		textRepository.flush();
 	}
 	
-	public void delete(Text t) {
+	public void delete(Text t, int masterClassId) {
 		Assert.isTrue(actorService.checkAuthority("COOK"));
 		Assert.notNull(t);
 		Assert.isTrue(t.getId() != 0);
 		Assert.isTrue(textRepository.exists(t.getId()));
 		
+		MasterClass masterClass;
+		
+		masterClass = masterClassService.findOne(masterClassId);
+		masterClass.removeLearningMaterial(t);	
 		textRepository.delete(t);
+		masterClassService.save(masterClass);
 	}
 	
 	public Boolean exists(Text t) {

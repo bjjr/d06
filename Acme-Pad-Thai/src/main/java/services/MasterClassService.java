@@ -162,40 +162,35 @@ public class MasterClassService {
 
 		Collection<Actor> attenders;
 		attenders = findAttenders(m);
-
+		
+		sendDeletionMessage(m, attenders);
+		
 		Cook c;
-		c = m.getCook();
-		c.removeMasterClass(m);
-
-		Message msg;
-		msg = sendDeletionMessage(m, attenders);
+		c = cookService.findByPrincipal();
+		c.removeMasterClassTeach(m);
+		actorService.save(c);
 		
 		removeAttenders(m, attenders);
-		
-		// Commit changes to the database
-		messageService.save(msg);
-		actorService.save(c);
-		for (Actor a : attenders) {
-			actorService.save(a);
-		}
 		
 		masterClassRepository.delete(m);
 	}
 
 	private Message sendDeletionMessage(MasterClass m, Collection<Actor> attenders) {
 		Message res;
-
+		Cook sender;
+		
+		sender = cookService.findByPrincipal();
 		res = messageService.create();
-
+		
 		res.setSubject("The master class " + m.getTitle() + " was removed");
 		res.setBody("The master class " + m.getTitle() + " was removed"
 				+ " by the cook and you will be no longer able"
 				+ " to access its contents");
 
-		 Priority p = priorityService.findOne(23);
-		 res.setPriority(p);
+		Priority p = priorityService.findOne(23);
+		res.setPriority(p);
 
-		messageService.sendMessage(res, actorService.findByPrincipal(), attenders);
+		messageService.sendMessage(res, sender, attenders);
 		
 		return res;
 	}
@@ -203,6 +198,7 @@ public class MasterClassService {
 	private void removeAttenders(MasterClass m, Collection<Actor> attenders) {
 		for (Actor a : attenders) {
 			a.removeMasterClass(m);
+			actorService.save(a);
 		}
 	}
 
@@ -371,7 +367,8 @@ public class MasterClassService {
 		Assert.notNull(masterClass);
 		
 		principal = actorService.findByPrincipal();
-		Assert.isTrue(masterClass.getActors().contains(principal));
+		Assert.isTrue(masterClass.getActors().contains(principal) ||
+					  masterClass.getCook().equals(principal));
 		
 		res = masterClass.getLearningMaterials();
 		Assert.notNull(res);
