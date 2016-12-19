@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class Quantity extends DomainEntity{
 	
 	//Attributes
-	private double quantity;
+	private double value;
 	
 	//Constructors
 	public Quantity(){
@@ -25,12 +25,13 @@ public class Quantity extends DomainEntity{
 	
 	@Digits(integer = 9, fraction = 2)
 	@Min((long) 1.0)
-	public double getQuantity() {
-		return quantity;
+	
+	public double getValue() {
+		return value;
 	}
 
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
+	public void setValue(double quantity) {
+		this.value = quantity;
 	}
 	
 	//Relationships

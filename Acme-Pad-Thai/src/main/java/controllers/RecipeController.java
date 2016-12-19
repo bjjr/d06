@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.RecipeService;
-
+import services.UserService;
 import domain.Comment;
 import domain.Quantity;
 import domain.Recipe;
@@ -24,6 +25,12 @@ public class RecipeController extends AbstractController {
 
 	@Autowired
 	private RecipeService recipeService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private ActorService actorService;
 
 	// Constructors
 
@@ -80,6 +87,7 @@ public class RecipeController extends AbstractController {
 		Collection<Comment> comments;
 		Integer likes;
 		Integer dislikes;
+		Boolean owner;
 
 		recipe = recipeService.findOne(recipeId);
 		quantities = recipe.getQuantities();
@@ -87,6 +95,11 @@ public class RecipeController extends AbstractController {
 		comments = recipe.getComments();
 		likes = recipeService.findLikes(recipe);
 		dislikes = recipeService.findDislikes(recipe);
+		owner = false;
+		
+		if (actorService.checkAuthority("USER"))
+			owner = userService.findByPrincipal().equals(recipe.getUser());
+		
 		result = new ModelAndView("recipe/display");
 		result.addObject("requestURI", "recipe/display.do");
 		result.addObject("recipe", recipe);
@@ -95,6 +108,7 @@ public class RecipeController extends AbstractController {
 		result.addObject("comments", comments);
 		result.addObject("likesSA", likes);
 		result.addObject("dislikesSA", dislikes);
+		result.addObject("owner", owner);
 
 		return result;
 	}	

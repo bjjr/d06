@@ -78,6 +78,16 @@ public class RecipeService {
 		Collection<Step> steps = new ArrayList<>();
 		Collection<Quantity> quantities = new ArrayList<>();
 		Collection<Category> categories = new ArrayList<>();
+		Date momentCreated;
+		Date momentUpdated;
+		String ticker;
+		
+		momentCreated = new Date(System.currentTimeMillis()-1000);		
+		momentUpdated = new Date(System.currentTimeMillis()-1000);
+		steps.add(stepService.createDefaultStep());
+		quantities.add(quantityService.createDefaultQuantity());
+		categories.add(categoryService.findOne(104));
+		ticker = createTicker();
 		
 		owner = userService.findByPrincipal();
 		result = new Recipe();
@@ -85,6 +95,9 @@ public class RecipeService {
 		result.setSteps(steps);
 		result.setQuantities(quantities);
 		result.setCategories(categories);
+		result.setMomentAuthored(momentCreated);
+		result.setMomentLastUpdated(momentUpdated);
+		result.setTicker(ticker);
 //		userService.save(owner);
 		
 		return result;
@@ -121,6 +134,7 @@ public class RecipeService {
 			recipe.getUser().addRecipe(result);
 			userService.save(recipe.getUser());
 			
+			defaultCategory = categoryService.findOne(104);
 			defaultCategory.addRecipe(result);
 			categoryService.save(defaultCategory);
 			
@@ -154,20 +168,23 @@ public class RecipeService {
 		owner = recipe.getUser();
 		categories = categoryService.findAll();
 		
-		for(Step s : recipe.getSteps()){
-			stepService.delete(s);
-		}
-		
 		for(Quantity q : recipe.getQuantities()){
 			quantityService.delete(q);
 		}
+		recipe.setQuantities(null);
 		
-		for(LikeSA l : recipe.getLikesSA()){
-			likeSAService.delete(l);
+		if (recipe.getLikesSA() != null) {
+			for(LikeSA l : recipe.getLikesSA()){
+				likeSAService.delete(l);
+			}
+			recipe.setLikesSA(null);
 		}
 		
-		for(Comment c : recipe.getComments()){
-			commentService.delete(c);
+		if (recipe.getComments() != null) {
+			for(Comment c : recipe.getComments()){
+				commentService.delete(c);
+			}
+			recipe.setComments(null);
 		}
 		
 		for(Category c : categories){
@@ -177,15 +194,31 @@ public class RecipeService {
 			}
 		}
 		
-		recipe.setUser(null);
-		owner.removeRecipe(recipe);
-		userService.save(owner);
+		if (recipe.getQuantities() != null) {
+			for (Quantity q : recipe.getQuantities()) {
+				quantityService.delete(q);
+			}
+			recipe.setQuantities(null);
+		}
 		
+		owner.removeRecipe(recipe);		
 		recipeRepository.delete(recipe);
-			
+		userService.save(owner);			
 	}
 	
 	public Recipe findOne(int recipeId) {
+		Assert.isTrue(recipeId != 0);
+		
+		Recipe res;
+		
+		res = recipeRepository.findOne(recipeId);
+		
+		Assert.notNull(res);
+		
+		return res;
+	}
+	
+	public Recipe findOneToEdit(int recipeId) {
 		Assert.isTrue(recipeId != 0);
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		
@@ -381,12 +414,16 @@ public class RecipeService {
 		char[] r;
 		int z;
 		char c;
+		Calendar fecha;
 		
 		caracteresEspeciales= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		result="";
 		recipes= (List<Recipe>) findAllRecipesGroupByCategory();
 		random= new Random();
-		result += Calendar.YEAR + Calendar.MONTH + Calendar.DAY_OF_MONTH;
+		fecha = Calendar.getInstance();
+		result += String.valueOf(fecha.get(Calendar.YEAR)).substring(2);
+		result += String.valueOf(fecha.get(Calendar.MONTH));
+		result += String.valueOf(fecha.get(Calendar.DAY_OF_MONTH));
 		
 		result += "-";
 		
@@ -404,6 +441,19 @@ public class RecipeService {
 			}
 		}
 		return result;
+	}
+	
+	public void deleteStep(Step step) {
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		Assert.isTrue(step != null);
+		
+		Recipe recipe;
+		recipe = stepService.findRecipeByStep(step.getId());
+		
+		recipe.getSteps().remove(step);
+		stepService.delete(step);
+		
+		save(recipe);
 	}
 
 
