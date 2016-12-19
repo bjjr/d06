@@ -77,13 +77,14 @@ public class MessageController extends AbstractController{
 		result.addObject("messages", messages);
 		result.addObject("outbox", outbox);
 		result.addObject("trashbox", trashbox);
+		result.addObject("folderId", folderId);
 		result.addObject("requestURI", "message/listByFolder.do");
 		
 		return result;
 	}
 	
-	@RequestMapping(value = "/listByFolder", method = RequestMethod.POST, params = "moveToTrashbox")
-	public ModelAndView moveToTrashbox(@RequestParam int messageId){
+	@RequestMapping(value = "/moveToTrashbox", method = RequestMethod.GET)
+	public ModelAndView moveToTrashbox(@RequestParam int messageId, @RequestParam int folderId){
 		ModelAndView result;
 		Actor actor;
 		Message message;
@@ -92,7 +93,7 @@ public class MessageController extends AbstractController{
 		message = messageService.findOne(messageId);
 		messageService.deleteMessageToTrash(actor, message);
 		
-		result = new ModelAndView("redirect:listByFolder.do");
+		result = new ModelAndView("redirect:listByFolder.do?folderId=" + folderId);
 		
 		return result;
 	}

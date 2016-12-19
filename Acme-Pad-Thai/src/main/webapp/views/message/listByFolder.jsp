@@ -52,9 +52,7 @@
 				onclick="return confirm('<spring:message code="message.confirm.delete" />')" />&nbsp;
 		</jstl:if>
 		<jstl:if test="${trashbox == false}">
-			<input type="submit" name="moveToTrashbox"
-				value="<spring:message code="message.moveToTrashbox" />"
-				onclick="return confirm('<spring:message code="message.confirm.moveToTrashbox" />')" />&nbsp;
+			<a href="message/moveToTrashbox?messageId=${row.id}&folderId=${folderId}"><spring:message code="message.moveToTrashbox" /></a>
 		</jstl:if>
 	</display:column>
 
