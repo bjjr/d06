@@ -26,6 +26,7 @@
 					<li class="arrow"></li>
 					<li><a href="cook/create.do"><spring:message code="master.page.administrator.create.cook" /></a></li>
 					<li><a href="contest/administrator/create.do"><spring:message code="master.page.administrator.create.contest" /></a></li>
+					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.list.category" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

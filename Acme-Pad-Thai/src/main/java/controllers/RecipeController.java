@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Authority;
+import services.ActorService;
 import services.CommentService;
 import services.LikeSAService;
 import services.RecipeService;
@@ -43,6 +44,9 @@ public class RecipeController extends AbstractController {
 	private SocialActorService socialActorService;
 
 	@Autowired
+	private ActorService actorService;
+
+	@Autowired
 	private UserService userService;
 
 	@Autowired
@@ -64,21 +68,39 @@ public class RecipeController extends AbstractController {
 		Collection<Recipe> own;
 		SocialActor principal;
 		Authority authority;
+		Authority authority2;
 
-		recipes = recipeService.findAllRecipesGroupByCategory();
-		principal = socialActorService.findByPrincipal();
+		authority = new Authority();
+		authority2 = new Authority();
+		authority.setAuthority(Authority.USER);
+		authority2.setAuthority(Authority.NUTRITIONIST);
 		likes = new ArrayList<Recipe>();
 		own = new ArrayList<Recipe>();
-		authority = new Authority();
-		authority.setAuthority(Authority.USER);
 
-		for (LikeSA l : principal.getLikesSA()) {
-			likes.add(l.getRecipe());
+		recipes = recipeService.findAllRecipesGroupByCategory();
 
-		}
+		if (actorService.checkAuthority("USER")
+				|| actorService.checkAuthority("ADMINISTRATOR")
+				|| actorService.checkAuthority("COOK")
+				|| actorService.checkAuthority("SPONSOR") || actorService
+				.checkAuthority("NUTRITIONIST") ) {
+			if (actorService.findByPrincipal().getUserAccount()
+					.getAuthorities().contains(authority)
+					|| actorService.findByPrincipal().getUserAccount()
+							.getAuthorities().contains(authority2)) {
 
-		if (principal.getUserAccount().getAuthorities().contains(authority)) {
-			own.addAll(userService.findByPrincipal().getRecipes());
+				principal = socialActorService.findByPrincipal();
+
+				for (LikeSA l : principal.getLikesSA()) {
+					likes.add(l.getRecipe());
+
+				}
+
+				if (principal.getUserAccount().getAuthorities()
+						.contains(authority)) {
+					own.addAll(userService.findByPrincipal().getRecipes());
+				}
+			}
 		}
 
 		result = new ModelAndView("recipe/list");
@@ -94,15 +116,10 @@ public class RecipeController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "search")
 	public ModelAndView search(@RequestParam String recipe) {
 		ModelAndView result;
-		Collection<Recipe> recipes;
 		Collection<Recipe> recipesWanted;
 
-		recipes = recipeService.findAllRecipesGroupByCategory();
-
 		if (recipe == "") {
-			result = new ModelAndView("recipe/list");
-			result.addObject("requestURI", "recipe/list.do");
-			result.addObject("recipes", recipes);
+			result = new ModelAndView("redirect:list.do");
 		} else {
 			recipesWanted = recipeService.findByKeyword(recipe);
 

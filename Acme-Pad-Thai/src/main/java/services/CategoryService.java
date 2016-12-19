@@ -46,8 +46,15 @@ public class CategoryService {
 		Assert.notNull(category);
 		
 		Category result;
+		Category root;
 		
 		result = categoryRepository.save(category);
+		if(category.getRoot()!=null){
+			root = result.getRoot();
+			save(root);
+		}
+		
+		
 		
 		return result;
 		
@@ -66,7 +73,7 @@ public class CategoryService {
 		
 		Category father;
 		
-		father = category.getCategory();
+		father = category.getRoot();
 		
 		if(father == null){
 			if(category.getSubcategories().isEmpty()){
@@ -79,7 +86,7 @@ public class CategoryService {
 		else{
 			father.getSubcategories().remove(category);
 			save(father);
-			category.setCategory(null);
+			category.setRoot(null);
 			if(category.getSubcategories().isEmpty()){
 				categoryRepository.delete(category.getId());
 			}

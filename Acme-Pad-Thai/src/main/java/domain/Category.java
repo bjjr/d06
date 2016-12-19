@@ -81,7 +81,7 @@ public class Category extends DomainEntity{
 	//Relationships
 	
 	private Collection<Recipe> recipes;
-	private Category category;
+	private Category root;
 	private Collection<Category> subcategories;
 	
 	@ManyToMany
@@ -105,15 +105,15 @@ public class Category extends DomainEntity{
 	
 	@Valid
 	@ManyToOne(optional = true)
-	public Category getCategory() {
-		return category;
+	public Category getRoot() {
+		return root;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setRoot(Category root) {
+		this.root = root;
 	}
 	
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "root")
 	public Collection<Category> getSubcategories() {
 		return subcategories;
 	}
@@ -124,12 +124,12 @@ public class Category extends DomainEntity{
 	
 	public void addSubcategory(Category subcategory){
 		subcategories.add(subcategory);
-		subcategory.setCategory(this);
+		subcategory.setRoot(this);
 	}
 	
 	public void removeSubcategory(Category subcategory){
 		subcategories.remove(subcategory);
-		subcategory.setCategory(null);
+		subcategory.setRoot(null);
 	}
 	
 	

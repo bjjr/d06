@@ -52,15 +52,11 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "search")
 	public ModelAndView search(@RequestParam String user) {
 		ModelAndView result;
-		Collection<User> users;
 		Collection<User> searched;
 
-		users = userService.findAll();
 
 		if (user == "") {
-			result = new ModelAndView("user/list");
-			result.addObject("requestURI", "user/list.do");
-			result.addObject("users", users);
+			result = new ModelAndView("redirect:list.do");
 		} else {
 			searched = userService.findByKeyword(user);
 

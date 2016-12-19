@@ -1905,7 +1905,7 @@
 			<ref bean = "recipe7"/>
 		</list>
 	</property>
-	<property  name ="category" ref="category1"/>
+	<property  name ="root" ref="category1"/>
 	<property name="subcategories">
 		<list>
 		</list>
@@ -1926,7 +1926,7 @@
 			<ref bean = "recipe1"/>
 		</list>
 	</property>
-<property name ="category" ref="category1"/>
+<property name ="root" ref="category1"/>
 	<property name="subcategories">
 		<list>
 		</list>
@@ -1947,7 +1947,7 @@
 			<ref bean = "recipe1"/>
 		</list>
 	</property>
-	<property name ="category" ref="category1"/>
+	<property name ="root" ref="category1"/>
 	<property name="subcategories">
 		<list>
 		</list>

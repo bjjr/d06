@@ -72,7 +72,11 @@
 		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
 	
-		<security:intercept-url pattern="/fee/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/fee/administrator/edit.do" access="hasRole('ADMINISTRATOR')" />
+		 
+		<security:intercept-url pattern="/category/administrator/list.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/category/administrator/create.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/category/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
 	
 		<security:intercept-url pattern="/user/user/edit.do" access="hasRole('USER')" /> 
 		<security:intercept-url pattern="/recipe/like.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
