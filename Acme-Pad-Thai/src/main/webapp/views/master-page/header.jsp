@@ -37,6 +37,7 @@
 					<li><a href="recipe/user/list.do"><spring:message code="master.page.recipe.user.list" /></a></li>
 					<li><a href="recipe/user/listFollow.do"><spring:message code="master.page.recipe.user.listFollow" /></a></li>
 					<li><a href="user/edit.do"><spring:message code="master.page.user.edit" /></a></li>
+					<li><a href="socialActor/list.do"><spring:message code="master.page.socialActor.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -50,6 +51,7 @@
 					<li><a href="nutritionist/edit.do"><spring:message code="master.page.nutritionist.edit" /></a></li>
 					<li><a href="ingredient/nutritionist/list.do"><spring:message code="master.page.nutritionist.ingredient.list" /></a></li>
 					<li><a href="property/nutritionist/list.do"><spring:message code="master.page.nutritionist.property.list" /></a></li>
+					<li><a href="socialActor/list.do"><spring:message code="master.page.socialActor.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

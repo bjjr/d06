@@ -116,7 +116,7 @@ public class RecipeUserController extends AbstractController{
 			result.addObject("contests", contests);
 		}
 		catch (Throwable oops) {
-			result = list();
+			result = new ModelAndView("redirect:list.do");
 			result.addObject("message", "recipe.commit.error");
 		}
 		
@@ -138,7 +138,7 @@ public class RecipeUserController extends AbstractController{
 			try {
 				contest = recipeCopy.getContest();
 				recipeService.qualifyRecipe(recipeCopy, contest);
-				result = list();
+				result = new ModelAndView("redirect:list.do");
 				result.addObject("message", "recipe.commit.ok");
 			} catch (Throwable oops) {
 				result = new ModelAndView("recipe/qualify");

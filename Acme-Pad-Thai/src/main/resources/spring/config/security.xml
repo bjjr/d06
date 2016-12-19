@@ -60,6 +60,10 @@
 		<security:intercept-url pattern="/property/nutritionist/list.do" access="hasRole('NUTRITIONIST')" /> 
 		<security:intercept-url pattern="/property/nutritionist/create.do" access="hasRole('NUTRITIONIST')" />
 		<security:intercept-url pattern="/property/nutritionist/edit.do" access="hasRole('NUTRITIONIST')" />
+	
+		<security:intercept-url pattern="/socialActor/list.do" access="hasAnyRole('USER', 'NUTRITIONIST')" /> 
+		<security:intercept-url pattern="/socialActor/follow.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
+		<security:intercept-url pattern="/socialActor/unfollow.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
 		
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />
@@ -71,9 +75,9 @@
 		<security:intercept-url pattern="/fee/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
 	
 		<security:intercept-url pattern="/user/user/edit.do" access="hasRole('USER')" /> 
-		<security:intercept-url pattern="/likeSA/like.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
-		<security:intercept-url pattern="/likeSA/dislike.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
-		<security:intercept-url pattern="/comment/create.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
+		<security:intercept-url pattern="/recipe/like.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
+		<security:intercept-url pattern="/recipe/dislike.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
+		<security:intercept-url pattern="/recipe/createComment.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
 		<security:intercept-url pattern="/recipe/user/listFollow.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/recipe/nutritionist/listFollow.do" access="hasRole('NUTRITIONIST')" />
 		

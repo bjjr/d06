@@ -8,7 +8,7 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="comment/create.do" modelAttribute="comment">
+<form:form action="recipe/createComment.do" modelAttribute="comment">
 	
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>

@@ -41,6 +41,7 @@
 		<value>/views/ingredient/messages</value>
 		<value>/views/property/messages</value>
 		<value>/views/comment/messages</value>
+		<value>/views/socialActor/messages</value>
 	</util:list>
 
 </beans>

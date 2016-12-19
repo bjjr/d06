@@ -1,5 +1,7 @@
 package services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +34,24 @@ public class SocialActorService {
 	}
 	
 	// Simple CRUD methods ----------------------------------
+	
+	public SocialActor findOne(int socialActorID){
+		SocialActor result;
+		
+		result = socialActorRepository.findOne(socialActorID);
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
+	public Collection<SocialActor> findAll() {
+		Collection<SocialActor> result;
+		
+		result = socialActorRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;
+	}
 	
 	public SocialActor save(SocialActor socialActor){
 		Assert.notNull(socialActor);
@@ -67,9 +87,9 @@ public class SocialActorService {
 				actorService.checkAuthority("NUTRITIONIST"));
 		Assert.isTrue(!socialActor.equals(current), "You can't follow yourself");
 		
-		if(!current.getFollows().contains(socialActor)){
-			current.followSocialActor(socialActor);
-		}
+		Assert.isTrue(!current.getFollows().contains(socialActor), "You already follow this person");
+		current.followSocialActor(socialActor);
+		
 	}
 	
 	public void unfollowSocialActor(SocialActor current, SocialActor socialActor){
@@ -77,9 +97,8 @@ public class SocialActorService {
 				actorService.checkAuthority("NUTRITIONIST"));
 		Assert.isTrue(!socialActor.equals(current), "You can't unfollow yourself");
 		
-		if(current.getFollows().contains(socialActor)){
-			current.unfollowSocialActor(socialActor);
-		}
+		Assert.isTrue(current.getFollows().contains(socialActor), "You don´t follow this person");
+		current.unfollowSocialActor(socialActor);
 	}
 	
 }

@@ -264,14 +264,10 @@ public class RecipeService {
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		Assert.notNull(contest);
 
-		String nameUser;
-
-		nameUser = recipeCopy.getNameUser();
-
 		for (RecipeCopy rc : contest.getRecipeCopies()) {
-			Assert.isTrue(recipeCopy.getTicker() != rc.getTicker(),
+			Assert.isTrue(!recipeCopy.getTicker().equals(rc.getTicker()),
 					"An user cannot qualify the same recipe in the same contest");
-			Assert.isTrue(nameUser != rc.getNameUser(),
+			Assert.isTrue(!recipeCopy.getNameUser().equals(rc.getNameUser()),
 					"An user cannot qualify two recipes in the same contest");
 		}
 

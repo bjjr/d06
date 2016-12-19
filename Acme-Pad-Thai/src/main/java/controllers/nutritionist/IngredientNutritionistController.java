@@ -135,15 +135,20 @@ public class IngredientNutritionistController extends AbstractController {
 		ModelAndView result;
 		Ingredient ingredient;
 		Property property;
+		Collection<Property> properties;
 		
 		ingredient = ingredientService.findOne(ingredientId);
 		property = propertyService.findOne(propertyId);
+		
 			try {
 				ingredientService.addProperty(ingredient, property);
 				result = new ModelAndView("redirect:list.do");
 				result.addObject("message", "ingredient.commit.ok");
 			} catch (Throwable oops) {
-				result = addProperty(ingredientId);
+				properties = propertyService.findAvailableProperties(ingredient);
+				result = new ModelAndView("ingredient/addProperty");
+				result.addObject("ingredient", ingredient);
+				result.addObject("properties", properties);
 				result.addObject("message", "ingredient.commit.error");
 			}
 
@@ -172,6 +177,7 @@ public class IngredientNutritionistController extends AbstractController {
 		ModelAndView result;
 		Ingredient ingredient;
 		Property property;
+		Collection<Property> properties;
 		
 		ingredient = ingredientService.findOne(ingredientId);
 		property = propertyService.findOne(propertyId);
@@ -180,7 +186,10 @@ public class IngredientNutritionistController extends AbstractController {
 				result = new ModelAndView("redirect:list.do");
 				result.addObject("message", "ingredient.commit.ok");
 			} catch (Throwable oops) {
-				result = addProperty(ingredientId);
+				properties = ingredient.getProperties();
+				result = new ModelAndView("ingredient/removeProperty");
+				result.addObject("ingredient", ingredient);
+				result.addObject("properties", properties);
 				result.addObject("message", "ingredient.commit.error");
 			}
 

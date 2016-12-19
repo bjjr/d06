@@ -56,19 +56,28 @@
 	
 	<security:authorize access="hasRole('USER') || hasRole('NUTRITIONIST')">
 	<display:column>
-			<a href="likeSA/like.do?recipeId=${row.id}"><spring:message code="likeSA.like"/></a>
+	<jstl:choose>
+	<jstl:when test="${own.contains(row)}">
+		<spring:message code="recipe.own"/>
+	</jstl:when>
+	<jstl:otherwise>
+		<jstl:choose>
+		<jstl:when test="${likes.contains(row)}">
+			<spring:message code="recipe.like"/>
+		</jstl:when>
+		<jstl:otherwise>
+		<a href="recipe/like.do?recipeId=${row.id}"><spring:message code="likeSA.like"/></a>
+		<a href="recipe/dislike.do?recipeId=${row.id}"><spring:message code="likeSA.dislike"/></a>
+		</jstl:otherwise>
+		</jstl:choose>
+	</jstl:otherwise>
+	</jstl:choose>		
 	</display:column>
 	</security:authorize>
 	
 	<security:authorize access="hasRole('USER') || hasRole('NUTRITIONIST')">
 	<display:column>
-			<a href="likeSA/dislike.do?recipeId=${row.id}"><spring:message code="likeSA.dislike"/></a>
-	</display:column>
-	</security:authorize>
-	
-	<security:authorize access="hasRole('USER') || hasRole('NUTRITIONIST')">
-	<display:column>
-			<a href="comment/create.do?recipeId=${row.id}"><spring:message code="comment.create"/></a>
+			<a href="recipe/createComment.do?recipeId=${row.id}"><spring:message code="comment.create"/></a>
 	</display:column>
 	</security:authorize>
 			
