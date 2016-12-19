@@ -43,10 +43,10 @@ public class MessageController extends AbstractController{
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(){
 		ModelAndView result;
-		Message message;
+		Message messageDomain;
 		
-		message = messageService.create();
-		result = createEditModelAndView(message);
+		messageDomain = messageService.create();
+		result = createEditModelAndView(messageDomain);
 		
 		return result;
 	}
@@ -110,13 +110,13 @@ public class MessageController extends AbstractController{
 			
 	protected ModelAndView createEditModelAndView(Message messageDomain, String message){
 		ModelAndView result;
-		Collection<Message> messages;
+		Collection<Message> messagesList;
 				
-		messages = messageService.findAll();
+		messagesList = messageService.findAll();
 				
 		result = new ModelAndView("message/create");
 		result.addObject("messageDomain", messageDomain);
-		result.addObject("messages", messages);
+		result.addObject("messagesList", messagesList);
 		result.addObject("message", message);
 			
 		return result;

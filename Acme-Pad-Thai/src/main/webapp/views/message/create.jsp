@@ -6,7 +6,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="message/create.do" modelAttribute="message">
+<form:form action="message/create.do" modelAttribute="messageDomain">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
@@ -15,38 +15,33 @@
 	<form:hidden path="priority.id"/>
 	<form:hidden path="priority.version"/>
 
-	<form:label path="subject">
-		<spring:message code="message.subject" />:
-	</form:label>
+	<form:label path="subject"><spring:message code="message.subject" /></form:label>
 	<form:input path="subject" />
 	<form:errors cssClass="error" path="subject" />
 	<br />
+	<br />
 	
-	<form:label path="body">
-		<spring:message code="message.body" />:
-	</form:label>
+	<form:label path="body"><spring:message code="message.body" /></form:label>
 	<form:textarea path="body" />
 	<form:errors cssClass="error" path="body" />
 	<br />
+	<br />
 	
-	<form:label path="recipients">
-		<spring:message code="message.recipients" />:
-	</form:label>
+	<form:label path="recipients"><spring:message code="message.recipients" /></form:label>
 	<form:textarea path="recipients" />
 	<form:errors cssClass="error" path="recipients" />
 	<br />
+	<br />
 	
-	<form:select path="recipients" >
-	<jstl:forEach var="i" items="${message.recipients}">
-		<form:option value="${i.email}">i.email</form:option>
-	</jstl:forEach>
-	</form:select>
-	
+	<form:label path="priority"><spring:message code="message.priority" /></form:label>
 	<form:select path="priority.priority" >
 		 <form:option value="High"><spring:message code="message.priority.High"/></form:option>
 		 <form:option value="Neutral"><spring:message code="message.priority.Neutral"/></form:option>
 		 <form:option value="Low"><spring:message code="message.priority.Low"/></form:option>
 	</form:select>
+	
+	<br />
+	<br />
 
 	<!-- Buttons -->
 	
