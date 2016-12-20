@@ -44,6 +44,7 @@
 		<value>/views/socialIdentity/messages</value>	
 		<value>/views/step/messages</value>
 		<value>/views/quantity/messages</value>
+		<value>/views/spamWord/messages</value>
 	</util:list>
 
 </beans>

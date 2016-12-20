@@ -45,6 +45,7 @@
 		<value>/views/quantity/tiles.xml</value>
 		<value>/views/folder/tiles.xml</value>
 		<value>/views/message/tiles.xml</value>
+		<value>/views/spamWord/tiles.xml</value>
 	</util:list>
 
 </beans>

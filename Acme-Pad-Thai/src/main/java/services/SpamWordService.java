@@ -71,6 +71,12 @@ public class SpamWordService {
 		Assert.notNull(spamWord);
 		
 		SpamWord result;
+		String word;
+		
+		word = spamWord.getWord();
+		
+		Assert.isTrue(!(word.equals("Viagra") || word.equals("Cialis") || word.equals("Sex")
+				|| word.equals("Love")), "This spamword can't be modified");
 		
 		result = spamWordRepository.save(spamWord);
 		

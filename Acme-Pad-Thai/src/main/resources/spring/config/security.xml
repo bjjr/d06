@@ -78,6 +78,8 @@
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 
 		<security:intercept-url pattern="/fee/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
+		
+		<security:intercept-url pattern="/spamWord/administrator/**" access="hasRole('ADMINISTRATOR')" /> 
 	
 		<security:intercept-url pattern="/user/user/edit.do" access="hasRole('USER')" /> 
 		
