@@ -147,10 +147,10 @@ public class SponsorService {
 		return res;
 	}
 
-	public Collection<Sponsor> inactiveSponsors() {
+	public Collection<String> inactiveSponsors() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"),
 				"Only an admin could use this method");
-		Collection<Sponsor> res;
+		Collection<String> res;
 
 		res = sponsorRepository.inactiveSponsors();
 

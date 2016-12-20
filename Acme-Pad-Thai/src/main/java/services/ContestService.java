@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class ContestService {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private ActorService actorService;
+	@Autowired
+	private RecipeCopyService recipeCopyService;
 
 	// Constructors -----------------------------------------------------------
 	public ContestService() {
@@ -45,17 +48,18 @@ public class ContestService {
 		if (contest.getId() == 0) {
 			Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"),
 					"Only an admin could save contest");
-		}
-		else {
+		} else {
 			Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR")
 					|| actorService.checkAuthority("USER"),
 					"Only an admin or user could edit contest");
 
 		}
-		Assert.isTrue(contest.getOpeningTime().compareTo(contest.getClosingTime())<0, "Opening time must be before than closing time");
+		Assert.isTrue(
+				contest.getOpeningTime().compareTo(contest.getClosingTime()) < 0,
+				"Opening time must be before than closing time");
 		return contestRepository.save(contest);
 	}
-	
+
 	public void flush() {
 		contestRepository.flush();
 	}
@@ -94,40 +98,40 @@ public class ContestService {
 		res = contestRepository.exists(id);
 		return res;
 	}
-	
+
 	// Other business methods -------------------------------------------------
 	public Integer minRecipeCopyPerContest() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"),
 				"Only an admin could use this method");
 		Integer res;
 		res = contestRepository.minRecipeCopiesPerContest();
-		
+
 		return res;
 	}
-	
+
 	public Integer maxRecipeCopyPerContest() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"),
 				"Only an admin could use this method");
 		Integer res;
 		res = contestRepository.maxRecipeCopiesPerContest();
-		
+
 		return res;
 	}
-	
+
 	public Double avgRecipeCopyPerContest() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"),
 				"Only an admin could use this method");
 		Double res;
 		res = contestRepository.avgRecipeCopiesPerContest();
-		
+
 		return res;
 	}
-	
+
 	/**
 	 * Concurso con mas recetas presentadas
 	 **/
-	public Contest findContestMoreRecipesQualified() {
-		Contest result;
+	public String findContestMoreRecipesQualified() {
+		String result;
 		result = contestRepository.findContestMoreRecipesQualified();
 		return result;
 	}
@@ -146,10 +150,33 @@ public class ContestService {
 		res = contestRepository.findRecipeWinnerByContest(id);
 		return res;
 	}
-	
+
 	public Collection<Contest> findOpenContests() {
 		Collection<Contest> res;
 		res = contestRepository.findOpenContests();
 		return res;
+	}
+
+	public ArrayList<RecipeCopy> recipeCopyByContestOrdered(int id) {
+		ArrayList<RecipeCopy> res;
+		res = (ArrayList<RecipeCopy>) contestRepository
+				.recipesCopiesByContestOrdered(id);
+		return res;
+	}
+
+	public void setWinners() {
+		Collection<Contest> contests;
+		contests = findAll();
+		contests.removeAll(contestRepository.findClosedContestsWinners());
+		for (Contest c : contests) {
+			ArrayList<RecipeCopy> r = (ArrayList<RecipeCopy>) contestRepository
+					.recipesCopiesByContestOrdered(c.getId());
+			if (!r.isEmpty()) {
+				for (Integer i = 0; i <= 2; i++) {
+					r.get(i).setWinner(true);
+					recipeCopyService.save(r.get(i));
+				}
+			}
+		}
 	}
 }

@@ -60,7 +60,27 @@ import domain.Fee;
 
 			return result;
 		}
-				
+		
+		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "default")
+		public ModelAndView defaultFee(@Valid Fee fee, BindingResult binding) {
+			ModelAndView result;
+
+			if (binding.hasErrors()) {
+				result = createEditModelAndView(fee);
+			} else {
+				try {
+					fee.setFee(0.25);
+					feeService.save(fee);		
+					result = new ModelAndView("redirect:edit.do");
+					result.addObject("message", "fee.commit.ok");
+				} catch (Throwable oops) {
+					result = createEditModelAndView(fee, "fee.commit.error");				
+				}
+			}
+
+			return result;
+		}
+		
 		//Ancillary Methods ----------------------------------------------------------
 		
 		protected ModelAndView createEditModelAndView(Fee fee) {

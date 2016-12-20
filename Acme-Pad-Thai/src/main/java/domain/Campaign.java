@@ -113,6 +113,13 @@ public class Campaign extends DomainEntity{
 	public void setBills(Collection<Bill> bills) {
 		this.bills = bills;
 	}
+	public void addBill(Bill bill){
+		this.bills.add(bill);
+	}
+	
+	public void removeBill(Bill bill){
+		this.bills.remove(bill);
+	}
 	
 	
 	
