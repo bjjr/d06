@@ -1,7 +1,9 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -181,11 +183,50 @@ public class CampaignService {
 		res = campaignRepository.avgActiveCampignsPerSponsor();
 		return res;
 	}
+	
+	public ArrayList<Campaign> findCampaignsWithDisplays(){
+		ArrayList<Campaign> res;
+		
+		res = campaignRepository.findCampaignsWithDisplays();
+		
+		return res;
+	}
+	
+	public ArrayList<Campaign> findStarCampaignsWithDisplays(){
+		ArrayList<Campaign> res;
+		
+		res = campaignRepository.findStarCampaignsWithDisplays();
+		
+		return res;
+	}
+
 
 	public void incrementDisplayed(Campaign c) {
 		Campaign res = c, saved;
 		res.setDisplayed(c.getDisplayed() + 1);
 		saved = save(res);
 		Assert.isTrue(res.getDisplayed() == saved.getDisplayed());
+	}
+	
+	public String displayBanner(){
+		String res;
+		ArrayList<String> banners;
+		ArrayList<Campaign> listC = findCampaignsWithDisplays();
+		Campaign c = listC.get(new Random().nextInt(listC.size()));
+		banners = new ArrayList<>(c.getBanners());
+		res = banners.get(new Random().nextInt(banners.size()));
+		incrementDisplayed(c);
+		return res;
+	}
+	
+	public String displayBannerStar(){
+		String res;
+		ArrayList<String> banners;
+		ArrayList<Campaign> listC = findStarCampaignsWithDisplays();
+		Campaign c = listC.get(new Random().nextInt(listC.size()));
+		banners = new ArrayList<>(c.getBanners());
+		res = banners.get(new Random().nextInt(banners.size()));
+		incrementDisplayed(c);
+		return res;
 	}
 }
