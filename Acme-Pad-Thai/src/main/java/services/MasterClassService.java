@@ -2,6 +2,8 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -396,6 +398,28 @@ public class MasterClassService {
 		
 		masterClass.setPromoted(false);
 		save(masterClass);
+	}
+	
+	public MasterClass findRandomPromotedMasterClass() {
+		MasterClass res;
+		Collection<MasterClass> masterClasses;
+		List<MasterClass> masterClassesList;
+		Random r;
+		int index;
+		
+		masterClasses = masterClassRepository.findAllPromotedMasterClasses();
+		
+		if (masterClasses.isEmpty())
+			res = null;
+		else {
+			r = new Random();
+			index = r.nextInt(masterClasses.size());
+			masterClassesList = new ArrayList<>(masterClasses);
+			res = masterClassesList.get(index);
+		}
+		
+		return res;
+		
 	}
 	
 }
