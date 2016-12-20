@@ -31,13 +31,20 @@
 		<value>/views/nutritionist/messages</value>
 		<value>/views/recipe/messages</value>
 		<value>/views/user/messages</value>
+		<value>/views/learningMaterial/messages</value>
+		<value>/views/text/messages</value>
 		<value>/views/fee/messages</value>
 		<value>/views/contest/messages</value>
 		<value>/views/recipeCopy/messages</value>
 		<value>/views/sponsor/messages</value>
 		<value>/views/campaign/messages</value>		
-		<value>/views/bill/messages</value>		
-		<value>/views/step/messages</value>		
+		<value>/views/bill/messages</value>
+		<value>/views/socialIdentity/messages</value>	
+		<value>/views/step/messages</value>
+		<value>/views/quantity/messages</value>
+		<value>/views/video/messages</value>
+		<value>/views/presentation/messages</value>
+		<value>/views/cook/messages</value>
 		<value>/views/ingredient/messages</value>
 		<value>/views/property/messages</value>
 		<value>/views/comment/messages</value>

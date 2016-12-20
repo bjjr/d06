@@ -12,7 +12,7 @@
 
 <h2><spring:message code="recipe.information"/></h2>
 <br />
-<display:table pagesize="5" class="displaytag" keepStatus="true"
+<display:table pagesize="5" class="displaytag"
 	name="recipe" requestURI="${requestURI}" id="row">
 
 	<spring:message code="recipe.title" var="titleHeader" />
@@ -77,27 +77,45 @@
 
 <h2><spring:message code="recipe.ingredients"/></h2>
 <br />
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="quantities" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" class="displaytag"
+	name="quantities" requestURI="${requestURI}" id="quantity">
 	
 	<spring:message code="ingredient.name" var="nameIngredientHeader" />
 	<display:column property="ingredient.name" title="${nameIngredientHeader}"
 		sortable="false" />
 	
 	<spring:message code="quantity.quantity" var="quantityHeader" />
-	<display:column property="quantity" title="${quantityHeader}"
+	<display:column property="value" title="${quantityHeader}"
 		sortable="false" />
 
 	<spring:message code="quantity.unit" var="unitHeader" />
 	<display:column property="unit.unit" title="${unitHeader}"
 		sortable="false" />
 	
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${owner}">
+			<display:column>
+				<a href="quantity/edit.do?recipeId=${recipe.id}&quantityId=${quantity.id}" >
+					<spring:message code="quantity.edit"/>
+				</a>
+			</display:column>
+		</jstl:if>
+	</security:authorize>
+	
 </display:table>
+
+<security:authorize access="hasRole('USER')">
+	<jstl:if test="${owner}">
+		<a href="quantity/create.do?recipeId=${recipe.id}" >
+			<spring:message code="quantity.add"/>
+		</a>
+	</jstl:if>
+</security:authorize>
 
 <h2><spring:message code="recipe.steps"/></h2>
 <br />
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="steps" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" class="displaytag"
+	name="steps" requestURI="${requestURI}" id="step">
 	
 	<spring:message code="step.description" var="descriptionHeader" />
 	<display:column property="description" title="${descriptionHeader}"
@@ -111,18 +129,36 @@
 	
 	<spring:message code="step.hints" var="stepHintsHeader" />
 	<display:column title="${stepHintsHeader}">
-		<jstl:forEach items="${row.hints }" var="hint">
+		<jstl:forEach items="${step.hints }" var="hint">
 			<jstl:out value="${hint }"></jstl:out>
 			<br />
 		</jstl:forEach>
 	</display:column>
 	
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${owner}">
+			<display:column>
+				<a href="step/edit.do?recipeId=${recipe.id}&stepId=${step.id}" >
+					<spring:message code="step.edit"/>
+				</a>
+			</display:column>
+		</jstl:if>
+	</security:authorize>
+	
 </display:table>
+
+<security:authorize access="hasRole('USER')">
+	<jstl:if test="${owner}">
+		<a href="step/create.do?recipeId=${recipe.id}" >
+			<spring:message code="step.add"/>
+		</a>
+	</jstl:if>
+</security:authorize>
 
 <h2><spring:message code="recipe.comments"/></h2>
 <br />
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="comments" requestURI="${requestURI}" id="row">
+<display:table pagesize="5" class="displaytag"
+	name="comments" requestURI="${requestURI}" id="comment">
 	
 	<spring:message code="comment.title" var="commentTitleHeader" />
 	<display:column property="title" title="${commentTitleHeader}"

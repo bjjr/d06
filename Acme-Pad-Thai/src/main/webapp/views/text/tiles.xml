@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="text/display" extends="master.page">
+		<put-attribute name="title" value="Display text" />
+		<put-attribute name="body" value="/views/text/display.jsp" />
+	</definition>
+	
+	<definition name="text/edit" extends="master.page">
+		<put-attribute name="title" value="Edit text" />
+		<put-attribute name="body" value="/views/text/edit.jsp" />
+	</definition>
+	
+</tiles-definitions>

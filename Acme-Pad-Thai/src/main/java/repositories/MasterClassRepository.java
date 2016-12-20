@@ -39,4 +39,7 @@ public interface MasterClassRepository extends JpaRepository<MasterClass, Intege
 	@Query("select m from MasterClass m, Actor a where a not member of m.actors and a.id = ?1")
 	Collection<MasterClass> findPrincipalNotRegisteredMasterClasses(int actorId);
 	
+	@Query("select m from MasterClass m where m.promoted = true")
+	Collection<MasterClass> findAllPromotedMasterClasses();
+	
 }

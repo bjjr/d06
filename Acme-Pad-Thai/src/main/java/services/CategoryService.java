@@ -111,7 +111,7 @@ public class CategoryService {
 	}
 	
 	public Category findOne(int id){
-		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"));
+		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR") || actorService.checkAuthority("USER"));
 		Assert.isTrue(id!=0);
 		Assert.notNull(id);
 		

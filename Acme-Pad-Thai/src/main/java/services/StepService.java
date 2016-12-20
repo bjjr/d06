@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Step;
-
 import repositories.StepRepository;
+import domain.Recipe;
+import domain.Step;
 
 
 @Service
@@ -22,6 +22,9 @@ public class StepService {
 	// Supporting services
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private RecipeService recipeService;
 	
 	
 	//Constructors
@@ -40,12 +43,16 @@ public class StepService {
 		return result;
 	}
 	
-	public Step save(Step step){
+	public Step save(Step step, int recipeId){
 		Assert.notNull(step);
 		
 		Step result;
+		Recipe recipe;
 		
+		recipe = recipeService.findOne(recipeId);
 		result = stepRepository.save(step);
+		recipe.addStep(result);
+		recipeService.save(recipe);
 		
 		return result;
 		
@@ -100,6 +107,26 @@ public class StepService {
 		Assert.notNull(result);
 		
 		return result;
+	}
+	
+	public Recipe findRecipeByStep(int stepId){
+		Recipe result;
+		
+		result = stepRepository.findRecipeByStep(stepId);
+		Assert.notNull(result);
+		
+		return result;
+}
+	public Step createDefaultStep() {
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		
+		Step res;
+		
+		res = create();
+		
+		res.setDescription("This is an example step / Esto es un paso de ejemplo");
+		
+		return res;
 	}
 	
 }

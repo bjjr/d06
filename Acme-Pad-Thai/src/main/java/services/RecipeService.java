@@ -24,7 +24,6 @@ import domain.Step;
 import domain.User;
 
 import repositories.RecipeRepository;
-import security.Authority;
 
 @Service
 @Transactional
@@ -76,11 +75,29 @@ public class RecipeService {
 
 		Recipe result;
 		User owner;
+		Collection<Step> steps = new ArrayList<>();
+		Collection<Quantity> quantities = new ArrayList<>();
+		Collection<Category> categories = new ArrayList<>();
+		Date momentCreated;
+		Date momentUpdated;
+		String ticker;
+		
+		momentCreated = new Date(System.currentTimeMillis()-1000);		
+		momentUpdated = new Date(System.currentTimeMillis()-1000);
+		steps.add(stepService.createDefaultStep());
+		quantities.add(quantityService.createDefaultQuantity());
+		categories.add(categoryService.findOne(104));
+		ticker = createTicker();
 
 		owner = userService.findByPrincipal();
 		result = new Recipe();
 		result.setUser(owner);
-		userService.save(owner);
+		result.setSteps(steps);
+		result.setQuantities(quantities);
+		result.setCategories(categories);
+		result.setMomentAuthored(momentCreated);
+		result.setMomentLastUpdated(momentUpdated);
+		result.setTicker(ticker);
 
 		return result;
 	}
@@ -93,13 +110,44 @@ public class RecipeService {
 		Recipe result;
 		Date momentCreated;
 		Date momentUpdated;
-
-		momentCreated = new Date(System.currentTimeMillis() - 1000);
-		momentUpdated = new Date(System.currentTimeMillis() - 1000);
-		recipe.setMomentAuthored(momentCreated);
+		Step defaultStep;
+		Quantity defaultQuantity;
+		Category defaultCategory;
+		
+		if (recipe.getId() == 0) {
+			momentCreated = new Date(System.currentTimeMillis()-1000);
+			recipe.setMomentAuthored(momentCreated);
+			
+			defaultStep = stepService.createDefaultStep();
+			recipe.getSteps().add(defaultStep);
+			
+			defaultCategory = categoryService.findOne(104);
+			recipe.getCategories().add(defaultCategory);
+		}
+		
+		momentUpdated = new Date(System.currentTimeMillis()-1000);
 		recipe.setMomentLastUpdated(momentUpdated);
-
-		result = recipeRepository.save(recipe);
+		
+		if (recipe.getId() == 0) {
+			result = recipeRepository.save(recipe);
+			
+			recipe.getUser().addRecipe(result);
+			userService.save(recipe.getUser());
+			
+			defaultCategory = categoryService.findOne(104);
+			defaultCategory.addRecipe(result);
+			categoryService.save(defaultCategory);
+			
+			defaultQuantity = quantityService.createDefaultQuantity();
+			result.getQuantities().add(defaultQuantity);
+			defaultQuantity.setRecipe(result);
+			quantityService.save(defaultQuantity);
+			
+			recipeRepository.save(result);
+			
+		} else {
+			result = recipeRepository.save(recipe);
+		}
 
 		return result;
 	}
@@ -120,44 +168,66 @@ public class RecipeService {
 	public void delete(Recipe recipe) {
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		Assert.notNull(recipe);
-		Assert.isTrue(recipe.getId() != 0);
+		Assert.isTrue(recipe.getId()!=0);
 		Assert.isTrue(recipeRepository.exists(recipe.getId()));
-
+		
 		User owner;
 		Collection<Category> categories;
-
+		
 		owner = recipe.getUser();
 		categories = categoryService.findAll();
-
-		for (Step s : recipe.getSteps()) {
-			stepService.delete(s);
-		}
-
-		for (Quantity q : recipe.getQuantities()) {
+		
+		for(Quantity q : recipe.getQuantities()){
 			quantityService.delete(q);
 		}
-
-		for (LikeSA l : recipe.getLikesSA()) {
-			likeSAService.delete(l);
+		recipe.setQuantities(null);
+		
+		if (recipe.getLikesSA() != null) {
+			for(LikeSA l : recipe.getLikesSA()){
+				likeSAService.delete(l);
+			}
+			recipe.setLikesSA(null);
 		}
-
-		for (Comment c : recipe.getComments()) {
-			commentService.delete(c);
+		
+		if (recipe.getComments() != null) {
+			for(Comment c : recipe.getComments()){
+				commentService.delete(c);
+			}
+			recipe.setComments(null);
 		}
-
-		for (Category c : categories) {
-			if (c.getRecipes().contains(recipe)) {
+		
+		for(Category c : categories){
+			if(c.getRecipes().contains(recipe)){
 				c.removeRecipe(recipe);
 				categoryService.save(c);
 			}
 		}
-
-		recipe.setUser(null);
-		owner.removeRecipe(recipe);
+		
+		if (recipe.getQuantities() != null) {
+			for (Quantity q : recipe.getQuantities()) {
+				quantityService.delete(q);
+			}
+			recipe.setQuantities(null);
+		}
+		
+		owner.removeRecipe(recipe);		
+		recipeRepository.delete(recipe);
 		userService.save(owner);
 
-		recipeRepository.delete(recipe);
-
+	}
+	
+	public Recipe findOneToEdit(int recipeId) {
+		Assert.isTrue(recipeId != 0);
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		
+		Recipe res;
+		
+		res = recipeRepository.findOne(recipeId);
+		
+		Assert.notNull(res);
+		Assert.isTrue(userService.findByPrincipal().getRecipes().contains(res));
+		
+		return res;
 	}
 
 	// Other business methods
@@ -277,36 +347,29 @@ public class RecipeService {
 		contestService.save(contest);
 	}
 
-	public Collection<Recipe> recipesFollows() {
-		Assert.isTrue(actorService.checkAuthority("USER")
-				|| actorService.checkAuthority("NUTRITIONIST"));
-
+	public Collection<Recipe> recipesFollows(){
+		Assert.isTrue(actorService.checkAuthority("USER") || 
+				actorService.checkAuthority("NUTRITIONIST"));
+		
 		Collection<Recipe> result;
 		SocialActor sa;
 		List<Recipe> userRecipes;
-		Authority user;
-
+		
 		result = new ArrayList<Recipe>();
 		sa = socialActorService.findByPrincipal();
 		userRecipes = new ArrayList<Recipe>();
-		user = new Authority();
-		user.setAuthority("USER");
 
-		for (SocialActor sc : sa.getFollows()) {
-			if (sc.getUserAccount().getAuthorities().contains(user)) {
+		for(SocialActor sc : sa.getFollows()){
+			if(userService.findByUserAccount(sc.getUserAccount()) != null){
 				User u;
-
+				
 				u = userService.findByUserAccount(sc.getUserAccount());
-				if (!u.getRecipes().isEmpty()) {
-
-					userRecipes = (List<Recipe>) u.getRecipes();
-
-					result.add(userRecipes.get(userRecipes.size() - 1));
-				}
-
+				userRecipes = (List<Recipe>) u.getRecipes();
+				
+				result.add(userRecipes.get(userRecipes.size()-1));
 			}
 		}
-
+		
 		return result;
 	}
 
@@ -341,26 +404,30 @@ public class RecipeService {
 	}
 
 	public String createTicker() {
-		String caracteresEspeciales;
+		String caracteresEspeciales; 
 		String result;
-		List<Recipe> recipes;
+		List<Recipe> recipes; 
 		Random random;
 		char[] r;
 		int z;
 		char c;
-
-		caracteresEspeciales = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-		result = "";
-		recipes = (List<Recipe>) findAllRecipesGroupByCategory();
-		random = new Random();
-		result += Calendar.YEAR + Calendar.MONTH + Calendar.DAY_OF_MONTH;
-
+		Calendar fecha;
+		
+		caracteresEspeciales= "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		result="";
+		recipes= (List<Recipe>) findAllRecipesGroupByCategory();
+		random= new Random();
+		fecha = Calendar.getInstance();
+		result += String.valueOf(fecha.get(Calendar.YEAR)).substring(2);
+		result += String.valueOf(fecha.get(Calendar.MONTH));
+		result += String.valueOf(fecha.get(Calendar.DAY_OF_MONTH));
+		
 		result += "-";
-
+		
 		for (int i = 0; i <= 3; i++) {
-			r = new char[4];
-			z = random.nextInt(caracteresEspeciales.length() - 1);
-			c = caracteresEspeciales.charAt(z);
+			r =  new char[4];
+		    z = random.nextInt(caracteresEspeciales.length() - 1);
+		    c = caracteresEspeciales.charAt(z);
 			r[i] = c;
 			result += r[i];
 		}
@@ -371,6 +438,19 @@ public class RecipeService {
 			}
 		}
 		return result;
+	}
+	
+	public void deleteStep(Step step) {
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		Assert.isTrue(step != null);
+		
+		Recipe recipe;
+		recipe = stepService.findRecipeByStep(step.getId());
+		
+		recipe.getSteps().remove(step);
+		stepService.delete(step);
+		
+		save(recipe);
 	}
 
 }
