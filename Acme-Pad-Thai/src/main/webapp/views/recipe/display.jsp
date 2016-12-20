@@ -10,6 +10,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<img src="${banner}" alt="Banner"></img>
+
 <h2><spring:message code="recipe.information"/></h2>
 <br />
 <display:table pagesize="5" class="displaytag"
