@@ -17,7 +17,7 @@
 <tiles-definitions>
 
 	<definition name="contest/list" extends="master.page">	
-		<put-attribute name="title" value="List of contest" />
+		<put-attribute name="title" value="List of contests" />
 		<put-attribute name="body" value="/views/contest/list.jsp" />
 	</definition>
 	

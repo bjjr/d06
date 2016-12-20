@@ -25,15 +25,23 @@
 	<display:column property="closingTime" title="${close}" sortable="true">
 		<jstl:out value="${row.closingTime}" />
 	</display:column>
-		<spring:message code="contest.recipes" var="recipes" />
-		<display:column title="${recipes}">
-			<a href="recipeCopy/list.do?contestId=${row.id}">${recipes}</a>
-		</display:column>
-	<security:authorize access="hasRole('ADMINISTRATOR')">
-	<spring:message code="contest.edit" var="edit" />
-	<display:column title="${edit}">
-		<a href="contest/administrator/edit.do?contestId=${row.id}">${edit}</a>
+	<spring:message code="contest.recipes" var="recipes" />
+	<display:column title="${recipes}">
+		<a href="recipeCopy/list.do?contestId=${row.id}">${recipes}</a>
 	</display:column>
+	<security:authorize access="hasRole('ADMINISTRATOR')">
+		<spring:message code="contest.edit" var="edit" />
+		<display:column title="${edit}">
+			<a href="contest/administrator/edit.do?contestId=${row.id}">${edit}</a>
+		</display:column>
 	</security:authorize>
 
 </display:table>
+<security:authorize access="hasRole('ADMINISTRATOR')">
+	<div>
+		<spring:message code="contest.set" var="set" />
+		<a
+			style="-webkit-appearance: button; -moz-appearance: button; appearance: button; text-decoration: none; color: initial;"
+			href="contest/administrator/set.do">${set}</a>
+	</div>
+</security:authorize>
