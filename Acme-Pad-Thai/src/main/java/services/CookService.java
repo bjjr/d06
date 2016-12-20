@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Cook;
-import domain.Folder;
-
 import repositories.CookRepository;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
+import domain.Cook;
+import domain.Folder;
 
 @Service
 @Transactional
@@ -67,7 +67,16 @@ public class CookService {
 		Assert.notNull(c);
 		
 		Cook res;
+		Collection<Folder> folders;
+		
+		folders = new ArrayList<Folder>();
+		
 		res = cookRepository.save(c);
+		folders = folderService.createFolderObligatory(res);
+		for (Folder f : folders) {
+			folderService.save(f);
+		}
+		res.setFolders(folders);
 		
 		return res;
 	}

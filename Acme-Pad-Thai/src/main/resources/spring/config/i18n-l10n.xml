@@ -44,6 +44,7 @@
 		<value>/views/quantity/messages</value>
 		<value>/views/video/messages</value>
 		<value>/views/presentation/messages</value>
+		<value>/views/cook/messages</value>
 	</util:list>
 
 </beans>

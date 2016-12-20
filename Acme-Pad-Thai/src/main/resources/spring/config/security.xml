@@ -53,6 +53,7 @@
 		<security:intercept-url pattern="/quantity/create.do" access="hasRole('USER')" />
 		<security:intercept-url pattern="/quantity/edit.do" access="hasRole('USER')" />
 		
+		<security:intercept-url pattern="/cook/**" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/masterClass/cook/**" access="hasRole('COOK')" />
