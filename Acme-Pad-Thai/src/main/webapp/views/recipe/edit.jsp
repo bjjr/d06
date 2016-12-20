@@ -46,7 +46,7 @@
 	</div>
 	<div>
 		<input type="submit" name="save"
-			value="<spring:message code="recipe.save" />" />
+			value="<spring:message code="recipe.save" />" />&nbsp;
 		<jstl:if test="${recipe.id != 0}">
 			<input type="submit" name="delete"
 			 value="<spring:message code="recipe.delete" />"

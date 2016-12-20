@@ -44,6 +44,8 @@
 		<value>/views/learningMaterial/tiles.xml</value>
 		<value>/views/text/tiles.xml</value>
 		<value>/views/quantity/tiles.xml</value>
+		<value>/views/video/tiles.xml</value>
+		<value>/views/presentation/tiles.xml</value>
 	</util:list>
 
 </beans>

@@ -28,9 +28,10 @@
 			</jstl:when>
 			
 			<jstl:otherwise>
-				<jstl:forEach var="url" items="learningMaterial.attachments">
+				<jstl:forEach var="url" items="${learningMaterial.attachments}">
 					<a href="${url}">
 						<jstl:out value="${url}" />
+						<br />
 					</a>
 				</jstl:forEach>
 			</jstl:otherwise>
@@ -69,29 +70,22 @@
 		<display:column>
 			<jstl:choose>
 				<jstl:when test="${learningMaterial['class'].name == 'domain.Text'}">
-					<form action="text/edit.do" method="post">
-						<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
-						<input hidden="true" type="text" name="textId" value="${learningMaterial.id}" />
-						<input type="submit" name="edit" value="<spring:message code="learningMaterial.edit.text"/>"/>
-					</form>
+					<a href="text/edit.do?masterClassId=${masterClassId}&textId=${learningMaterial.id}">
+						<spring:message code="learningMaterial.edit.text"/>
+					</a>
 				</jstl:when>
 				
 				<jstl:when test="${learningMaterial['class'].name == 'domain.Presentation'}">
-					<form action="presentation/edit.do" method="post">
-						<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
-						<input hidden="true" type="text" name="presentationId" value="${learningMaterial.id}" />
-						<input type="submit" name="edit" value="<spring:message code="learningMaterial.edit.presentation"/>"/>
-					</form>
+					<a href="presentation/edit.do?masterClassId=${masterClassId}&presentationId=${learningMaterial.id}">
+						<spring:message code="learningMaterial.edit.presentation"/>
+					</a>
 				</jstl:when>
 				
 				<jstl:when test="${learningMaterial['class'].name == 'domain.Video'}">
-					<form action="video/edit.do" method="post">
-						<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
-						<input hidden="true" type="text" name="videoId" value="${learningMaterial.id}" />
-						<input type="submit" name="edit" value="<spring:message code="learningMaterial.edit.video"/>"/>
-					</form>
+					<a href="video/edit.do?masterClassId=${masterClassId}&videoId=${learningMaterial.id}">
+						<spring:message code="learningMaterial.edit.video"/>
+					</a>
 				</jstl:when>
-				
 				<jstl:otherwise></jstl:otherwise>
 			</jstl:choose>
 		</display:column>
@@ -100,19 +94,16 @@
 
 <security:authorize access="hasRole('COOK')">
 	<div>
-		<form action="text/create.do" method="post">
-			<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
-			<input type="submit" name="add" value="<spring:message code="learningMaterial.create.text"/>"/>
-		</form> &nbsp;
+		<a href="text/create.do?masterClassId=${masterClassId}">
+			<spring:message code="learningMaterial.create.text"/>
+		</a> &nbsp;
 		
-		<form action="presentation/create.do" method="post">
-			<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
-			<input type="submit" name="add" value="<spring:message code="learningMaterial.create.presentation"/>"/>
-		</form> &nbsp;
+		<a href="presentation/create.do?masterClassId=${masterClassId}">
+			<spring:message code="learningMaterial.create.presentation"/>
+		</a> &nbsp;
 		
-		<form action="video/edit.do" method="post">
-			<input hidden="true" type="text" name="masterClassId" value="${masterClassId}" />
-			<input type="submit" name="add" value="<spring:message code="learningMaterial.create.video"/>"/>
-		</form>
+		<a href="video/create.do?masterClassId=${masterClassId}" >
+			<spring:message code="learningMaterial.create.video"/>
+		</a>
 	</div>
 </security:authorize>

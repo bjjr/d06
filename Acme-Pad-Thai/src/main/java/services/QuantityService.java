@@ -42,7 +42,7 @@ public class QuantityService {
 		Quantity result;
 		Recipe r;
 		
-		r = recipeService.findOne(recipeId);
+		r = recipeService.findOneToEdit(recipeId);
 		result = new Quantity();
 		result.setRecipe(r);
 		

@@ -4,13 +4,16 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.RecipeService;
 import services.StepService;
+import services.UserService;
 import controllers.AbstractController;
 import domain.Step;
 
@@ -24,6 +27,9 @@ public class StepUserController extends AbstractController {
 	
 	@Autowired
 	private RecipeService recipeService;
+	
+	@Autowired
+	private UserService userService;
 
 	// Constructors ----------------------------------------------------------
 
@@ -31,45 +37,44 @@ public class StepUserController extends AbstractController {
 		super();
 	}
 
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "add")
-	public ModelAndView create(int recipeId) {
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create(@RequestParam int recipeId) {
 		ModelAndView result;
 		Step step;
 
+		Assert.isTrue(recipeService.findOne(recipeId).getUser().equals(userService.findByPrincipal()));
 		step = stepService.create();
-		result = createEditModelAndView(step);
-		result.addObject("recipeId", recipeId);
+		result = createEditModelAndView(step, recipeId);
 
 		return result;
 	}
 
 	// Edition ----------------------------------------------------------
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params="edit")
-	public ModelAndView edit(int recipeId, int stepId) {
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam int recipeId, @RequestParam int stepId) {
 		ModelAndView result;
 		Step step;
 
+		Assert.isTrue(recipeService.findOne(recipeId).getUser().equals(userService.findByPrincipal()));
 		step = stepService.findOne(stepId);
-		result = createEditModelAndView(step);
-		result.addObject("recipeId", recipeId);
+		result = createEditModelAndView(step, recipeId);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Step step, int recipeId, BindingResult binding) {
+	public ModelAndView save(@Valid Step step, BindingResult binding, @RequestParam int recipeId) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
-			result = createEditModelAndView(step);
+			result = createEditModelAndView(step, recipeId);
 		} else {
 			try {
 				stepService.save(step, recipeId);
-				result = new ModelAndView(
-						"redirect:/recipe/display.do?recipeId=" + recipeId);
+				result = new ModelAndView("redirect:/recipe/display.do?recipeId=" + recipeId);
 			} catch (Throwable oops) {
-				result = createEditModelAndView(step, "step.commit.error");
+				result = createEditModelAndView(step, recipeId, "step.commit.error");
 			}
 		}
 
@@ -77,14 +82,14 @@ public class StepUserController extends AbstractController {
 	}
 	
 	@RequestMapping(value="/edit", method=RequestMethod.POST, params="delete")
-	public ModelAndView delete(Step step, int recipeId, BindingResult binding) {
+	public ModelAndView delete(Step step, BindingResult binding, @RequestParam int recipeId) {
 		ModelAndView res;
 		
 		try {
 			recipeService.deleteStep(step);
-			res = new ModelAndView("redirect:/recipe/display.do?recipeId="+ recipeId);
+			res = new ModelAndView("redirect:/recipe/display.do?recipeId=" + recipeId);
 		} catch (Throwable th) {
-			res = createEditModelAndView(step, "step.commit.error");
+			res = createEditModelAndView(step, recipeId, "step.commit.error");
 		}
 		
 		return res;
@@ -93,20 +98,21 @@ public class StepUserController extends AbstractController {
 	// Ancillary Methods
 	// ----------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(Step step) {
+	protected ModelAndView createEditModelAndView(Step step, int recipeId) {
 		ModelAndView result;
 
-		result = createEditModelAndView(step, null);
+		result = createEditModelAndView(step, recipeId, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(Step step, String message) {
+	protected ModelAndView createEditModelAndView(Step step, int recipeId, String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("step/edit");
 		result.addObject("step", step);
 		result.addObject("message", message);
+		result.addObject("recipeId", recipeId);
 
 		return result;
 	}

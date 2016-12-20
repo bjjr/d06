@@ -95,11 +95,9 @@
 	<security:authorize access="hasRole('USER')">
 		<jstl:if test="${owner}">
 			<display:column>
-				<form action="/Acme-Pad-Thai/quantity/edit.do" method="post" >
-					<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
-					<input hidden="true" type="text" name="quantityId" value="${quantity.id}" />
-					<input type="submit" name="edit" value="<spring:message code="quantity.edit"/>"/>
-				</form>
+				<a href="quantity/edit.do?recipeId=${recipe.id}&quantityId=${quantity.id}" >
+					<spring:message code="quantity.edit"/>
+				</a>
 			</display:column>
 		</jstl:if>
 	</security:authorize>
@@ -108,10 +106,9 @@
 
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${owner}">
-		<form action="/Acme-Pad-Thai/quantity/create.do" method="post" >
-			<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
-			<input type="submit" name="add" value="<spring:message code="quantity.add"/>"/>
-		</form>
+		<a href="quantity/create.do?recipeId=${recipe.id}" >
+			<spring:message code="quantity.add"/>
+		</a>
 	</jstl:if>
 </security:authorize>
 
@@ -141,11 +138,9 @@
 	<security:authorize access="hasRole('USER')">
 		<jstl:if test="${owner}">
 			<display:column>
-				<form action="/Acme-Pad-Thai/step/edit.do" method="post" >
-					<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
-					<input hidden="true" type="text" name="stepId" value="${step.id}" />
-					<input type="submit" name="edit" value="<spring:message code="step.edit"/>"/>
-				</form>
+				<a href="step/edit.do?recipeId=${recipe.id}&stepId=${step.id}" >
+					<spring:message code="step.edit"/>
+				</a>
 			</display:column>
 		</jstl:if>
 	</security:authorize>
@@ -154,10 +149,9 @@
 
 <security:authorize access="hasRole('USER')">
 	<jstl:if test="${owner}">
-		<form action="/Acme-Pad-Thai/step/create.do" method="post" >
-			<input hidden="true" type="text" name="recipeId" value="${recipe.id}" />
-			<input type="submit" name="add" value="<spring:message code="step.add"/>"/>
-		</form>
+		<a href="step/create.do?recipeId=${recipe.id}" >
+			<spring:message code="step.add"/>
+		</a>
 	</jstl:if>
 </security:authorize>
 

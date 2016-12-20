@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.IngredientService;
@@ -41,29 +42,27 @@ public class QuantityController extends AbstractController {
 	
 	// Creating ------------------------------------------
 	
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "add")
-	public ModelAndView create(int recipeId) {
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create(@RequestParam int recipeId) {
 		ModelAndView res;
 		Quantity quantity;
 		
 		quantity = quantityService.create(recipeId);
 		
-		res = createEditModelAndView(quantity);
-		res.addObject("recipeId", recipeId);
+		res = createEditModelAndView(quantity, recipeId);
 		
 		return res;
 	}
 	
 	// Editing -------------------------------------------
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "edit")
-	public ModelAndView edit(int recipeId, int quantityId) {
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam int recipeId, @RequestParam int quantityId) {
 		ModelAndView res;
 		Quantity quantity;
 		
 		quantity = quantityService.findOne(quantityId);
-		res = createEditModelAndView(quantity);
-		res.addObject("recipeId", recipeId);
+		res = createEditModelAndView(quantity, recipeId);
 		
 		return res;
 	}
@@ -75,14 +74,13 @@ public class QuantityController extends AbstractController {
 		ModelAndView res;
 		
 		if (binding.hasErrors()) {
-			res = createEditModelAndView(quantity);
+			res = createEditModelAndView(quantity, quantity.getRecipe().getId());
 		} else {
 			try {
 				quantityService.save(quantity);
-				res = new ModelAndView("redirect:/recipe/display.do?recipeId=" 
-									   + String.valueOf(quantity.getRecipe().getId()));
+				res = new ModelAndView("redirect:/recipe/display.do?recipeId=" + quantity.getRecipe().getId());
 			} catch (Throwable th) {
-				res = createEditModelAndView(quantity, "quantity.commit.error");
+				res = createEditModelAndView(quantity, quantity.getRecipe().getId(), "quantity.commit.error");
 			}
 		}
 		
@@ -98,10 +96,9 @@ public class QuantityController extends AbstractController {
 		
 		try {
 			quantityService.delete(quantity);
-			res = new ModelAndView("redirect:/recipe/display.do?recipeId=" 
-					   + String.valueOf(quantity.getRecipe().getId()));
+			res = new ModelAndView("redirect:/recipe/display.do?recipeId=" + quantity.getRecipe().getId());
 		} catch (Throwable th) {
-			res = createEditModelAndView(quantity, "quantity.commit.error");
+			res = createEditModelAndView(quantity, quantity.getRecipe().getId(), "quantity.commit.error");
 		}
 		
 		return res;
@@ -109,15 +106,15 @@ public class QuantityController extends AbstractController {
 	
 	// Ancillary methods ---------------------------------
 	
-	protected ModelAndView createEditModelAndView(Quantity quantity) {
+	protected ModelAndView createEditModelAndView(Quantity quantity, int recipeId) {
 		ModelAndView res;
 
-		res = createEditModelAndView(quantity, null);
+		res = createEditModelAndView(quantity, recipeId, null);
 
 		return res;
 	}
 
-	protected ModelAndView createEditModelAndView(Quantity quantity, String message) {
+	protected ModelAndView createEditModelAndView(Quantity quantity, int recipeId, String message) {
 		ModelAndView res;
 		Collection<Ingredient> ingredients;
 		Collection<Unit> units;
@@ -131,6 +128,7 @@ public class QuantityController extends AbstractController {
 		res.addObject("ingredients", ingredients);
 		res.addObject("units", units);
 		res.addObject("message", message);
+		res.addObject("recipeId", recipeId);
 
 		return res;
 	}

@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.TextService;
+import services.PresentationService;
 import controllers.AbstractController;
-import domain.Text;
+import domain.Presentation;
 
 @Controller
-@RequestMapping("/text")
-public class TextCookController extends AbstractController {
+@RequestMapping("/presentation")
+public class PresentationCookController extends AbstractController {
 
 	// Services ------------------------------------------
 
 	@Autowired
-	private TextService textService;
+	private PresentationService presentationService;
 	
 	// Constructor ---------------------------------------
 
-	public TextCookController() {
+	public PresentationCookController() {
 		super();
 	}
 	
@@ -34,11 +34,11 @@ public class TextCookController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam int masterClassId) {
 		ModelAndView res;
-		Text text;
+		Presentation presentation;
 		
-		text = textService.create();
+		presentation = presentationService.create();
 		
-		res = createEditModelAndView(text, masterClassId);
+		res = createEditModelAndView(presentation, masterClassId);
 		
 		return res;
 	}
@@ -46,13 +46,13 @@ public class TextCookController extends AbstractController {
 	// Editing -------------------------------------------
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int masterClassId, @RequestParam int textId) {
+	public ModelAndView edit(@RequestParam int masterClassId, @RequestParam int presentationId) {
 		ModelAndView res;
-		Text text;
-		
-		text = textService.findOne(masterClassId, textId);
+		Presentation presentation;
 
-		res = createEditModelAndView(text, masterClassId);
+		presentation = presentationService.findOne(masterClassId, presentationId);
+
+		res = createEditModelAndView(presentation, masterClassId);
 
 		return res;
 	}
@@ -60,17 +60,17 @@ public class TextCookController extends AbstractController {
 	// Save ---------------------------------------------
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Text text, BindingResult binding, @RequestParam int masterClassId) {
+	public ModelAndView save(@Valid Presentation presentation, BindingResult binding, @RequestParam int masterClassId) {
 		ModelAndView res;
 		
 		if (binding.hasErrors()) {
-			res = createEditModelAndView(text, masterClassId);
+			res = createEditModelAndView(presentation, masterClassId);
 		} else {
 			try {
-				textService.save(text, masterClassId);
+				presentationService.save(presentation, masterClassId);
 				res = new ModelAndView("redirect:/learningMaterial/cook/list.do?masterClassId=" + masterClassId);
 			} catch (Throwable th) {
-				res = createEditModelAndView(text, masterClassId, "text.commit.error");
+				res = createEditModelAndView(presentation, masterClassId, "presentation.commit.error");
 			}
 		}
 		
@@ -80,14 +80,14 @@ public class TextCookController extends AbstractController {
 	// Delete -------------------------------------------
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView edit(Text text, BindingResult binding, @RequestParam int masterClassId) {
+	public ModelAndView edit(Presentation presentation, BindingResult binding, @RequestParam int masterClassId) {
 		ModelAndView res;
 		
 		try {
-			textService.delete(text, masterClassId);
+			presentationService.delete(presentation, masterClassId);
 			res = new ModelAndView("redirect:/learningMaterial/cook/list.do?masterClassId=" + masterClassId);
 		} catch (Throwable th) {
-			res = createEditModelAndView(text, masterClassId, "text.commit.error");
+			res = createEditModelAndView(presentation, masterClassId, "presentation.commit.error");
 		}
 		
 		return res;
@@ -95,19 +95,19 @@ public class TextCookController extends AbstractController {
 
 	// Ancillary methods --------------------------------
 
-	protected ModelAndView createEditModelAndView(Text text, int masterClassId) {
+	protected ModelAndView createEditModelAndView(Presentation presentation, int masterClassId) {
 		ModelAndView res;
 
-		res = createEditModelAndView(text, masterClassId, null);
+		res = createEditModelAndView(presentation, masterClassId, null);
 
 		return res;
 	}
 
-	protected ModelAndView createEditModelAndView(Text text, int masterClassId, String message) {
+	protected ModelAndView createEditModelAndView(Presentation presentation, int masterClassId, String message) {
 		ModelAndView res;
 
-		res = new ModelAndView("text/edit");
-		res.addObject("text", text);
+		res = new ModelAndView("presentation/edit");
+		res.addObject("presentation", presentation);
 		res.addObject("message", message);
 		res.addObject("masterClassId", masterClassId);
 

@@ -10,15 +10,13 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="step/edit.do" modelAttribute="step">
+<form:form action="step/edit.do?recipeId=${recipeId}" modelAttribute="step">
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	
-	<input type="hidden" id="recipeId" name="recipeId" value="${recipeId}" />
-	
 	<div>
 		<spring:message code="step.description" />
-		<form:input path="description" />
+		<form:textarea path="description" />
 		<form:errors cssClass="error" path="description" />
 	</div>
 	<div>
@@ -41,7 +39,7 @@
 		</jstl:if>
 		<input type="button" name="cancel"
 			value="<spring:message code="step.cancel" />"
-			onclick="window.location='/recipe/display.do?recipeId=?${recipeId}'" /> <br />
+			onclick="window.location='recipe/display.do?recipeId=${recipeId}'" /> <br />
 	</div>
 
 

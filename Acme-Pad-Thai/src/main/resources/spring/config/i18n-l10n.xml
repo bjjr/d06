@@ -42,6 +42,8 @@
 		<value>/views/socialIdentity/messages</value>	
 		<value>/views/step/messages</value>
 		<value>/views/quantity/messages</value>
+		<value>/views/video/messages</value>
+		<value>/views/presentation/messages</value>
 	</util:list>
 
 </beans>

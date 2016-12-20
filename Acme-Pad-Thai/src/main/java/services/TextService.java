@@ -1,8 +1,14 @@
 package services;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.Payload;
+import javax.validation.constraints.Pattern.Flag;
+
+import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.internal.constraintvalidators.URLValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,8 +63,67 @@ public class TextService {
 		Assert.notNull(t);
 		
 		Text res;
+		MasterClass masterClass;
 		
+		URLValidator validator = new URLValidator();
+		validator.initialize(new URL() {
+			
+			@Override
+			public Class<? extends Annotation> annotationType() {
+				return null;
+			}
+			
+			@Override
+			public String regexp() {
+				return null;
+			}
+			
+			@Override
+			public String protocol() {
+				return null;
+			}
+			
+			@Override
+			public int port() {
+				return -1;
+			}
+			
+			@Override
+			public Class<? extends Payload>[] payload() {
+				return null;
+			}
+			
+			@Override
+			public String message() {
+				return null;
+			}
+			
+			@Override
+			public String host() {
+				return null;
+			}
+			
+			@Override
+			public Class<?>[] groups() {
+				return null;
+			}
+			
+			@Override
+			public Flag[] flags() {
+				return null;
+			}
+		});
+		
+		for (String url : t.getAttachments()) {
+			if (validator.isValid(url, null) == false) {
+				throw new IllegalArgumentException();
+			}
+		}
+		
+		masterClass = masterClassService.findOne(masterClassId);
 		res = textRepository.save(t);
+		masterClass.addLearningMaterial(res);
+		masterClassService.save(masterClass);
 		
 		return res;
 	}
