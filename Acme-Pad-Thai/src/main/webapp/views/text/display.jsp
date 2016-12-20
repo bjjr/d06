@@ -17,6 +17,8 @@
 	<jstl:out value="${text.body}"></jstl:out>
 </div>
 
+<br />
+
 <div>
 	<spring:message code="text.back" var="backText" />
 	<input type="button" name="back" value="${backText}"

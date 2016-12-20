@@ -1564,6 +1564,9 @@
 			<ref bean="step1"/>
 			<ref bean="step2"/>
 			<ref bean="step3"/>
+			<ref bean="step15"/>
+			<ref bean="step16"/>
+			<ref bean="step17"/>
 		</list>
 	</property>
 	<property name="comments">
@@ -1905,7 +1908,7 @@
 			<ref bean = "recipe7"/>
 		</list>
 	</property>
-	<property  name ="category" ref="category1"/>
+	<property  name ="root" ref="category1"/>
 	<property name="subcategories">
 		<list>
 		</list>
@@ -1926,7 +1929,7 @@
 			<ref bean = "recipe1"/>
 		</list>
 	</property>
-<property name ="category" ref="category1"/>
+<property name ="root" ref="category1"/>
 	<property name="subcategories">
 		<list>
 		</list>
@@ -1947,7 +1950,7 @@
 			<ref bean = "recipe1"/>
 		</list>
 	</property>
-	<property name ="category" ref="category1"/>
+	<property name ="root" ref="category1"/>
 	<property name="subcategories">
 		<list>
 		</list>
@@ -2629,6 +2632,32 @@
 	</property>
 </bean>
 
+<bean id="step15" class="domain.Step">
+	<property name="description" value="This is the step 15" />
+	<property name="picture" value="" />
+	<property name="hints">
+		<list>
+		</list>
+	</property>
+</bean>
+
+<bean id="step16" class="domain.Step">
+	<property name="description" value="This is the step 16" />
+	<property name="picture" value="" />
+	<property name="hints">
+		<list>
+		</list>
+	</property>
+</bean>
+
+<bean id="step17" class="domain.Step">
+	<property name="description" value="This is the step 17" />
+	<property name="picture" value="" />
+	<property name="hints">
+		<list>
+		</list>
+	</property>
+</bean>
 
 <!-- INGREDIENTS -->
 
@@ -2703,7 +2732,7 @@
 
 
 <bean id="quantity1" class="domain.Quantity">
-	<property name="quantity" value= "2.5" />
+	<property name="value" value= "2.5" />
 	<property name="recipe" ref = "recipe1" />
 	<property name="unit" ref = "unit1" />
 	<property name="ingredient" ref = "ingredient2" />
@@ -2711,7 +2740,7 @@
 
 
 <bean id="quantity2" class="domain.Quantity">
-	<property name="quantity" value= "1.0" />
+	<property name="value" value= "1.0" />
 	<property name="recipe" ref = "recipe1" />
 	<property name="unit" ref = "unit1" />
 	<property name="ingredient" ref = "ingredient4" />
@@ -2719,7 +2748,7 @@
 
 
 <bean id="quantity3" class="domain.Quantity">
-	<property name="quantity" value= "1.3" />
+	<property name="value" value= "1.3" />
 	<property name="recipe" ref = "recipe1" />
 	<property name="unit" ref = "unit7" />
 	<property name="ingredient" ref = "ingredient1" />
@@ -2727,7 +2756,7 @@
 
 
 <bean id="quantity4" class="domain.Quantity">
-	<property name="quantity" value= "1.6" />
+	<property name="value" value= "1.6" />
 	<property name="recipe" ref = "recipe2" />
 	<property name="unit" ref = "unit3" />
 	<property name="ingredient" ref = "ingredient2" />
@@ -2735,7 +2764,7 @@
 
 
 <bean id="quantity5" class="domain.Quantity">
-	<property name="quantity" value= "1.2" />
+	<property name="value" value= "1.2" />
 	<property name="recipe" ref = "recipe3" />
 	<property name="unit" ref = "unit2" />
 	<property name="ingredient" ref = "ingredient1" />
@@ -2743,7 +2772,7 @@
 
 
 <bean id="quantity6" class="domain.Quantity">
-	<property name="quantity" value= "3.0" />
+	<property name="value" value= "3.0" />
 	<property name="recipe" ref = "recipe3" />
 	<property name="unit" ref = "unit5" />
 	<property name="ingredient" ref = "ingredient5" />
@@ -2751,7 +2780,7 @@
 
 
 <bean id="quantity7" class="domain.Quantity">
-	<property name="quantity" value= "1.6" />
+	<property name="value" value= "1.6" />
 	<property name="recipe" ref = "recipe3" />
 	<property name="unit" ref = "unit1" />
 	<property name="ingredient" ref = "ingredient4" />
@@ -2759,7 +2788,7 @@
 
 
 <bean id="quantity8" class="domain.Quantity">
-	<property name="quantity" value= "1.8" />
+	<property name="value" value= "1.8" />
 	<property name="recipe" ref = "recipe4" />
 	<property name="unit" ref = "unit4" />
 	<property name="ingredient" ref = "ingredient3" />
@@ -2767,7 +2796,7 @@
 
 
 <bean id="quantity9" class="domain.Quantity">
-	<property name="quantity" value= "2.5" />
+	<property name="value" value= "2.5" />
 	<property name="recipe" ref = "recipe4" />
 	<property name="unit" ref = "unit6" />
 	<property name="ingredient" ref = "ingredient5" />
@@ -2775,7 +2804,7 @@
 
 
 <bean id="quantity10" class="domain.Quantity">
-	<property name="quantity" value= "1.5" />
+	<property name="value" value= "1.5" />
 	<property name="recipe" ref = "recipe5" />
 	<property name="unit" ref = "unit8" />
 	<property name="ingredient" ref = "ingredient1" />
@@ -2783,7 +2812,7 @@
 
 
 <bean id="quantity11" class="domain.Quantity">
-	<property name="quantity" value= "2.2" />
+	<property name="value" value= "2.2" />
 	<property name="recipe" ref = "recipe6" />
 	<property name="unit" ref = "unit3" />
 	<property name="ingredient" ref = "ingredient2" />
@@ -2791,7 +2820,7 @@
 
 
 <bean id="quantity12" class="domain.Quantity">
-	<property name="quantity" value= "2.7" />
+	<property name="value" value= "2.7" />
 	<property name="recipe" ref = "recipe6" />
 	<property name="unit" ref = "unit9" />
 	<property name="ingredient" ref = "ingredient1" />
@@ -2799,7 +2828,7 @@
 
 
 <bean id="quantity13" class="domain.Quantity">
-	<property name="quantity" value= "1.5" />
+	<property name="value" value= "1.5" />
 	<property name="recipe" ref = "recipe7" />
 	<property name="unit" ref = "unit2" />
 	<property name="ingredient" ref = "ingredient4" />
@@ -2860,6 +2889,14 @@
 		<list>
 			<ref bean="ingredient3" />
 			<ref bean="ingredient4" />
+		</list>
+	</property>
+</bean>
+
+<bean id="property6" class="domain.Property">
+	<property name="name" value="Default" />
+	<property name="ingredients">
+		<list>
 		</list>
 	</property>
 </bean>

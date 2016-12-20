@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -52,8 +53,15 @@ public class MessageService {
 				actorService.checkAuthority("SPONSOR") ||
 				actorService.checkAuthority("COOK"));
 		Message result;
+		Date momentCreated;
+		Collection<Actor> recipients;
 		
 		result = new Message();
+		momentCreated = new Date(System.currentTimeMillis() - 1000);
+		recipients = new ArrayList<>();
+		
+		result.setMoment(momentCreated);
+		result.setRecipients(recipients);
 		
 		return result;
 	}
@@ -138,6 +146,10 @@ public class MessageService {
 		Collection<SpamWord> spamWords;
 		boolean isSpam;
 		
+		message.setSender(sender);
+		message.setRecipients(recipients);
+		message = save(message);
+		
 		spamWords = spamWordService.findAll();
 		isSpam = false;
 		body = body.toLowerCase();
@@ -150,25 +162,32 @@ public class MessageService {
 		}
 		
 		for(Actor a:recipients){
+			a.getReceivedMessages().add(message);
+			actorService.save(a);
 			for(Folder f:a.getFolders()){
 				if(isSpam){
-					if(f.getName().equals("Spambox")){
-						a.getReceivedMessages().add(message);
+					if(f.getName().equals("Spambox") && f.isObligatory()){
 						f.addMessage(message);
+						folderService.save(f);
+						break;
 					}
 				}
 				else{
-					if(f.getName().equals("Inbox")){
-						a.getReceivedMessages().add(message);
+					if(f.getName().equals("Inbox") && f.isObligatory()){
 						f.addMessage(message);
+						folderService.save(f);
+						break;
 					}
 				}
 			}
 		}
 		for(Folder fo:sender.getFolders()){
-			if(fo.getName().equals("Outbox")){
+			if(fo.getName().equals("Outbox") && fo.isObligatory()){
 				sender.getSentMessages().add(message);
+				actorService.save(sender);
 				fo.addMessage(message);
+				folderService.save(fo);
+				break;
 			}
 		}
 	}

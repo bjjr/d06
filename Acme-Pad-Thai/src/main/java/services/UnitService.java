@@ -1,13 +1,14 @@
 package services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Unit;
-
 import repositories.UnitRepository;
+import domain.Unit;
 
 @Service
 @Transactional
@@ -63,6 +64,17 @@ public class UnitService {
 		
 		return result;
 		
+	}
+	
+	public Collection<Unit> findAll() {
+		Assert.isTrue(actorService.checkAuthority("USER"));
+		
+		Collection<Unit> res;
+		
+		res = unitRepository.findAll();
+		Assert.notNull(res);
+		
+		return res;
 	}
 	
 

@@ -26,6 +26,7 @@
 					<li class="arrow"></li>
 					<li><a href="cook/create.do"><spring:message code="master.page.administrator.create.cook" /></a></li>
 					<li><a href="contest/administrator/create.do"><spring:message code="master.page.administrator.create.contest" /></a></li>
+					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.list.category" /></a></li>
 					<li><a href="masterClass/admin/list.do"><spring:message code="master.page.administrator.list.masterClass" /></a></li>
 					<li><a href="campaign/administrator/generate.do"><spring:message code="master.page.administrator.generateBills" /></a></li>
 				</ul>
@@ -47,7 +48,9 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="recipe/user/list.do"><spring:message code="master.page.recipe.user.list" /></a></li>
+					<li><a href="recipe/user/listFollow.do"><spring:message code="master.page.recipe.user.listFollow" /></a></li>
 					<li><a href="user/edit.do"><spring:message code="master.page.user.edit" /></a></li>
+					<li><a href="socialActor/list.do"><spring:message code="master.page.socialActor.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -56,8 +59,12 @@
 			<li><a class="fNiv"><spring:message code="master.page.nutritionist" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="recipe/nutritionist/listFollow.do"><spring:message code="master.page.recipe.nutritionist.listFollow" /></a></li>
 					<li><a href="curriculum/nutritionist/list.do"><spring:message code="master.page.nutritionist.curriculum.list" /></a></li>
 					<li><a href="nutritionist/edit.do"><spring:message code="master.page.nutritionist.edit" /></a></li>
+					<li><a href="ingredient/nutritionist/list.do"><spring:message code="master.page.nutritionist.ingredient.list" /></a></li>
+					<li><a href="property/nutritionist/list.do"><spring:message code="master.page.nutritionist.property.list" /></a></li>
+					<li><a href="socialActor/list.do"><spring:message code="master.page.socialActor.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -74,16 +81,16 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
-			<li><a class="fNiv" href="user/create.do"><spring:message code="master.page.user.create" /></a></li>
-			<li><a class="fNiv" href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>
+			<li><a class="fNiv" href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>	
 			<li><a class="fNiv" href="masterClass/list.do"><spring:message code="master.page.anonymous.masterClass.list" /></a></li>
+			<li><a class="fNiv" href="user/create.do"><spring:message code="master.page.user.create" /></a></li>
 			<li><a class="fNiv" href="nutritionist/create.do"><spring:message code="master.page.nutritionist.create" /></a></li>
 			<li><a class="fNiv" href="sponsor/create.do"><spring:message code="master.page.sponsor.create" /></a></li>
-			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>	
+			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="permitAll">
-			<li><a class="fNiv" href="contest/list.do"><spring:message code="master.page.contests" /></a></li>
+					<li><a class="fNiv" href="contest/list.do"><spring:message code="master.page.contests" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">

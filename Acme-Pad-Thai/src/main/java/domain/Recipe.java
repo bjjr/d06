@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -142,7 +143,7 @@ public class Recipe extends DomainEntity{
 	private Collection<LikeSA> likesSA;
 
 	@NotEmpty
-	@ManyToMany(mappedBy = "recipes")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "recipes")
 	public Collection<Category> getCategories() {
 		return categories;
 	}
@@ -162,7 +163,9 @@ public class Recipe extends DomainEntity{
 	}
 
 	@NotEmpty
+	@Valid
 	@OneToMany(mappedBy = "recipe")
+	@NotNull
 	public Collection<Quantity> getQuantities() {
 		return quantities;
 	}

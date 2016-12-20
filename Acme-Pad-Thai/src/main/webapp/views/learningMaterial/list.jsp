@@ -28,9 +28,10 @@
 			</jstl:when>
 			
 			<jstl:otherwise>
-				<jstl:forEach var="url" items="learningMaterial.attachments">
+				<jstl:forEach var="url" items="${learningMaterial.attachments}">
 					<a href="${url}">
 						<jstl:out value="${url}" />
+						<br />
 					</a>
 				</jstl:forEach>
 			</jstl:otherwise>
@@ -63,5 +64,46 @@
 				<jstl:otherwise></jstl:otherwise>
 				
 			</jstl:choose>
-		</display:column>	
+	</display:column>
+	
+	<security:authorize access="hasRole('COOK')">
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${learningMaterial['class'].name == 'domain.Text'}">
+					<a href="text/edit.do?masterClassId=${masterClassId}&textId=${learningMaterial.id}">
+						<spring:message code="learningMaterial.edit.text"/>
+					</a>
+				</jstl:when>
+				
+				<jstl:when test="${learningMaterial['class'].name == 'domain.Presentation'}">
+					<a href="presentation/edit.do?masterClassId=${masterClassId}&presentationId=${learningMaterial.id}">
+						<spring:message code="learningMaterial.edit.presentation"/>
+					</a>
+				</jstl:when>
+				
+				<jstl:when test="${learningMaterial['class'].name == 'domain.Video'}">
+					<a href="video/edit.do?masterClassId=${masterClassId}&videoId=${learningMaterial.id}">
+						<spring:message code="learningMaterial.edit.video"/>
+					</a>
+				</jstl:when>
+				<jstl:otherwise></jstl:otherwise>
+			</jstl:choose>
+		</display:column>
+	</security:authorize>
 </display:table>
+
+<security:authorize access="hasRole('COOK')">
+	<div>
+		<a href="text/create.do?masterClassId=${masterClassId}">
+			<spring:message code="learningMaterial.create.text"/>
+		</a> &nbsp;
+		
+		<a href="presentation/create.do?masterClassId=${masterClassId}">
+			<spring:message code="learningMaterial.create.presentation"/>
+		</a> &nbsp;
+		
+		<a href="video/create.do?masterClassId=${masterClassId}" >
+			<spring:message code="learningMaterial.create.video"/>
+		</a>
+	</div>
+</security:authorize>

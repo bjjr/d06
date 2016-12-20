@@ -18,6 +18,9 @@
 	<form:hidden path="masterClasses"/>
 	<form:hidden path="socialIdentities"/>
 	<form:hidden path="masterClassesTeach"/>
+	<form:hidden path="userAccount.authorities" id="authorities"/>
+	<form:hidden path="userAccount.id"/>
+	<form:hidden path="userAccount.version"/>
 		
 	<div>
 		<form:label path="name">
@@ -82,7 +85,7 @@
 		value="<spring:message code="cook.save"/>"/>&nbsp;
 	<input type="button" name="cancel"
 		value="<spring:message code="cook.cancel" />"
-		onclick="javascript: relativeRedir('/');" />
+		onclick="window.location='/'" />
 	</div>
 	
 </form:form>
