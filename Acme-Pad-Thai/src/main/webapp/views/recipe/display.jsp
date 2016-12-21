@@ -11,7 +11,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <jstl:if test="${banner != ''}">
-	<img src="${banner}" alt="Banner" />
+	<img src="${banner}" alt="Banner" style="width: 25vw"/>
 </jstl:if>
 
 <h2>
