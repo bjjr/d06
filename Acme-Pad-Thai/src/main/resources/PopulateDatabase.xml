@@ -2725,6 +2725,17 @@
 	</property>
 </bean>	
 
+<bean id="ingredient6" class="domain.Ingredient">
+	<property name="name" value="ingredient6" />
+	<property name="description" value="this is the ingredient6" />
+	<property name="picture" value="" />
+	<property name="properties">
+		<list>
+			<ref bean = "property4"/>
+		</list>
+	</property>
+</bean>	
+
 
 
 
@@ -2878,6 +2889,7 @@
 		<list>
 			<ref bean="ingredient2" />
 			<ref bean="ingredient4" />
+			<ref bean="ingredient6" />
 		</list>
 	</property>
 </bean>

@@ -54,7 +54,11 @@
 		<security:intercept-url pattern="/quantity/edit.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/recipe/user/list.do" access="hasRole('USER')" /> 
-		<security:intercept-url pattern="/recipe/user/qualify.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/recipe/user/qualify.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/recipe/user/addCategory.do" access="hasRole('USER')" /> 
+		<security:intercept-url pattern="/recipe/user/add.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/recipe/user/removeCategory.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/recipe/user/remove.do" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/cook/**" access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />

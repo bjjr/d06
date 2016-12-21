@@ -27,4 +27,14 @@
 		<put-attribute name="body" value="/views/recipe/edit.jsp" />
 	</definition>
 	
+	<definition name="recipe/addCategory" extends="master.page">	
+		<put-attribute name="title" value="Añadir categorías" />
+		<put-attribute name="body" value="/views/recipe/addCategory.jsp" />
+	</definition>
+	
+	<definition name="recipe/removeCategory" extends="master.page">	
+		<put-attribute name="title" value="Eliminar categorías" />
+		<put-attribute name="body" value="/views/recipe/removeCategory.jsp" />
+	</definition>
+	
 </tiles-definitions>

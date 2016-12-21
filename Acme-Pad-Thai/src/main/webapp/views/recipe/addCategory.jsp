@@ -11,14 +11,17 @@
 
 <!-- Listing grid -->
 <display:table pagesize="5" class="displaytag"
-	name="properties" requestURI="${requestURI}" id="row">
+	name="categories" requestURI="${requestURI}" id="row">
 	<!-- Attributes -->
-	<spring:message code="property.name" var="nameHeader" />
+	<spring:message code="category.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true" />
+	
+	<spring:message code="category.description" var="descriptionHeader" />
+	<display:column property="description" title="${descriptionHeader}" sortable="false" />
 	
 	<!-- Action links -->
 	<display:column>
-	<a href="ingredient/nutritionist/add.do?ingredientId=${ingredient.id}&propertyId=${row.id}"><spring:message code="property.add"/></a>
+	<a href="recipe/user/add.do?recipeId=${recipe.id}&categoryId=${row.id}"><spring:message code="category.add"/></a>
 	</display:column>
 	
 </display:table>
