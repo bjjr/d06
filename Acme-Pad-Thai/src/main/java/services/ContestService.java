@@ -159,8 +159,7 @@ public class ContestService {
 
 	public ArrayList<RecipeCopy> recipeCopyByContestOrdered(int id) {
 		ArrayList<RecipeCopy> res;
-		res = (ArrayList<RecipeCopy>) contestRepository
-				.recipesCopiesByContestOrdered(id);
+		res = contestRepository.recipesCopiesByContestOrdered(id);
 		return res;
 	}
 

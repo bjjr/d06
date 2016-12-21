@@ -58,6 +58,28 @@ public class PropertyService {
 		return res;
 	}
 	
+	public Property findOne(int id){
+		Assert.notNull(id);
+		Assert.isTrue(id!=0);
+		
+		Property result;
+		
+		result = propertyRepository.findOne(id);
+		Assert.notNull(result);
+		
+		return result;
+		
+	}
+	
+	public Collection<Property> findAll() {
+		Collection<Property> result;
+		
+		result = propertyRepository.findAll();
+		Assert.notNull(result);
+
+		return result;
+	}
+	
 	public void flush() {
 		propertyRepository.flush();
 	}
@@ -73,4 +95,19 @@ public class PropertyService {
 	}
 
 	// Other business methods ----------------------------
+	
+	public Collection<Property> findAvailableProperties(Ingredient ingredient){
+		Assert.notNull(ingredient);
+		
+		Collection<Property> used;
+		Collection<Property> result;
+		
+		used = ingredient.getProperties();
+		result = findAll();
+		result.removeAll(used);
+		
+		return result;
+		
+	
+	}
 }

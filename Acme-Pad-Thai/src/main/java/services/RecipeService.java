@@ -28,51 +28,51 @@ import repositories.RecipeRepository;
 @Service
 @Transactional
 public class RecipeService {
-	
-	//Managed repository
+
+	// Managed repository
 	@Autowired
 	private RecipeRepository recipeRepository;
-	
+
 	// Supporting services
 	@Autowired
 	private ActorService actorService;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private StepService stepService;
-	
+
 	@Autowired
 	private CommentService commentService;
-	
+
 	@Autowired
 	private LikeSAService likeSAService;
-	
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private QuantityService quantityService;
-	
+
 	@Autowired
 	private SocialActorService socialActorService;
-	
+
 	@Autowired
 	private RecipeCopyService recipeCopyService;
-	
+
 	@Autowired
 	private ContestService contestService;
-	
-	//Constructors
-	public RecipeService(){
+
+	// Constructors
+	public RecipeService() {
 		super();
 	}
-	
+
 	// Simple CRUD methods
-	public Recipe create(){
+	public Recipe create() {
 		Assert.isTrue(actorService.checkAuthority("USER"));
-		
+
 		Recipe result;
 		User owner;
 		Collection<Step> steps = new ArrayList<>();
@@ -88,7 +88,7 @@ public class RecipeService {
 		quantities.add(quantityService.createDefaultQuantity());
 		categories.add(categoryService.findOne(104));
 		ticker = createTicker();
-		
+
 		owner = userService.findByPrincipal();
 		result = new Recipe();
 		result.setUser(owner);
@@ -98,15 +98,15 @@ public class RecipeService {
 		result.setMomentAuthored(momentCreated);
 		result.setMomentLastUpdated(momentUpdated);
 		result.setTicker(ticker);
-//		userService.save(owner);
-		
+
 		return result;
 	}
-	
-	public Recipe save(Recipe recipe){
-		Assert.isTrue(actorService.checkAuthority("USER") || actorService.checkAuthority("NUTRITIONIST"));
+
+	public Recipe save(Recipe recipe) {
+		Assert.isTrue(actorService.checkAuthority("USER")
+				|| actorService.checkAuthority("NUTRITIONIST"));
 		Assert.notNull(recipe);
-		
+
 		Recipe result;
 		Date momentCreated;
 		Date momentUpdated;
@@ -148,15 +148,24 @@ public class RecipeService {
 		} else {
 			result = recipeRepository.save(recipe);
 		}
-		
+
 		return result;
 	}
-	
+
 	public void flush() {
 		recipeRepository.flush();
 	}
-	
-	public void delete(Recipe recipe){
+
+	public Recipe findOne(int recipeID) {
+		Recipe result;
+
+		result = recipeRepository.findOne(recipeID);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public void delete(Recipe recipe) {
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		Assert.notNull(recipe);
 		Assert.isTrue(recipe.getId()!=0);
@@ -203,19 +212,8 @@ public class RecipeService {
 		
 		owner.removeRecipe(recipe);		
 		recipeRepository.delete(recipe);
-		userService.save(owner);			
-	}
-	
-	public Recipe findOne(int recipeId) {
-		Assert.isTrue(recipeId != 0);
-		
-		Recipe res;
-		
-		res = recipeRepository.findOne(recipeId);
-		
-		Assert.notNull(res);
-		
-		return res;
+		userService.save(owner);
+
 	}
 	
 	public Recipe findOneToEdit(int recipeId) {
@@ -231,90 +229,90 @@ public class RecipeService {
 		
 		return res;
 	}
-	
-	//Other business methods
-	public Double findMinRecipesUser(){
+
+	// Other business methods
+	public Double findMinRecipesUser() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"));
-		
+
 		Double result;
-		
+
 		result = recipeRepository.findMinRecipesUser();
 		Assert.notNull(result);
-		
+
 		return result;
 	}
-	
-	public Double findAvgRecipesUser(){
+
+	public Double findAvgRecipesUser() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"));
-		
+
 		Double result;
-		
+
 		result = recipeRepository.findAvgRecipesUser();
 		Assert.notNull(result);
-		
+
 		return result;
 	}
-	
-	public Double findMaxRecipesUser(){
+
+	public Double findMaxRecipesUser() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"));
-		
+
 		Double result;
-		
+
 		result = recipeRepository.findMaxRecipesUser();
 		Assert.notNull(result);
-		
+
 		return result;
 	}
-	
-	public Collection<Recipe> findAllRecipesGroupByCategory(){
+
+	public Collection<Recipe> findAllRecipesGroupByCategory() {
 		Collection<Recipe> result;
-		
+
 		result = recipeRepository.findAllRecipesGroupByCategory();
 		Assert.notNull(result);
-		
+
 		return result;
 	}
-	
-	public Collection<Recipe> findByKeyword(String keyword){
+
+	public Collection<Recipe> findByKeyword(String keyword) {
 		Assert.notNull(keyword);
-		
+
 		Collection<Recipe> result;
-		
+
 		result = recipeRepository.findByKeyword(keyword);
 		Assert.notNull(result);
-		
+
 		return result;
-		
+
 	}
-	
-	public RecipeCopy copyRecipe(Recipe recipe){
+
+	public RecipeCopy copyRecipe(Recipe recipe) {
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		Assert.notNull(recipe);
-		
+
 		int countLikes;
 		int countDislikes;
 		RecipeCopy recipeCopy;
 		User u;
-		
+
 		u = userService.findByPrincipal();
 		countLikes = 0;
 		countDislikes = 0;
-		
-		Assert.isTrue(u.getRecipes().contains(recipe),"An user only could qualify his recipes");
-		
-		for(LikeSA l : recipe.getLikesSA()){
-			if(l.isLikeSA()==true){
+
+		Assert.isTrue(u.getRecipes().contains(recipe),
+				"An user only could qualify his recipes");
+
+		for (LikeSA l : recipe.getLikesSA()) {
+			if (l.isLikeSA() == true) {
 				countLikes++;
-			}
-			else{
+			} else {
 				countDislikes++;
 			}
 		}
 
-		Assert.isTrue(countLikes >=5 && countDislikes == 0);
-		
+		Assert.isTrue(countLikes >= 5 && countDislikes == 0);
+
 		recipeCopy = recipeCopyService.create();
-		
+
 		recipeCopy.setTicker(recipe.getTicker());
 		recipeCopy.setTitle(recipe.getTitle());
 		recipeCopy.setSummary(recipe.getSummary());
@@ -323,33 +321,32 @@ public class RecipeService {
 		recipeCopy.setPictures(recipe.getPictures());
 		recipeCopy.setHints(recipe.getHints());
 		recipeCopy.setWinner(false);
-		recipeCopy.setNameUser(recipe.getUser().getName() + recipe.getUser().getSurname());
+		recipeCopy.setNameUser(recipe.getUser().getName()
+				+ recipe.getUser().getSurname());
 		recipeCopy.setLikesRC(countLikes);
 		recipeCopy.setDislikesRC(countDislikes);
-		
+
 		return recipeCopy;
-		
+
 	}
-	
-	public void qualifyRecipe(RecipeCopy recipeCopy, Contest contest){
+
+	public void qualifyRecipe(RecipeCopy recipeCopy, Contest contest) {
 		Assert.isTrue(actorService.checkAuthority("USER"));
 		Assert.notNull(contest);
-		
-		String nameUser;
-		
-		nameUser = recipeCopy.getNameUser();
 
-		for(RecipeCopy rc: contest.getRecipeCopies()){
-			Assert.isTrue(recipeCopy.getTicker() != rc.getTicker(), "An user cannot qualify the same recipe in the same contest");
-			Assert.isTrue(nameUser != rc.getNameUser(), "An user cannot qualify two recipes in the same contest");
+		for (RecipeCopy rc : contest.getRecipeCopies()) {
+			Assert.isTrue(!recipeCopy.getTicker().equals(rc.getTicker()),
+					"An user cannot qualify the same recipe in the same contest");
+			Assert.isTrue(!recipeCopy.getNameUser().equals(rc.getNameUser()),
+					"An user cannot qualify two recipes in the same contest");
 		}
-		
+
 		recipeCopy.setContest(contest);
 		recipeCopyService.save(recipeCopy);
 		contest.addRecipeCopy(recipeCopy);
 		contestService.save(contest);
 	}
-	
+
 	public Collection<Recipe> recipesFollows(){
 		Assert.isTrue(actorService.checkAuthority("USER") || 
 				actorService.checkAuthority("NUTRITIONIST"));
@@ -375,35 +372,35 @@ public class RecipeService {
 		
 		return result;
 	}
-	
-	public Integer findLikes(Recipe recipe){
+
+	public Integer findLikes(Recipe recipe) {
 		Integer result;
-		
+
 		result = 0;
-		
-		for(LikeSA l : recipe.getLikesSA()){
-			if(l.isLikeSA()){
+
+		for (LikeSA l : recipe.getLikesSA()) {
+			if (l.isLikeSA()) {
 				result++;
 			}
 		}
-		
+
 		return result;
-		
+
 	}
-	
-	public Integer findDislikes(Recipe recipe){
+
+	public Integer findDislikes(Recipe recipe) {
 		Integer result;
-		
+
 		result = 0;
-		
-		for(LikeSA l : recipe.getLikesSA()){
-			if(!l.isLikeSA()){
+
+		for (LikeSA l : recipe.getLikesSA()) {
+			if (!l.isLikeSA()) {
 				result++;
 			}
 		}
-		
+
 		return result;
-		
+
 	}
 
 	public String createTicker() {
@@ -455,6 +452,5 @@ public class RecipeService {
 		
 		save(recipe);
 	}
-
 
 }

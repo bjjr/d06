@@ -22,6 +22,7 @@
 	<form:hidden path="comments"/>
 	<form:hidden path="likesSA"/>
 	<form:hidden path="curriculum"/>
+	<form:hidden path="userAccount.authorities" id="authorities"/>
 		
 	<form:label path="name">
 		<spring:message code="nutritionist.name"/>
@@ -76,7 +77,7 @@
 		value="<spring:message code="nutritionist.save"/>"/>&nbsp;
 	<input type="button" name="cancel"
 		value="<spring:message code="nutritionist.cancel" />"
-		onclick="javascript: relativeRedir('/');" />
+		onclick="window.location='/Acme-Pad-Thai/'" />
 	<br />
 		
 </form:form>

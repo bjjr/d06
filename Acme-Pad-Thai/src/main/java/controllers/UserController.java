@@ -52,15 +52,11 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.POST, params = "search")
 	public ModelAndView search(@RequestParam String user) {
 		ModelAndView result;
-		Collection<User> users;
 		Collection<User> searched;
 
-		users = userService.findAll();
 
 		if (user == "") {
-			result = new ModelAndView("user/list");
-			result.addObject("requestURI", "user/list.do");
-			result.addObject("users", users);
+			result = new ModelAndView("redirect:list.do");
 		} else {
 			searched = userService.findByKeyword(user);
 
@@ -101,8 +97,6 @@ public class UserController extends AbstractController {
 		return result;
 	}
 
-	// Edition ----------------------------------------------------------------
-	
 	//Edition
 	
 		@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -134,7 +128,7 @@ public class UserController extends AbstractController {
 				
 				userService.save(user);
 				result = new ModelAndView("redirect:../welcome/index.do");
-				result.addObject("messageStatus", "user.commit.ok");
+				result.addObject("message", "user.commit.ok");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(user, "user.commit.error");
 			}

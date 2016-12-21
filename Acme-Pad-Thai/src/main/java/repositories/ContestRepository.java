@@ -1,6 +1,7 @@
 package repositories;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,5 +40,5 @@ public interface ContestRepository extends JpaRepository<Contest, Integer>{
 	Collection<Contest> findClosedContestsWinners();
 
 	@Query("select r from Contest c join c.recipeCopies r where c.id=?1 order by r.likesRC desc")
-	Collection<RecipeCopy> recipesCopiesByContestOrdered(int id);
+	ArrayList<RecipeCopy> recipesCopiesByContestOrdered(int id);
 }

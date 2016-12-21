@@ -23,9 +23,9 @@ import domain.User;
 
 @Controller
 @RequestMapping("/recipe/user")
-public class RecipeUserController extends AbstractController {
-
-	// Services --------------------------------------------
+public class RecipeUserController extends AbstractController{
+	
+	// Services
 	
 	@Autowired
 	private RecipeService recipeService;
@@ -36,13 +36,13 @@ public class RecipeUserController extends AbstractController {
 	@Autowired
 	private ContestService contestService;
 	
-	// Constructor -----------------------------------------
+	// Constructors
 	
-	public RecipeUserController() {
+	public RecipeUserController(){
 		super();
 	}
 	
-	// Listing ---------------------------------------------
+	// Listing
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -71,7 +71,30 @@ public class RecipeUserController extends AbstractController {
 		return result;
 	}
 	
-	// Qualifying ------------------------------------------
+	@RequestMapping(value = "/listFollow", method = RequestMethod.GET)
+	public ModelAndView listFollow() {
+		ModelAndView result;
+		Collection<Recipe> recipes;
+		Boolean owner;
+		
+		owner = true;
+		
+		recipes = recipeService.recipesFollows();
+		
+		for(Recipe r : recipes){
+			if(!userService.findByPrincipal().getRecipes().contains(r)){
+				owner = false;
+				break;
+			}
+		}
+		
+		result = new ModelAndView("recipe/list");
+		result.addObject("requestURI", "recipe/user/list.do");
+		result.addObject("recipes", recipes);
+		result.addObject("owner", owner);
+		
+		return result;
+	}
 	
 	@RequestMapping(value = "/qualify", method = RequestMethod.GET)
 	public ModelAndView copyRecipe(@RequestParam int recipeId) {
@@ -84,13 +107,13 @@ public class RecipeUserController extends AbstractController {
 		
 		try{
 			recipeCopy = recipeService.copyRecipe(recipe);
-			contests = contestService.findAll();
+			contests = contestService.findOpenContests();
 			result = new ModelAndView("recipe/qualify");
 			result.addObject("recipeCopy", recipeCopy);
 			result.addObject("contests", contests);
 		}
 		catch (Throwable oops) {
-			result = list();
+			result = new ModelAndView("redirect:list.do");
 			result.addObject("message", "recipe.commit.error");
 		}
 		
@@ -103,7 +126,7 @@ public class RecipeUserController extends AbstractController {
 		Contest contest;
 		Collection<Contest> contests;
 		
-		contests = contestService.findAll();
+		contests = contestService.findOpenContests();
 
 		if (binding.hasErrors()) {
 			result = new ModelAndView("recipe/qualify");
@@ -112,8 +135,8 @@ public class RecipeUserController extends AbstractController {
 			try {
 				contest = recipeCopy.getContest();
 				recipeService.qualifyRecipe(recipeCopy, contest);
-				result = list();
-				result.addObject("messageStatus", "recipe.commit.ok");
+				result = new ModelAndView("redirect:list.do");
+				result.addObject("message", "recipe.commit.ok");
 			} catch (Throwable oops) {
 				result = new ModelAndView("recipe/qualify");
 				result.addObject("recipeCopy", recipeCopy);

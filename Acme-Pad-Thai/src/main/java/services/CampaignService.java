@@ -1,7 +1,9 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ public class CampaignService {
 	private SponsorService sponsorService;
 	@Autowired
 	private BillService billService;
-	
+
 	// Constructors -----------------------------------------------------------
 	public CampaignService() {
 		super();
@@ -50,8 +52,7 @@ public class CampaignService {
 
 	public Campaign save(Campaign campaign) {
 		Assert.notNull(campaign);
-		Assert.isTrue(actorService.checkAuthority("SPONSOR")||actorService.checkAuthority("ADMINISTRATOR"),
-				"Only an sponsor or administrator could save campaign");
+	
 
 		if (campaign.getId() == 0) {
 			Assert.isTrue(new Date(System.currentTimeMillis())
@@ -64,7 +65,7 @@ public class CampaignService {
 
 		return campaignRepository.save(campaign);
 	}
-	
+
 	public void flush() {
 		campaignRepository.flush();
 	}
@@ -95,19 +96,23 @@ public class CampaignService {
 
 		result = campaignRepository.findOne(id);
 		Assert.notNull(result);
-		Assert.isTrue(sponsorService.findByPrincipal().getCampaigns().contains(result), "Sponsor only could see his campaigns");
+		Assert.isTrue(
+				sponsorService.findByPrincipal().getCampaigns()
+						.contains(result),
+				"Sponsor only could see his campaigns");
 		return result;
 	}
-	
-	public void generateBills(){
+
+	public void generateBills() {
 		Collection<Campaign> campaigns;
 		campaigns = findAll();
 		campaigns.removeAll(campaignsWithBillThisMonth());
-		for(Campaign c : campaigns){
-			Bill b,b1; 
+		for (Campaign c : campaigns) {
+			Bill b, b1;
 			b = billService.create(c);
-			b.setDescription("Bill of month "+b.getCreationMoment().getMonth());
-			b1=billService.save(b);
+			b.setDescription("Bill of month "
+					+ b.getCreationMoment().getMonth());
+			b1 = billService.save(b);
 			c.addBill(b1);
 			c.setDisplayed(0);
 			save(c);
@@ -128,6 +133,7 @@ public class CampaignService {
 		res = campaignRepository.campaignsWithBillThisMonth();
 		return res;
 	}
+
 	/** Minimo de campañas de un sponsor **/
 	public Integer minCampignsPerSponsor() {
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR"),
@@ -182,10 +188,52 @@ public class CampaignService {
 		return res;
 	}
 
+	public ArrayList<Campaign> findCampaignsWithDisplays() {
+		ArrayList<Campaign> res;
+
+		res = campaignRepository.findCampaignsWithDisplays();
+
+		return res;
+	}
+
+	public ArrayList<Campaign> findStarCampaignsWithDisplays() {
+		ArrayList<Campaign> res;
+
+		res = campaignRepository.findStarCampaignsWithDisplays();
+
+		return res;
+	}
+
 	public void incrementDisplayed(Campaign c) {
 		Campaign res = c, saved;
 		res.setDisplayed(c.getDisplayed() + 1);
 		saved = save(res);
 		Assert.isTrue(res.getDisplayed() == saved.getDisplayed());
+	}
+
+	public String displayBanner() {
+		String res = "";
+		ArrayList<String> banners;
+		ArrayList<Campaign> listC = findCampaignsWithDisplays();
+		if (listC.size() > 0) {
+			Campaign c = listC.get(new Random().nextInt(listC.size()));
+			banners = new ArrayList<>(c.getBanners());
+			res = banners.get(new Random().nextInt(banners.size()));
+			incrementDisplayed(c);
+		}
+		return res;
+	}
+
+	public String displayBannerStar() {
+		String res = "";
+		ArrayList<String> banners;
+		ArrayList<Campaign> listC = findStarCampaignsWithDisplays();
+		if (listC.size() > 0) {
+			Campaign c = listC.get(new Random().nextInt(listC.size()));
+			banners = new ArrayList<>(c.getBanners());
+			res = banners.get(new Random().nextInt(banners.size()));
+			incrementDisplayed(c);
+		}
+		return res;
 	}
 }
