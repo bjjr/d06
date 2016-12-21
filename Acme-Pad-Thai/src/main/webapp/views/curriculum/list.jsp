@@ -6,8 +6,6 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="curriculum.list.title" /></p>
-
 <!-- Listing grid -->
 
 <display:table pagesize="1" class="displaytag" keepStatus="true"
@@ -27,10 +25,10 @@
 	<spring:message code="curriculum.hobbiesSection" var="hobbiesSectionHeader" />
 	<display:column property="hobbiesSection" title="${hobbiesSectionHeader}" sortable="false" />
 	
-	<spring:message code="curriculum.endorsers" var="endorsers" />
-	<display:column>
+	<spring:message code="curriculum.endorsers" var="endorsersHeader" />
+	<display:column title="${endorsersHeader}" sortable="false">
 		<a href="endorser/nutritionist/listByCurriculum.do?curriculumId=${row.id}">
-			<spring:message code="curriculum.endorsers" var="endorsers" />
+			<spring:message code="curriculum.endorsers"/>
 		</a>
 	</display:column>
 	
@@ -42,8 +40,11 @@
 	
 </display:table>
 
-<jstl:if test="${row.id == 0} || ${row.id == null}">
-	<input type="submit" name="addCurriculum"
+<jstl:if test="${curriculum == null}">
+	<br />
+	<br />
+	<input type="button" name="addCurriculum"
 		value="<spring:message code="curriculum.addCurriculum" />" 
-		onclick="javascript: relativeRedir('curriculum/nutritionist/create.do');" />&nbsp;
+		onclick="window.location='curriculum/nutritionist/create.do'" />&nbsp;
+		
 </jstl:if>

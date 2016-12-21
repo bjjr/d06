@@ -48,6 +48,9 @@
 		<value>/views/learningMaterial/tiles.xml</value>
 		<value>/views/text/tiles.xml</value>
 		<value>/views/quantity/tiles.xml</value>
+		<value>/views/folder/tiles.xml</value>
+		<value>/views/message/tiles.xml</value>
+		<value>/views/spamWord/tiles.xml</value>
 		<value>/views/video/tiles.xml</value>
 		<value>/views/presentation/tiles.xml</value>
 		<value>/views/cook/tiles.xml</value>	

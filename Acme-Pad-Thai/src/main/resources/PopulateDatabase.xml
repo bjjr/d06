@@ -441,7 +441,7 @@
 
 
 <bean id="endorser1" class="domain.Endorser">
-	<property name="name" value="nameEndorser2" />
+	<property name="name" value="nameEndorser1" />
 	<property name="homepage" value="http://www.homepageEndorser1.com" />
 	<property name="curricula">
 		<list>
@@ -2132,7 +2132,7 @@
 <bean id="folderN3.1" class="domain.Folder">
 	<property name="name" value="Inbox" />
 	<property name="obligatory" value="true" />
-	<property name="actor" ref="nutritionist2" />
+	<property name="actor" ref="nutritionist3" />
 	<property name="messages">
 		<list>
 		</list>
@@ -2143,7 +2143,7 @@
 <bean id="folderN3.2" class="domain.Folder">
 	<property name="name" value="Outbox" />
 	<property name="obligatory" value="true" />
-	<property name="actor" ref="nutritionist2" />
+	<property name="actor" ref="nutritionist3" />
 	<property name="messages">
 		<list>
 		</list>
@@ -2154,7 +2154,7 @@
 <bean id="folderN3.3" class="domain.Folder">
 	<property name="name" value="Trashbox" />
 	<property name="obligatory" value="true" />
-	<property name="actor" ref="nutritionist2" />
+	<property name="actor" ref="nutritionist3" />
 	<property name="messages">
 		<list>
 		</list>
@@ -2165,7 +2165,7 @@
 <bean id="folderN3.4" class="domain.Folder">
 	<property name="name" value="Spambox" />
 	<property name="obligatory" value="true" />
-	<property name="actor" ref="nutritionist2" />
+	<property name="actor" ref="nutritionist3" />
 	<property name="messages">
 		<list>
 		</list>

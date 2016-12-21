@@ -24,11 +24,13 @@
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
 					<li class="arrow"></li>
+					<li><a href="administrator/dashboard.do"><spring:message code="administrator.dashboard" /></a></li>
 					<li><a href="cook/create.do"><spring:message code="master.page.administrator.create.cook" /></a></li>
 					<li><a href="contest/administrator/create.do"><spring:message code="master.page.administrator.create.contest" /></a></li>
 					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.list.category" /></a></li>
 					<li><a href="masterClass/admin/list.do"><spring:message code="master.page.administrator.list.masterClass" /></a></li>
 					<li><a href="campaign/administrator/generate.do"><spring:message code="master.page.administrator.generateBills" /></a></li>
+					<li><a href="spamWord/administrator/list.do"><spring:message code="master.page.administrator.list.spamWord" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -80,7 +82,8 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
+			<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user.list" /></a></li>
+			<li><a class="fNiv" href="user/create.do"><spring:message code="master.page.user.create" /></a></li>
 			<li><a class="fNiv" href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>	
 			<li><a class="fNiv" href="masterClass/list.do"><spring:message code="master.page.anonymous.masterClass.list" /></a></li>
 			<li><a class="fNiv" href="user/create.do"><spring:message code="master.page.user.create" /></a></li>
@@ -90,15 +93,17 @@
 		</security:authorize>
 		
 		<security:authorize access="permitAll">
-					<li><a class="fNiv" href="contest/list.do"><spring:message code="master.page.contests" /></a></li>
+			<li><a class="fNiv" href="contest/list.do"><spring:message code="master.page.contests" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
 			<li><a class="fNiv" href="user/list.do"><spring:message code="master.page.user.list" /></a></li>	
+			<li><a class="fNiv" href="nutritionist/list.do"><spring:message code="master.page.nutritionist.list" /></a></li>	
 			<li><a class="fNiv" href="recipe/list.do"><spring:message code="master.page.recipe.list" /></a></li>
 			<li><a class="fNiv" href="masterClass/actor/list-unregistered.do"><spring:message code="master.page.masterClass.lu" /></a></li>
 			<li><a class="fNiv"><spring:message code="master.page.profile" />(<security:authentication property="principal.username" />)</a></li>
 			<li><a class="fNiv" href="masterClass/actor/list-registered.do"><spring:message code="master.page.masterClass.lr" /></a></li>
+			<li><a class="fNiv" href="folder/list.do"><spring:message code="master.page.folder.list" /></a></li>
 			<li><a class="fNiv" href="j_spring_security_logout"><spring:message code="master.page.logout" />(<security:authentication property="principal.username" />)</a></li>
 		</security:authorize>
 	</ul>

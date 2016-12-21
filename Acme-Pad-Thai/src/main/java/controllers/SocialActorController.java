@@ -27,7 +27,7 @@ public class SocialActorController extends AbstractController {
 	public SocialActorController() {
 		super();
 	}
-
+	
 	// Listing -----------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)

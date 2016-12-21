@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.NutritionistService;
 import domain.Nutritionist;
 
-import services.NutritionistService;
 
 @Controller
 @RequestMapping("/nutritionist")
@@ -26,7 +26,7 @@ public class NutritionistController extends AbstractController{
 	
 	@Autowired
 	private NutritionistService nutritionistService;
-
+	
 	// Constructors -------------------------------------------
 	
 	public NutritionistController(){

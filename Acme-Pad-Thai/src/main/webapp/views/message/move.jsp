@@ -6,11 +6,16 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<form:form action="curriculum/nutritionist/edit.do" modelAttribute="curriculum">
+<form:form action="message/move.do" modelAttribute="message">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="endorsers" />
+	<form:hidden path="moment" />
+	<form:hidden path="subject" />
+	<form:hidden path="body" />
+	<form:hidden path="priority" />
+	<form:hidden path="sender" />
+	<form:hidden path="recipients" />
 
 	<form:label path="photo">
 		<spring:message code="curriculum.photo" />:
@@ -57,5 +62,3 @@
 	<br />
 
 </form:form>
-
-
