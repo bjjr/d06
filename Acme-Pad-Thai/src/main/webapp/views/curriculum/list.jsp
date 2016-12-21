@@ -8,7 +8,7 @@
 
 <!-- Listing grid -->
 
-<display:table pagesize="1" class="displaytag" keepStatus="true"
+<display:table pagesize="5" class="displaytag" keepStatus="true"
 	name="curriculum" requestURI="${requestURI}" id="row">
 	
 	<!-- Attributes -->
