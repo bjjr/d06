@@ -45,6 +45,9 @@
 		<security:intercept-url pattern="/user/create.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/edit.do" access="permitAll" /> 
 		<security:intercept-url pattern="/user/display.do" access="permitAll" />
+		
+		<security:intercept-url pattern="/nutritionist/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/nutritionist/edit.do" access="permitAll" /> 
 		 
 		<security:intercept-url pattern="/recipe/list.do" access="permitAll" /> 
 		<security:intercept-url pattern="/recipe/display.do" access="permitAll" /> 

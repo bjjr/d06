@@ -11,12 +11,11 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Nutritionist;
-
+import services.ActorService;
 import services.NutritionistService;
+import domain.Nutritionist;
 
 @Controller
 @RequestMapping("/nutritionist")
@@ -26,6 +25,8 @@ public class NutritionistController extends AbstractController{
 	
 	@Autowired
 	private NutritionistService nutritionistService;
+	@Autowired
+	private ActorService actorService;
 
 	// Constructors -------------------------------------------
 	
@@ -49,11 +50,11 @@ public class NutritionistController extends AbstractController{
 	// Edition -----------------------------------------------
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam int nutritionistId){
+	public ModelAndView edit(){
 		ModelAndView result;
 		Nutritionist nutritionist;
 		
-		nutritionist = nutritionistService.findOne(nutritionistId);
+		nutritionist = nutritionistService.findOne(actorService.findByPrincipal().getId());
 		Assert.notNull(nutritionist);
 		result = createEditModelAndView(nutritionist);
 		

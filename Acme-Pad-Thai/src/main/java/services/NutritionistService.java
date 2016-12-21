@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,8 +94,22 @@ public class NutritionistService {
 		Assert.notNull(nutritionist);
 		
 		Nutritionist result;
+		Collection<Folder> folders;
 		
-		result = nutritionistRepository.save(nutritionist);
+		folders = new ArrayList<Folder>();
+		if (nutritionist.getId() == 0) {
+			result = nutritionistRepository.save(nutritionist);
+			folders = folderService.createFolderObligatory(result);
+			for(Folder f: folders){
+				folderService.save(f);
+			}
+			result.setFolders(folders);
+			
+		}
+		else{
+			result = nutritionistRepository.save(nutritionist);
+		}
+		
 		
 		return result;
 	}
