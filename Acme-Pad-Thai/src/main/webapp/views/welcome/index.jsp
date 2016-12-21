@@ -8,25 +8,34 @@
  * http://www.tdg-seville.info/License.html
  --%>
 
-<%@page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 
-<%@taglib prefix="jstl"	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
+<p>
+	<spring:message code="welcome.greeting.prefix" />
+	<jstl:choose>
+		<jstl:when test="${name != ''}">${name}</jstl:when><jstl:otherwise><spring:message code="welcome.greeting.guest"/></jstl:otherwise></jstl:choose><spring:message code="welcome.greeting.suffix" /></p>
 
-	<jstl:if test="${banner != ''}">
-		<img src="${banner}" alt="Banner" style="width: 25vw"/>
-	</jstl:if>
+<jstl:if test="${banner != ''}">
+	<img src="${banner}" alt="Banner" style="width: 25vw" />
+</jstl:if>
 <security:authorize access="isAuthenticated()">
 	<jstl:if test="${masterClass != null}">
 		<h3>
-			<spring:message code="welcome.masterClass.promo" /> ${masterClass}
+			<spring:message code="welcome.masterClass.promo" />
+			${masterClass}
 		</h3>
 	</jstl:if>
 </security:authorize>
 
-<p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
+<p>
+	<spring:message code="welcome.greeting.current.time" />
+	${moment}
+</p>
