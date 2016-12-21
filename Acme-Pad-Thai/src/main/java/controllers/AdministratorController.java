@@ -20,10 +20,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.Cook;
+
 import services.BillService;
 import services.CampaignService;
 import services.ContestService;
+import services.CookService;
+import services.MasterClassService;
+import services.PresentationService;
 import services.SponsorService;
+import services.TextService;
+import services.VideoService;
 
 @Controller
 @RequestMapping("/administrator")
@@ -38,34 +45,31 @@ public class AdministratorController extends AbstractController {
 	
 	@Autowired
 	private ContestService contestService;
+	
 	@Autowired
 	private CampaignService campaignService;
+	
 	@Autowired
 	private SponsorService sponsorService;
+	
 	@Autowired
 	private BillService billService;
 	
-	// Action-1 ---------------------------------------------------------------		
-
-	@RequestMapping("/action-1")
-	public ModelAndView action1() {
-		ModelAndView result;
-				
-		result = new ModelAndView("administrator/action-1");
-		
-		return result;
-	}
+	@Autowired
+	private MasterClassService masterClassService;
 	
-	// Action-2 ---------------------------------------------------------------
+	@Autowired
+	private TextService textService;
 	
-	@RequestMapping("/action-2")
-	public ModelAndView action2() {
-		ModelAndView result;
-				
-		result = new ModelAndView("administrator/action-2");
-		
-		return result;
-	}
+	@Autowired
+	private PresentationService presentationService;
+	
+	@Autowired
+	private VideoService videoService;
+	
+	@Autowired
+	private CookService cookService;
+	
 	//Dashboard
 	@RequestMapping(value="/dashboard", method = RequestMethod.GET)
 	public ModelAndView dashboard(){
@@ -77,6 +81,8 @@ public class AdministratorController extends AbstractController {
 		queries.put("administrator.minRCpC",contestService.minRecipeCopyPerContest().toString());
 		queries.put("administrator.maxRCpC",contestService.maxRecipeCopyPerContest().toString());
 		queries.put("administrator.CmRCc",contestService.findContestMoreRecipesQualified().toString());
+		
+		// Queries B -------------------------------------------------------
 		queries.put("administrator.avgCpS",campaignService.avgCampignsPerSponsor().toString());
 		queries.put("administrator.maxCpS",campaignService.maxCampignsPerSponsor().toString());
 		queries.put("administrator.minCpS",campaignService.minCampignsPerSponsor().toString());
@@ -88,17 +94,39 @@ public class AdministratorController extends AbstractController {
 		queries.put("administrator.avgUB",billService.avgUnpaidBills().toString());
 		queries.put("administrator.stdUB",billService.stddevUnpaidBills().toString());
 		
-		Map<String,Collection<String>> listQueries = new HashMap<String, Collection<String>>();
+		// Queries A -------------------------------------------------------
+		queries.put("administrator.minMCpCk", masterClassService.findMinNumMasterClassesPerCook().toString());
+		queries.put("administrator.maxMCpCk", masterClassService.findMaxNumMasterClassesPerCook().toString());
+		queries.put("administrator.avgMCpCk", masterClassService.findAvgNumMasterClassesPerCook().toString());
+		queries.put("administrator.stdMCpCk", masterClassService.findStddevNumMasterClassesPerCook().toString());
+		queries.put("administrator.avgVpMC", videoService.findAvgNumVideo().toString());
+		queries.put("administrator.avgPpMC", presentationService.findAvgNumPresentation().toString());
+		queries.put("administrator.avgTpMC", textService.findAvgNumText().toString());
+		queries.put("administrator.numProMC", masterClassService.findNumPromotedMasterClasses().toString());
+		queries.put("administrator.avgProMcpCk", cookService.findAvgPromotedMasterClasses().toString());
+		queries.put("administrator.avgDemMcpCk", cookService.findAvgDemotedMasterClasses().toString());
 		
-		listQueries.put("administrator.CbnC",sponsorService.companiesByNumCampaigns());
-		listQueries.put("administrator.CbnB",sponsorService.companiesByNumBills());
-		listQueries.put("administrator.inacS",sponsorService.inactiveSponsors());
-		listQueries.put("administrator.CsltA",sponsorService.companiesSpentLessThanAverage());
-		listQueries.put("administrator.CsalN",sponsorService.companiesSpentAtLeastNinety());
+		// List queries ----------------------------------------------------
+		
+		Collection<String> compByCampaigns = sponsorService.companiesByNumCampaigns();
+		Collection<String> compByBills = sponsorService.companiesByNumBills();
+		Collection<String> inactiveSponsors = sponsorService.inactiveSponsors();
+		Collection<String> compSpentLess = sponsorService.companiesSpentLessThanAverage();
+		Collection<String> compSpentLeast = sponsorService.companiesSpentAtLeastNinety();
+		
+		// Queries A -------------------------------------------------------
+		Collection<Cook> cooksByProMC = cookService.findAllOrderByNumPromotedMasterClasses();
 		
 		result = new ModelAndView("administrator/dashboard");
 		result.addObject("queries", queries);
-		result.addObject("listQueries", listQueries);
+		
+		result.addObject("compByCampaigns", compByCampaigns);
+		result.addObject("compByBills", compByBills);
+		result.addObject("inactiveSponsors", inactiveSponsors);
+		result.addObject("compSpentLess", compSpentLess);
+		result.addObject("compSpentLeast", compSpentLeast);
+		result.addObject("compSpentLeast", compSpentLeast);
+		result.addObject("cooksByProMC", cooksByProMC);
 		
 		return result;
 	}
