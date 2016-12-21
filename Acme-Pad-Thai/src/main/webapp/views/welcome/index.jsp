@@ -19,7 +19,7 @@
 <p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
 
 	<jstl:if test="${banner != ''}">
-		<img src="${banner}" alt="Banner"/>
+		<img src="${banner}" alt="Banner" style="width: 25vw"/>
 	</jstl:if>
 <security:authorize access="isAuthenticated()">
 	<jstl:if test="${masterClass != null}">

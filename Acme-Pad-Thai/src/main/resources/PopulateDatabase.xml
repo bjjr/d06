@@ -3599,10 +3599,10 @@
 	<property name="endMoment" value="05/05/2020"/>
 	<property name="banners">
 		<list>
-			<value>http://cdn77.sadanduseless.com/wp-content/uploads/2014/09/hide-the-pain-harold.jpg</value>
+			<value>http://p.bigstockphoto.com/lG8py5ozQFGFFfrVeRmV_81988295.jpg</value>
 		</list>
 	</property>
-	<property name="maxDisplayed" value="100"/>	
+	<property name="maxDisplayed" value="25"/>	
 	<property name="star" value="true"/>
 	<property name="displayed" value="1"/>
 	<property name="sponsor" ref="sponsor1"/>
@@ -3619,11 +3619,11 @@
 	<property name="endMoment" value="12/01/2017"/>
 	<property name="banners">
 		<list>
-			<value>http://www.sickchirpse.com/wp-content/uploads/2016/05/Hide-the-pain-harold-phone.jpg</value>
-			<value>http://i.imgur.com/Y5d5M8D.jpg</value>
+			<value>https://static.pexels.com/photos/10651/photo-1432821596592-e2c18b78144f.jpeg</value>
+			<value>http://orig05.deviantart.net/3c83/f/2013/131/b/8/stock_premade_background10_by_gwendolyn1_stock-d64wakh.jpg</value>
 		</list>
 	</property>
-	<property name="maxDisplayed" value="100"/>	
+	<property name="maxDisplayed" value="20"/>	
 	<property name="star" value="true"/>
 	<property name="displayed" value="3"/>
 	<property name="sponsor" ref="sponsor2"/>
@@ -3641,11 +3641,11 @@
 	<property name="endMoment" value="03/20/2018"/>
 	<property name="banners">
 		<list>
-			<value>http://i1.kym-cdn.com/photos/images/facebook/000/839/199/8a9.jpg</value>
-			<value>http://i.imgur.com/zcGtCQt.jpg</value>
+			<value>http://img07.deviantart.net/201d/i/2015/225/1/2/deep_blue_sea_by_xlocky-d95imxu.jpg</value>
+			<value>http://somebodymarketing.com/wp-content/uploads/2013/05/Stock-Dock-House.jpg</value>
 		</list>
 	</property>
-	<property name="maxDisplayed" value="100"/>	
+	<property name="maxDisplayed" value="32"/>	
 	<property name="star" value="false"/>
 	<property name="displayed" value="0"/>
 	<property name="sponsor" ref="sponsor2"/>
@@ -3661,10 +3661,10 @@
 	<property name="endMoment" value="09/17/2019"/>
 	<property name="banners">
 		<list>
-			<value>http://i.imgur.com/LbDUJDk.jpg</value>
+			<value>https://www.sitebuilderreport.com/assets/facebook-stock-up-08c6c9a855df26a3b13a34ac62bb75cc.jpg</value>
 		</list>
 	</property>
-	<property name="maxDisplayed" value="100"/>
+	<property name="maxDisplayed" value="35"/>
 	<property name="star" value="true"/>
 	<property name="displayed" value="6"/>
 	<property name="sponsor" ref="sponsor4"/>
@@ -3682,10 +3682,10 @@
 	<property name="endMoment" value="07/25/2016"/>
 	<property name="banners">
 		<list>
-			<value>http://i3.kym-cdn.com/photos/images/newsfeed/000/854/491/b7c.jpg</value>
+			<value>http://img06.deviantart.net/25de/i/2012/134/3/1/037_by_koko_stock-d4zq28i.jpg</value>
 		</list>
 	</property>
-	<property name="maxDisplayed" value="100"/>
+	<property name="maxDisplayed" value="40"/>
 	<property name="star" value="true"/>
 	<property name="displayed" value="6"/>
 	<property name="sponsor" ref="sponsor5"/>
