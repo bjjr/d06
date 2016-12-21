@@ -41,9 +41,8 @@ public class RecipeCopyService {
 
 	public RecipeCopy save(RecipeCopy recipeCopy) {
 		Assert.notNull(recipeCopy);
-		Assert.isTrue(actorService.checkAuthority("USER"),
-				"Only an user could save recipeCopy");
-		Assert.isTrue(recipeCopy.getId()==0 ,"Recipe copy couldn't be edited");
+		Assert.isTrue(actorService.checkAuthority("USER")||actorService.checkAuthority("ADMINISTRATOR"),
+				"Only an user or administrator could save recipeCopy");
 		
 		
 		return recipeCopyRepository.save(recipeCopy);

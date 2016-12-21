@@ -31,6 +31,8 @@
 		<value>/views/nutritionist/messages</value>
 		<value>/views/recipe/messages</value>
 		<value>/views/user/messages</value>
+		<value>/views/folder/messages</value>
+		<value>/views/message/messages</value>
 		<value>/views/learningMaterial/messages</value>
 		<value>/views/text/messages</value>
 		<value>/views/fee/messages</value>
@@ -50,6 +52,7 @@
 		<value>/views/comment/messages</value>
 		<value>/views/socialActor/messages</value>
 		<value>/views/category/messages</value>
+		<value>/views/spamWord/messages</value>
 	</util:list>
 
 </beans>

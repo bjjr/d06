@@ -1,2 +1,2 @@
-Añadida query campaigns de contest
+Añadida 2 queries campaigns de contest
 Añadida query campaigns de step

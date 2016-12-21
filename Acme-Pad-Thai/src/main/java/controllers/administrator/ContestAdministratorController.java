@@ -72,6 +72,38 @@ import domain.Contest;
 
 			return result;
 		}
+		// Deleting ------------------------------------------------
+		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+		public ModelAndView delete(Contest contest, BindingResult binding) {
+			ModelAndView res;
+			
+			try {
+				contestService.delete(contest);
+				res = new ModelAndView("redirect:/contest/list.do");
+			} catch (Throwable th) {
+				res = createEditModelAndView(contest, "contest.commit.error");
+			}
+			
+			return res;
+	}
+		
+		// Set winners ----------------------------------------------------------
+		@RequestMapping(value="/set", method = RequestMethod.GET)
+		public ModelAndView set(){
+			ModelAndView result;
+
+			try {
+				contestService.setWinners();
+				result = new ModelAndView("redirect:/contest/list.do");
+			} catch (Throwable oops) {
+				result = new ModelAndView("redirect:/contest/list.do");
+			}
+		
+
+			
+			return result;
+		}
+
 				
 		//Ancillary Methods ----------------------------------------------------------
 		

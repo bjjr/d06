@@ -18,8 +18,8 @@ public interface SponsorRepository extends JpaRepository<Sponsor, Integer> {
 	@Query("select s.companyName from Sponsor s join s.campaigns c join c.bills b group by s.companyName order by sum(b.cost) DESC")
 	Collection<String> companiesByNumBills();
 
-	@Query("select s from Sponsor s join s.campaigns c where ((MONTH(CURRENT_DATE)-MONTH(c.endMoment))=3 and YEAR(c.endMoment) <= YEAR(CURRENT_DATE) and DAY(c.endMoment) <= DAY(CURRENT_DATE)) or ((MONTH(CURRENT_DATE)-MONTH(c.endMoment))>3 and YEAR(c.endMoment) <= YEAR(CURRENT_DATE))")
-	Collection<Sponsor> inactiveSponsors();
+	@Query("select s.name from Sponsor s join s.campaigns c where ((MONTH(CURRENT_DATE)-MONTH(c.endMoment))=3 and YEAR(c.endMoment) <= YEAR(CURRENT_DATE) and DAY(c.endMoment) <= DAY(CURRENT_DATE)) or ((MONTH(CURRENT_DATE)-MONTH(c.endMoment))>3 and YEAR(c.endMoment) <= YEAR(CURRENT_DATE))")
+	Collection<String> inactiveSponsors();
 	
 	@Query("select s.companyName from Sponsor s join s.campaigns c join c.bills b where b.paidMoment != null group by s.companyName having sum(b.cost) < (select avg(b.cost) from Sponsor s join s.campaigns c join c.bills b where b.paidMoment != null)")
 	Collection<String> companiesSpentLessThanAverage();

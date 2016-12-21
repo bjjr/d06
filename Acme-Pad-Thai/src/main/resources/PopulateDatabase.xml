@@ -441,7 +441,7 @@
 
 
 <bean id="endorser1" class="domain.Endorser">
-	<property name="name" value="nameEndorser2" />
+	<property name="name" value="nameEndorser1" />
 	<property name="homepage" value="http://www.homepageEndorser1.com" />
 	<property name="curricula">
 		<list>
@@ -2132,7 +2132,7 @@
 <bean id="folderN3.1" class="domain.Folder">
 	<property name="name" value="Inbox" />
 	<property name="obligatory" value="true" />
-	<property name="actor" ref="nutritionist2" />
+	<property name="actor" ref="nutritionist3" />
 	<property name="messages">
 		<list>
 		</list>
@@ -2143,7 +2143,7 @@
 <bean id="folderN3.2" class="domain.Folder">
 	<property name="name" value="Outbox" />
 	<property name="obligatory" value="true" />
-	<property name="actor" ref="nutritionist2" />
+	<property name="actor" ref="nutritionist3" />
 	<property name="messages">
 		<list>
 		</list>
@@ -2154,7 +2154,7 @@
 <bean id="folderN3.3" class="domain.Folder">
 	<property name="name" value="Trashbox" />
 	<property name="obligatory" value="true" />
-	<property name="actor" ref="nutritionist2" />
+	<property name="actor" ref="nutritionist3" />
 	<property name="messages">
 		<list>
 		</list>
@@ -2165,7 +2165,7 @@
 <bean id="folderN3.4" class="domain.Folder">
 	<property name="name" value="Spambox" />
 	<property name="obligatory" value="true" />
-	<property name="actor" ref="nutritionist2" />
+	<property name="actor" ref="nutritionist3" />
 	<property name="messages">
 		<list>
 		</list>
@@ -3611,7 +3611,7 @@
 	<property name="endMoment" value="05/05/2020"/>
 	<property name="banners">
 		<list>
-			<value>http://www.banner1.com</value>
+			<value>http://cdn77.sadanduseless.com/wp-content/uploads/2014/09/hide-the-pain-harold.jpg</value>
 		</list>
 	</property>
 	<property name="maxDisplayed" value="100"/>	
@@ -3631,8 +3631,8 @@
 	<property name="endMoment" value="12/01/2017"/>
 	<property name="banners">
 		<list>
-			<value>http://www.bannerSponsor21.com</value>
-			<value>http://www.bannerSponsor22.com</value>
+			<value>http://www.sickchirpse.com/wp-content/uploads/2016/05/Hide-the-pain-harold-phone.jpg</value>
+			<value>http://i.imgur.com/Y5d5M8D.jpg</value>
 		</list>
 	</property>
 	<property name="maxDisplayed" value="100"/>	
@@ -3653,8 +3653,8 @@
 	<property name="endMoment" value="03/20/2018"/>
 	<property name="banners">
 		<list>
-			<value>http://www.bannerSponsor21.com</value>
-			<value>http://www.bannerSponsor22.com</value>
+			<value>http://i1.kym-cdn.com/photos/images/facebook/000/839/199/8a9.jpg</value>
+			<value>http://i.imgur.com/zcGtCQt.jpg</value>
 		</list>
 	</property>
 	<property name="maxDisplayed" value="100"/>	
@@ -3673,7 +3673,7 @@
 	<property name="endMoment" value="09/17/2019"/>
 	<property name="banners">
 		<list>
-			<value>http://www.bannerSponsor41.com</value>
+			<value>http://i.imgur.com/LbDUJDk.jpg</value>
 		</list>
 	</property>
 	<property name="maxDisplayed" value="100"/>
@@ -3694,7 +3694,7 @@
 	<property name="endMoment" value="07/25/2016"/>
 	<property name="banners">
 		<list>
-			<value>http://www.bannerSponsor51.com</value>
+			<value>http://i3.kym-cdn.com/photos/images/newsfeed/000/854/491/b7c.jpg</value>
 		</list>
 	</property>
 	<property name="maxDisplayed" value="100"/>

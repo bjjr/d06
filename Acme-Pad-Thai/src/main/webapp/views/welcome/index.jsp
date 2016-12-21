@@ -18,4 +18,15 @@
 
 <p><spring:message code="welcome.greeting.prefix" /> ${name}<spring:message code="welcome.greeting.suffix" /></p>
 
+	<jstl:if test="${banner != ''}">
+		<img src="${banner}" alt="Banner"/>
+	</jstl:if>
+<security:authorize access="isAuthenticated()">
+	<jstl:if test="${masterClass != null}">
+		<h3>
+			<spring:message code="welcome.masterClass.promo" /> ${masterClass}
+		</h3>
+	</jstl:if>
+</security:authorize>
+
 <p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 

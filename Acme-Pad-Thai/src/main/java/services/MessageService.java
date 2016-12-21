@@ -117,20 +117,27 @@ public class MessageService {
 		messageRepository.flush();
 	}
 	
-	// This method deletes a message from the database
+	// This method deletes a message from the Trashbox of the actor logged
 	
-	public void delete(Message message){
+	public void delete(Message message, Actor actor){
 		Assert.isTrue(actorService.checkAuthority("ADMINISTRATOR") || 
 				actorService.checkAuthority("USER") ||
 				actorService.checkAuthority("NUTRITIONIST") ||
 				actorService.checkAuthority("SPONSOR") ||
 				actorService.checkAuthority("COOK"));
 		Assert.notNull(message);
-		Assert.isTrue(message.getId() != 0);
 		
-		Assert.isTrue(messageRepository.exists(message.getId()));
+		Collection<Folder> folders;
 		
-		messageRepository.delete(message);
+		folders = actor.getFolders();
+		
+		for(Folder f:folders){
+			if(f.getName().equals("Trashbox") && f.isObligatory()){
+				f.removeMessage(message);
+				folderService.save(f);
+			}
+		}
+		
 	}
 	
 	// Other business methods -------------------------------
@@ -206,6 +213,7 @@ public class MessageService {
 		for(Folder f:actor.getFolders()){
 			if(f.getMessages().contains(message)){
 				currentFolder = f;
+				break;
 			}
 		}
 
@@ -228,9 +236,11 @@ public class MessageService {
 		for(Folder f:actor.getFolders()){
 			if(f.getMessages().contains(message) && !f.getName().equals("Trashbox")){
 				f.getMessages().remove(message);
+				folderService.save(f);
 			}
 			if(f.getName().equals("Trashbox")){
 				f.addMessage(message);
+				folderService.save(f);
 			}
 		}
 	}

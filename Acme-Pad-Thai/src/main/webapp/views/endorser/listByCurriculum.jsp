@@ -6,8 +6,6 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="endorser.listByCurriculum.title" /></p>
-
 <!-- Listing grid -->
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
@@ -26,5 +24,5 @@
 <br />
 <input type="button" name="return"
 		value="<spring:message code="endorser.return" />"
-		onclick="javascript: relativeRedir('curriculum/nutritionist/list.do');" />
+		onclick="window.location='curriculum/nutritionist/list.do'" />
 <br />

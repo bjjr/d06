@@ -13,14 +13,25 @@ package controllers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CampaignService;
+import services.MasterClassService;
+import domain.MasterClass;
+
 @Controller
 @RequestMapping("/welcome")
 public class WelcomeController extends AbstractController {
+	
+	// Services ---------------------------------------------------------------
+	@Autowired
+	private MasterClassService masterClassService;
+	@Autowired
+	private CampaignService campaignService;
 
 	// Constructors -----------------------------------------------------------
 	
@@ -35,13 +46,20 @@ public class WelcomeController extends AbstractController {
 		ModelAndView result;
 		SimpleDateFormat formatter;
 		String moment;
+		MasterClass promotedMasterClass;
+		String banner;
 		
 		formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		moment = formatter.format(new Date());
-				
+		promotedMasterClass = masterClassService.findRandomPromotedMasterClass();
+		banner = campaignService.displayBannerStar();
+		
 		result = new ModelAndView("welcome/index");
 		result.addObject("name", name);
 		result.addObject("moment", moment);
+		result.addObject("banner", banner);
+		if (promotedMasterClass != null)
+			result.addObject("masterClass", promotedMasterClass.getTitle());
 
 		return result;
 	}

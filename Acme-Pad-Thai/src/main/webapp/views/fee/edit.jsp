@@ -25,7 +25,9 @@
 			value="<spring:message code="fee.save" />" />
 		<input type="button" name="cancel"
 			value="<spring:message code="fee.cancel" />"
-			onclick="window.location='/Acme-Pad-Thai'" /> <br />
+			onclick="window.location='/Acme-Pad-Thai'" />
+		<input type="submit" name="default"
+			value="<spring:message code="fee.default" />" />
 	</div>
 
 </form:form>

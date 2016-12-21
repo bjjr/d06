@@ -15,12 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.Authority;
 import services.ActorService;
+import services.CampaignService;
 import services.CommentService;
 import services.LikeSAService;
 import services.RecipeService;
 import services.SocialActorService;
 import services.UserService;
-
 import domain.Comment;
 import domain.LikeSA;
 import domain.Quantity;
@@ -51,7 +51,10 @@ public class RecipeController extends AbstractController {
 
 	@Autowired
 	private CommentService commentService;
-
+	
+	@Autowired
+	private CampaignService campaignService;
+	
 	// Constructors
 
 	public RecipeController() {
@@ -141,6 +144,7 @@ public class RecipeController extends AbstractController {
 		Integer likes;
 		Integer dislikes;
 		Boolean owner;
+		String banner = campaignService.displayBanner();
 
 		recipe = recipeService.findOne(recipeId);
 		quantities = recipe.getQuantities();
@@ -162,6 +166,7 @@ public class RecipeController extends AbstractController {
 		result.addObject("likesSA", likes);
 		result.addObject("dislikesSA", dislikes);
 		result.addObject("owner", owner);
+		result.addObject("banner", banner);
 
 		return result;
 	}

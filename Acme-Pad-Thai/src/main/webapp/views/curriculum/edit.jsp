@@ -6,8 +6,6 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<p><spring:message code="curriculum.edit.title" /></p>
-
 <form:form action="curriculum/nutritionist/edit.do" modelAttribute="curriculum">
 
 	<form:hidden path="id" />
@@ -55,7 +53,7 @@
 	
 	<input type="button" name="cancel"
 		value="<spring:message code="curriculum.cancel" />"
-		onclick="javascript: relativeRedir('curriculum/nutritionist/list.do');" />
+		onclick="window.location='curriculum/nutritionist/list.do'" />
 	<br />
 
 </form:form>

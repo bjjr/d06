@@ -9,6 +9,7 @@ import org.springframework.util.Assert;
 
 import domain.Curriculum;
 import domain.Endorser;
+import domain.Nutritionist;
 
 import repositories.CurriculumRepository;
 
@@ -28,6 +29,9 @@ public class CurriculumService {
 	
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private NutritionistService nutritionistService;
 	
 	// Constructors -----------------------------------------
 	
@@ -72,8 +76,12 @@ public class CurriculumService {
 		Assert.notNull(curriculum);
 		
 		Curriculum result;
+		Nutritionist nutritionist;
 		
+		nutritionist = nutritionistService.findByPrincipal();
 		result = curriculumRepository.save(curriculum);
+		nutritionist.setCurriculum(result);
+		nutritionistService.save(nutritionist);
 		
 		return result;
 	}
@@ -90,13 +98,18 @@ public class CurriculumService {
 		Assert.isTrue(curriculumRepository.exists(curriculum.getId()));
 		
 		Collection<Endorser> endorsers;
+		Nutritionist nutritionist;
 		
 		endorsers = curriculum.getEndorsers();
+		nutritionist = nutritionistService.findByPrincipal();
 		
 		for(Endorser e:endorsers){
 			e.getCurricula().remove(curriculum);
 			endorserService.save(e);
 		}
+		
+		nutritionist.setCurriculum(null);
+		nutritionistService.save(nutritionist);
 		
 		curriculumRepository.delete(curriculum);
 	}
