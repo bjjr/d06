@@ -46,7 +46,7 @@
 		<security:intercept-url pattern="/user/display.do" access="permitAll" />
 		
 		<security:intercept-url pattern="/cook/create.do" access="hasRole('ADMINISTRATOR')" />
-		<security:intercept-url pattern="/cook/edit.do" access="hasRole('COOK')" />
+		<security:intercept-url pattern="/cook/edit.do" access="isAuthenticated()" />
 		
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />

@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CookService;
+import services.FolderService;
 import domain.Cook;
+import domain.Folder;
 
 @Controller
 @RequestMapping("/cook")
@@ -21,6 +25,9 @@ public class CookController extends AbstractController {
 	
 	@Autowired
 	private CookService cookService;
+	
+	@Autowired
+	private FolderService folderService;
 	
 	// Constructors -----------------------------------
 	
@@ -59,6 +66,12 @@ public class CookController extends AbstractController {
 		String password;
 		String newPassword;
 		Md5PasswordEncoder encoder;
+		Collection<Folder> folders;
+		
+		if (cook.getId() == 0) {
+			folders = folderService.createFolderObligatory(cook);
+			cook.setFolders(folders);
+		}
 		
 		if (binding.hasErrors()) {
 			res = createEditModelAndView(cook);

@@ -1,6 +1,5 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,15 +67,22 @@ public class CookService {
 		
 		Cook res;
 		Collection<Folder> folders;
+		Folder fs;
 		
-		folders = new ArrayList<Folder>();
-		
-		res = cookRepository.save(c);
-		folders = folderService.createFolderObligatory(res);
-		for (Folder f : folders) {
-			folderService.save(f);
+		if (c.getId() == 0) {
+			folders = c.getFolders();
+			res = cookRepository.save(c);
+			for (Folder f : folders) {
+				f.setActor(res);
+			}
+			for (Folder f : folders) {
+				fs = folderService.save(f);
+				res.addFolder(fs);
+			}
+			cookRepository.save(res);
+		} else {
+			res = cookRepository.save(c);
 		}
-		res.setFolders(folders);
 		
 		return res;
 	}

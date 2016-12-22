@@ -1,6 +1,5 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import domain.Folder;
-import domain.Nutritionist;
-
 import repositories.NutritionistRepository;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
+import domain.Folder;
+import domain.Nutritionist;
 
 @Service
 @Transactional
@@ -95,15 +93,19 @@ public class NutritionistService {
 		
 		Nutritionist result;
 		Collection<Folder> folders;
+		Folder fs;
 		
-		folders = new ArrayList<Folder>();
 		if (nutritionist.getId() == 0) {
+			folders = nutritionist.getFolders();
 			result = nutritionistRepository.save(nutritionist);
-			folders = folderService.createFolderObligatory(result);
-			for(Folder f: folders){
-				folderService.save(f);
+			for (Folder f : folders) {
+				f.setActor(result);
 			}
-			result.setFolders(folders);
+			for(Folder f: folders){
+				fs = folderService.save(f);
+				result.addFolder(fs);
+			}
+			nutritionistRepository.save(result);
 			
 		}
 		else{
