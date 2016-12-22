@@ -93,10 +93,18 @@ public class RecipeUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Recipe> recipes;
 		Boolean owner;
+		Collection<Recipe> likes;
+		User user;
 
 		owner = true;
 
 		recipes = recipeService.recipesFollows();
+		likes = new ArrayList<Recipe>();
+		user = userService.findByPrincipal();
+		
+		for (LikeSA l : user.getLikesSA()) {
+			likes.add(l.getRecipe());
+		}
 
 		for (Recipe r : recipes) {
 			if (!userService.findByPrincipal().getRecipes().contains(r)) {
@@ -109,6 +117,7 @@ public class RecipeUserController extends AbstractController {
 		result.addObject("requestURI", "recipe/user/list.do");
 		result.addObject("recipes", recipes);
 		result.addObject("owner", owner);
+		result.addObject("likes", likes);
 
 		return result;
 	}

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.RecipeRepository;
+import security.Authority;
 import domain.Category;
 import domain.Comment;
 import domain.Contest;
@@ -22,8 +24,6 @@ import domain.RecipeCopy;
 import domain.SocialActor;
 import domain.Step;
 import domain.User;
-
-import repositories.RecipeRepository;
 
 @Service
 @Transactional
@@ -354,20 +354,27 @@ public class RecipeService {
 		Collection<Recipe> result;
 		SocialActor sa;
 		List<Recipe> userRecipes;
+		Collection<SocialActor> socialActors;
+		Authority authority;
 		
 		result = new ArrayList<Recipe>();
 		sa = socialActorService.findByPrincipal();
 		userRecipes = new ArrayList<Recipe>();
+		socialActors = sa.getFollows();
+		authority = new Authority();
+		authority.setAuthority("USER");
 
-		for(SocialActor sc : sa.getFollows()){
-			if(userService.findByUserAccount(sc.getUserAccount()) != null){
+		for(SocialActor sc : socialActors){
+			if (sc.getUserAccount().getAuthorities().contains(authority)) {
 				User u;
 				
 				u = userService.findByUserAccount(sc.getUserAccount());
 				userRecipes = (List<Recipe>) u.getRecipes();
 				
-				result.add(userRecipes.get(userRecipes.size()-1));
+				if (!userRecipes.isEmpty())
+					result.add(userRecipes.get(userRecipes.size()-1));
 			}
+				
 		}
 		
 		return result;

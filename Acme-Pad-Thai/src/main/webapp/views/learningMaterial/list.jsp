@@ -41,7 +41,7 @@
 	<display:column>
 			<jstl:choose>
 				<jstl:when test="${learningMaterial['class'].name == 'domain.Text'}">
-					<a href="text/actor/display.do?masterClassId=${masterClassId}&textId=${learningMaterial.id}">
+					<a href="text2/actor/display.do?masterClassId=${masterClassId}&textId=${learningMaterial.id}">
 						<spring:message code="learningMaterial.display.text" var="displayText" />
 						<jstl:out value="${displayText}" />
 					</a>

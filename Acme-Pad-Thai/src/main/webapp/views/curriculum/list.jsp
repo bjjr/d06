@@ -14,7 +14,9 @@
 	<!-- Attributes -->
 
 	<spring:message code="curriculum.photo" var="photoHeader" />
-	<display:column property="photo" title="${photoHeader}" sortable="false" />
+	<display:column title="${photoHeader}" sortable="false">
+		<img src="${row.photo}" width="25%" />
+	</display:column>
 
 	<spring:message code="curriculum.educationSection" var="educationSectionHeader" />
 	<display:column property="educationSection" title="${educationSectionHeader}" sortable="false" />

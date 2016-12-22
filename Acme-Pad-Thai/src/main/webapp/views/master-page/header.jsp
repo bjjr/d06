@@ -31,8 +31,9 @@
 					<li><a href="cook/create.do"><spring:message code="master.page.administrator.create.cook" /></a></li>
 					<li><a href="contest/administrator/create.do"><spring:message code="master.page.administrator.create.contest" /></a></li>
 					<li><a href="category/administrator/list.do"><spring:message code="master.page.administrator.list.category" /></a></li>
-					<li><a href="masterClass/administrator/list.do"><spring:message code="master.page.administrator.list.masterClass" /></a></li>
+					<li><a href="masterClass/admin/list.do"><spring:message code="master.page.administrator.list.masterClass" /></a></li>
 					<li><a href="spamWord/administrator/list.do"><spring:message code="master.page.administrator.list.spamWord" /></a></li>
+					<li><a href="fee/administrator/edit.do"><spring:message code="master.page.administrator.edit.fee" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
@@ -80,6 +81,7 @@
 					<li class="arrow"></li>
 					<li><a href="campaign/sponsor/list.do"><spring:message code="master.page.sponsor.campaign.list" /></a></li>
 					<li><a href="campaign/sponsor/create.do"><spring:message code="master.page.sponsor.campaign.create" /></a></li>
+					<li><a href="sponsor/edit.do"><spring:message code="master.page.actor.edit" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>

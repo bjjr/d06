@@ -79,7 +79,7 @@
 		value="<spring:message code="user.save"/>"/>&nbsp;
 	<input type="button" name="cancel"
 		value="<spring:message code="user.cancel" />"
-		onclick="window.location='/'" />
+		onclick="window.location='/Acme-Pad-Thai'" />
 	<br />
 		
 </form:form>

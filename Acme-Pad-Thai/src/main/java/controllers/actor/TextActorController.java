@@ -12,7 +12,7 @@ import controllers.AbstractController;
 import domain.Text;
 
 @Controller
-@RequestMapping("/text/actor")
+@RequestMapping("/text2/actor")
 public class TextActorController extends AbstractController {
 
 	// Services ------------------------------------------

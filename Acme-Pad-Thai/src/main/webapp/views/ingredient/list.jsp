@@ -20,7 +20,9 @@
 	<display:column property="description" title="${descriptionHeader}" sortable="false" />
 	
 	<spring:message code="ingredient.picture" var="pictureHeader" />
-	<display:column property="picture" title="${pictureHeader}" sortable="false" />
+	<display:column title="${pictureHeader}" sortable="false">
+		<img src="${row.picture}" width="25%" />
+	</display:column>
 	
 	<spring:message code="ingredient.properties" var="propertiesHeader" />
 	<display:column title="${propertiesHeader}">

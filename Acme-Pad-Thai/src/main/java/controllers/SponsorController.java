@@ -84,7 +84,7 @@ public class SponsorController extends AbstractController {
 				sponsor.getUserAccount().setPassword(newPassword);
 
 				sponsorService.save(sponsor);
-				result = new ModelAndView("redirect:/security/logout.do");
+				result = new ModelAndView("redirect:/");
 				result.addObject("message", "sponsor.commit.ok");
 			} catch (Throwable oops) {
 				result = createEditModelAndView(sponsor, "sponsor.commit.error");
