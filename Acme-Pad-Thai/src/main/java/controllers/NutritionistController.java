@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.FolderService;
 import services.NutritionistService;
+import domain.Folder;
 import domain.Nutritionist;
 
 
@@ -26,6 +28,9 @@ public class NutritionistController extends AbstractController{
 	
 	@Autowired
 	private NutritionistService nutritionistService;
+	
+	@Autowired
+	private FolderService folderService;
 	
 	// Constructors -------------------------------------------
 	
@@ -66,6 +71,12 @@ public class NutritionistController extends AbstractController{
 		String password;
 		String passwordEncoder;
 		Md5PasswordEncoder encoder;
+		Collection<Folder> folders;
+		
+		if (nutritionist.getId() == 0) {
+			folders = folderService.createFolderObligatory(nutritionist);
+			nutritionist.setFolders(folders);
+		}
 		
 		encoder = new Md5PasswordEncoder();
 		password = nutritionist.getUserAccount().getPassword();

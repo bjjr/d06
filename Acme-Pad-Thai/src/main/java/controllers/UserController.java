@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.FolderService;
 import services.UserService;
-
+import domain.Folder;
 import domain.SocialIdentity;
 import domain.User;
 
@@ -26,6 +27,9 @@ public class UserController extends AbstractController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private FolderService folderService;
 
 	// Constructors
 
@@ -116,6 +120,12 @@ public class UserController extends AbstractController {
 		String password;
 		String newPassword;
 		Md5PasswordEncoder encoder;
+		Collection<Folder> folders;
+		
+		if (user.getId() == 0) {
+			folders = folderService.createFolderObligatory(user);
+			user.setFolders(folders);
+		}
 
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(user);

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.Authority;
+import services.FolderService;
 import services.SponsorService;
+import domain.Folder;
 import domain.Sponsor;
 
 @Controller
@@ -25,6 +27,9 @@ public class SponsorController extends AbstractController {
 
 	@Autowired
 	private SponsorService sponsorService;
+	
+	@Autowired
+	private FolderService folderService;
 
 	// Constructors ----------------------------------------------------------
 
@@ -62,7 +67,12 @@ public class SponsorController extends AbstractController {
 		ModelAndView result;
 		String password,newPassword;
 		Md5PasswordEncoder encoder;
+		Collection<Folder> folders;
 		
+		if (sponsor.getId() == 0) {
+			folders = folderService.createFolderObligatory(sponsor);
+			sponsor.setFolders(folders);
+		}
 		
 		if (binding.hasErrors()) {
 			result = createEditModelAndView(sponsor);

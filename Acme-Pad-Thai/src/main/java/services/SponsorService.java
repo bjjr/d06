@@ -1,6 +1,5 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,15 +57,19 @@ public class SponsorService {
 		
 		Sponsor result;
 		Collection<Folder> folders;
+		Folder fs;
 		
-		folders = new ArrayList<Folder>();
 		if (sponsor.getId() == 0) {
+			folders = sponsor.getFolders();
 			result = sponsorRepository.save(sponsor);
-			folders = folderService.createFolderObligatory(result);
 			for(Folder f: folders){
-				folderService.save(f);
+				f.setActor(result);
 			}
-			result.setFolders(folders);
+			for (Folder f : folders) {
+				fs = folderService.save(f);
+				result.addFolder(fs);
+			}
+			sponsorRepository.save(result);
 			
 		}
 		else{

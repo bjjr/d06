@@ -35,12 +35,13 @@ public class FolderService {
 	
 	// Simple CRUD methods ----------------------------------
 	
-	public Folder create(){
+	public Folder create(Actor actor){
 		Folder result;
 		
 		result = new Folder();
 		result.setObligatory(false);
-		result.setActor(actorService.findByPrincipal());
+		
+		result.setActor(actor);
 		
 		return result;
 	}
@@ -77,18 +78,8 @@ public class FolderService {
 		Assert.notNull(folder);
 		
 		Folder result;
-		Actor actor;
 		
-		if(folder.getId()==0){
-			actor = actorService.findByPrincipal();
-			folder.setActor(actor);
-			result = folderRepository.save(folder);
-			actor.addFolder(result);
-			actorService.save(actor);
-		}
-		else{
-			result = folderRepository.save(folder);
-		}
+		result = folderRepository.save(folder);
 		
 		return result;
 	}
@@ -128,10 +119,10 @@ public class FolderService {
 
 		result = new ArrayList<Folder>();
 		obligatoryFolders = new ArrayList<Folder>();
-		f1 = create();
-		f2 = create();
-		f3 = create();
-		f4 = create();
+		f1 = create(a);
+		f2 = create(a);
+		f3 = create(a);
+		f4 = create(a);
 		
 		f1.setName("Inbox");
 		f2.setName("Outbox");

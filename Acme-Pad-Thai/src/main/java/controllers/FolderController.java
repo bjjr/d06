@@ -43,8 +43,10 @@ public class FolderController extends AbstractController{
 	public ModelAndView create(){
 		ModelAndView result;
 		Folder folder;
+		Actor actor;
 		
-		folder = folderService.create();
+		actor = actorService.findByPrincipal();
+		folder = folderService.create(actor);
 		result = createEditModelAndView(folder);
 		
 		return result;

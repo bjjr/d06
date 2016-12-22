@@ -41,12 +41,13 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
 		
-		<security:intercept-url pattern="/user/list.do" access="permitAll" /> 
-		<security:intercept-url pattern="/user/create.do" access="permitAll" /> 
+		<security:intercept-url pattern="/user/create.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/user/edit.do" access="permitAll" />
 		<security:intercept-url pattern="/user/display.do" access="permitAll" />
 		
-		<security:intercept-url pattern="/cook/**" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/cook/create.do" access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url pattern="/cook/edit.do" access="hasRole('COOK')" />
+		
 		<security:intercept-url pattern="/masterClass/list.do" access="isAnonymous()" />
 		<security:intercept-url pattern="/masterClass/actor/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/masterClass/cook/**" access="hasRole('COOK')" />
@@ -59,29 +60,21 @@
 		<security:intercept-url pattern="/text/actor/display.do" access="isAuthenticated()" />
 		
 		<security:intercept-url pattern="/video/**" access="hasRole('COOK')" />
-		<security:intercept-url pattern="/presentation/**" access="hasRole('COOK')" />
 		
-		<security:intercept-url pattern="/recipe/nutritionist/list.do" access="hasRole('NUTRITIONIST')" /> 
-		<security:intercept-url pattern="/ingredient/nutritionist/list.do" access="hasRole('NUTRITIONIST')" /> 
-		<security:intercept-url pattern="/ingredient/nutritionist/create.do" access="hasRole('NUTRITIONIST')" />
-		<security:intercept-url pattern="/ingredient/nutritionist/edit.do" access="hasRole('NUTRITIONIST')" />
-		<security:intercept-url pattern="/ingredient/nutritionist/addProperty.do" access="hasRole('NUTRITIONIST')" />
-		<security:intercept-url pattern="/ingredient/nutritionist/add.do" access="hasRole('NUTRITIONIST')" />
-		<security:intercept-url pattern="/ingredient/nutritionist/removeProperty.do" access="hasRole('NUTRITIONIST')" />
-		<security:intercept-url pattern="/ingredient/nutritionist/remove.do" access="hasRole('NUTRITIONIST')" />
-		<security:intercept-url pattern="/property/nutritionist/list.do" access="hasRole('NUTRITIONIST')" /> 
-		<security:intercept-url pattern="/property/nutritionist/create.do" access="hasRole('NUTRITIONIST')" />
-		<security:intercept-url pattern="/property/nutritionist/edit.do" access="hasRole('NUTRITIONIST')" />
+		<security:intercept-url pattern="/presentation/**" access="hasRole('COOK')" />
+		 
+		<security:intercept-url pattern="/ingredient/nutritionist/**" access="hasRole('NUTRITIONIST')" />
+		
+		<security:intercept-url pattern="/property/nutritionist/**" access="hasRole('NUTRITIONIST')" /> 
 	
-		<security:intercept-url pattern="/socialActor/list.do" access="hasAnyRole('USER', 'NUTRITIONIST')" /> 
-		<security:intercept-url pattern="/socialActor/follow.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
-		<security:intercept-url pattern="/socialActor/unfollow.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
+		<security:intercept-url pattern="/socialActor/**" access="hasAnyRole('USER', 'NUTRITIONIST')" /> 
 		
 		<security:intercept-url pattern="/curriculum/nutritionist/**" access="hasRole('NUTRITIONIST')" />
 		
 		<security:intercept-url pattern="/endorser/nutritionist/**" access="hasRole('NUTRITIONIST')" />
 		
-		<security:intercept-url pattern="/nutritionist/edit.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/nutritionist/create.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/nutritionist/edit.do" access="permitAll" />
 		<security:intercept-url pattern="/nutritionist/list.do" access="isAuthenticated()" />
 		
 		<security:intercept-url pattern="/folder/**" access="isAuthenticated()" />
@@ -89,36 +82,28 @@
 
 		<security:intercept-url pattern="/fee/administrator/edit.do" access="hasRole('ADMINISTRATOR')" />
 		 
-		 <security:intercept-url pattern="/user/user/edit.do" access="hasRole('USER')" /> 
-		 
-		<security:intercept-url pattern="/category/administrator/list.do" access="hasRole('ADMINISTRATOR')" /> 
-		<security:intercept-url pattern="/category/administrator/create.do" access="hasRole('ADMINISTRATOR')" /> 
-		<security:intercept-url pattern="/category/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
+		<security:intercept-url pattern="/category/administrator/**" access="hasRole('ADMINISTRATOR')" /> 
 		
 		<security:intercept-url pattern="/spamWord/administrator/**" access="hasRole('ADMINISTRATOR')" /> 
 	
-		<security:intercept-url pattern="/quantity/create.do" access="hasRole('USER')" />
-		<security:intercept-url pattern="/quantity/edit.do" access="hasRole('USER')" />
+		<security:intercept-url pattern="/quantity/**" access="hasRole('USER')" />
 		
 		<security:intercept-url pattern="/recipe/list.do" access="permitAll" /> 
 		<security:intercept-url pattern="/recipe/display.do" access="permitAll" />
 		<security:intercept-url pattern="/recipe/like.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
 		<security:intercept-url pattern="/recipe/dislike.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
 		<security:intercept-url pattern="/recipe/createComment.do" access="hasAnyRole('USER', 'NUTRITIONIST')" />
-		<security:intercept-url pattern="/recipe/user/listFollow.do" access="hasRole('USER')" />
-		<security:intercept-url pattern="/recipe/nutritionist/listFollow.do" access="hasRole('NUTRITIONIST')" />
 		<security:intercept-url pattern="/recipe/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/recipe/nutritionist/**" access="hasRole('NUTRITIONIST')" />
 		
-		<security:intercept-url pattern="/contest/list.do" access="permitAll" /> 
+		
+		<security:intercept-url pattern="/contest/list.do" access="permitAll" />
+		<security:intercept-url pattern="/contest/administrator/**" access="hasRole('ADMINISTRATOR')" />
 
 		<security:intercept-url pattern="/recipeCopy/list.do" access="permitAll" /> 
 
-		<security:intercept-url pattern="/contest/administrator/edit.do" access="hasRole('ADMINISTRATOR')" /> 
-		<security:intercept-url pattern="/contest/administrator/create.do" access="hasRole('ADMINISTRATOR')" /> 
-		<security:intercept-url pattern="/contest/administrator/set.do" access="hasRole('ADMINISTRATOR')" /> 
-
-		<security:intercept-url pattern="/sponsor/create.do" access="permitAll" /> 
-		<security:intercept-url pattern="/sponsor/edit.do" access="permitAll" /> 
+		<security:intercept-url pattern="/sponsor/create.do" access="isAnonymous()" />
+		<security:intercept-url pattern="/sponsor/edit.do" access="permitAll" />
 
 		<security:intercept-url pattern="/campaign/sponsor/**" access="hasRole('SPONSOR')" /> 
 		

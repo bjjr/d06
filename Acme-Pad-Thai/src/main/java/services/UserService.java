@@ -71,16 +71,19 @@ public class UserService {
 
 		User result;
 		Collection<Folder> folders;
+		Folder fs;
 		
-		folders = new ArrayList<Folder>();
 		if (user.getId() == 0) {
+			folders = user.getFolders();
 			result = userRepository.save(user);
-			folders = folderService.createFolderObligatory(result);
-			for(Folder f: folders){
-				folderService.save(f);
+			for (Folder f: folders) {
+				f.setActor(result);
 			}
-			result.setFolders(folders);
-			
+			for(Folder f: folders){
+				fs = folderService.save(f);
+				result.addFolder(fs);
+			}
+			userRepository.save(result);
 		}
 		else{
 			result = userRepository.save(user);
