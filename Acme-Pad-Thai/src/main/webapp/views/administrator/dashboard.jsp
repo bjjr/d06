@@ -21,6 +21,54 @@
 	</jstl:forEach>
 </ul>
 
+<h2><spring:message code="administrator.userMRA" /></h2>
+
+<display:table pagesize="5" class="displaytag" name="usersAuthMoRecipe"
+requestURI="administrator/dashboard.do" id="usersAuthMoRecipe">
+	
+	<spring:message code="user.name" var="name" />
+	<spring:message code="user.surname" var="surname" />
+	<display:column property="name" title="${name}" />
+	<display:column property="surname" title="${surname}" />
+
+</display:table>
+
+<h2><spring:message code="administrator.usersP" /></h2>
+
+<display:table pagesize="5" class="displaytag" name="usersOrderPop"
+requestURI="administrator/dashboard.do" id="usersOrderPop">
+	
+	<spring:message code="user.name" var="name" />
+	<spring:message code="user.surname" var="surname" />
+	<display:column property="name" title="${name}" />
+	<display:column property="surname" title="${surname}" />
+
+</display:table>
+
+<h2><spring:message code="administrator.usersAvgL" /></h2>
+
+<display:table pagesize="5" class="displaytag" name="usersOrderLike"
+requestURI="administrator/dashboard.do" id="usersOrderLike">
+	
+	<spring:message code="user.name" var="name" />
+	<spring:message code="user.surname" var="surname" />
+	<display:column property="name" title="${name}" />
+	<display:column property="surname" title="${surname}" />
+
+</display:table>
+
+<h2><spring:message code="administrator.usersAvgD" /></h2>
+
+<display:table pagesize="5" class="displaytag" name="usersOrderDislike"
+requestURI="administrator/dashboard.do" id="usersOrderDislike">
+	
+	<spring:message code="user.name" var="name" />
+	<spring:message code="user.surname" var="surname" />
+	<display:column property="name" title="${name}" />
+	<display:column property="surname" title="${surname}" />
+
+</display:table>
+
 <h2><spring:message code="administrator.CbnC" /></h2>
 
 <display:table pagesize="5" class="displaytag" name="compByCampaigns"
