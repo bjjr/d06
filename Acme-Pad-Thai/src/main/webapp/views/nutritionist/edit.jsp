@@ -23,6 +23,8 @@
 	<form:hidden path="likesSA"/>
 	<form:hidden path="curriculum"/>
 	<form:hidden path="userAccount.authorities" id="authorities"/>
+	<form:hidden path="userAccount.id"/>
+	<form:hidden path="userAccount.version"/>
 		
 	<form:label path="name">
 		<spring:message code="nutritionist.name"/>

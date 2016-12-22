@@ -25,7 +25,7 @@ public class Presentation extends LearningMaterial {
 	@NotNull
 	@NotBlank
 	@URL
-	@Pattern(regexp = "^(\\S*)\\.slideshare\\.net\\/\\S+$")
+	@Pattern(regexp = "(^(\\S*)\\.slideshare\\.net\\/\\S+$)|(^$)")
 	public String getPath() {
 		return path;
 	}

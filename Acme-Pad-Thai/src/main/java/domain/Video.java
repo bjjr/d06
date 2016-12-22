@@ -25,7 +25,7 @@ public class Video extends LearningMaterial {
 	@NotNull
 	@NotBlank
 	@URL
-	@Pattern(regexp = "^(\\S*)\\.youtube\\.com\\/\\S+$")
+	@Pattern(regexp = "(^(\\S*)\\.youtube\\.com\\/\\S+$)|(^$)")
 	public String getIdentifier() {
 		return identifier;
 	}

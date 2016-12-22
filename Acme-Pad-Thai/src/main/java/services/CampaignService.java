@@ -111,7 +111,7 @@ public class CampaignService {
 			Bill b, b1;
 			b = billService.create(c);
 			b.setDescription("Bill of month "
-					+ b.getCreationMoment().getMonth());
+					+ b.getCreationMoment().getMonth()+1);
 			b1 = billService.save(b);
 			c.addBill(b1);
 			c.setDisplayed(0);

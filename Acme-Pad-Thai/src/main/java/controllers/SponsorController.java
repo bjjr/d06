@@ -55,7 +55,7 @@ public class SponsorController extends AbstractController {
 		ModelAndView result;
 		Sponsor sponsor;
 		
-		sponsor = sponsorService.findOne(sponsorService.findByPrincipal().getId());
+		sponsor = sponsorService.findByPrincipal();
 		Assert.notNull(sponsor);
 		result = createEditModelAndView(sponsor);
 

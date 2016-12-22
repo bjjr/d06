@@ -39,7 +39,8 @@
 	<form:label path="path">
 		<spring:message code="presentation.path" />
 	</form:label>
-	<form:input path="path" />
+	<form:input path="path" cssStyle="display: inline-block"/>
+		<p style="font-size: 0.6vw;font-weight: bold;display: inline-block;"><spring:message code="presentation.hint" />: http://*.slideshare.com/*</p>
 	<form:errors cssClass="error" path="path" />
 	<br />
 
