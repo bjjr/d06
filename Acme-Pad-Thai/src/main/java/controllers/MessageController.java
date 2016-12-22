@@ -62,12 +62,10 @@ public class MessageController extends AbstractController{
 	public ModelAndView send(@Valid Message messageDomain, BindingResult binding){
 		ModelAndView result;
 		Actor sender;
-		Collection<Actor> actors;
 		
 		sender = actorService.findByPrincipal();
-		actors = actorService.findAll();
 		messageService.sendMessage(messageDomain, sender, recipients);
-		result.addObject("actors", actors);
+		
 		return result;
 	}
 	

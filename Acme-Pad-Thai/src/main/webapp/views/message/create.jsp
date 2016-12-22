@@ -26,10 +26,7 @@
 	<br />
 	
 	<form:label path="recipients"><spring:message code="message.recipients" /></form:label>
-	<form:select path="" >
-		<form:option label="-----" value="0" />
-		<form:options items="${actors}" itemLabel="userAccount.username" itemValue="id" multiple="multiple"/>
-	</form:select>
+	<form:textarea path="recipients" />
 	<form:errors cssClass="error" path="recipients" />
 	<br />
 	
