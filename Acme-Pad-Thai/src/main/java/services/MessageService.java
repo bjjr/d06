@@ -257,4 +257,22 @@ public class MessageService {
 		}
 	}
 	
+	public Collection<Actor> convertUsernameToActor(Collection<String> usernames){
+		Collection<Actor> result;
+		Collection<Actor> allActors;
+		
+		result = new ArrayList<Actor>();
+		allActors = actorService.findAll();
+		
+		for(String s:usernames){
+			for(Actor a:allActors){
+				if(a.getUserAccount().getUsername().equals(s)){
+					result.add(a);
+				}
+			}
+		}
+		
+		return result;
+	}
+	
 }
