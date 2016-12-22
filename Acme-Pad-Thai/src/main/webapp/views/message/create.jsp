@@ -12,8 +12,6 @@
 	<form:hidden path="version" />
 	<form:hidden path="moment" />
 	<form:hidden path="sender" />
-	<form:hidden path="priority.id"/>
-	<form:hidden path="priority.version"/>
 
 	<form:label path="subject"><spring:message code="message.subject" /></form:label>
 	<form:input path="subject" />
@@ -26,16 +24,13 @@
 	<br />
 	
 	<form:label path="recipients"><spring:message code="message.recipients" /></form:label>
-	<form:textarea path="recipients" />
+	<form:select path="recipients" items="${actors}" itemLabel="userAccount.username" itemValue="id" multiple="multiple" />
 	<form:errors cssClass="error" path="recipients" />
 	<br />
 	
+	<p><spring:message code="priority.help" /></p>
 	<form:label path="priority"><spring:message code="message.priority" /></form:label>
-	<form:select path="priority.priority" >
-		 <form:option value="High"><spring:message code="message.priority.High"/></form:option>
-		 <form:option value="Neutral"><spring:message code="message.priority.Neutral"/></form:option>
-		 <form:option value="Low"><spring:message code="message.priority.Low"/></form:option>
-	</form:select>
+	<form:select path="priority" items="${priorities}" itemValue="id" itemLabel="priority" />
 	<br />
 
 	<!-- Buttons -->

@@ -131,7 +131,7 @@ public class MessageService {
 		Folder aux;
 		
 		folders = actor.getFolders();
-		aux = folderService.create();
+		aux = null;
 		
 		for(Folder f:folders){
 			if(f.getName().equals("Trashbox") && f.isObligatory()){
@@ -220,7 +220,7 @@ public class MessageService {
 		
 		Folder currentFolder;
 		
-		currentFolder = folderService.create();
+		currentFolder = null;
 		
 		for(Folder f:actor.getFolders()){
 			if(f.getMessages().contains(message)){

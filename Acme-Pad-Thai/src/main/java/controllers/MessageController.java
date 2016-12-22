@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import domain.Actor;
-import domain.Curriculum;
-import domain.Folder;
-import domain.Message;
-
 import services.ActorService;
 import services.FolderService;
 import services.MessageService;
+import services.PriorityService;
+import domain.Actor;
+import domain.Folder;
+import domain.Message;
 
 @Controller
 @RequestMapping("/message")
@@ -37,6 +36,9 @@ public class MessageController extends AbstractController{
 	@Autowired
 	private ActorService actorService;
 	
+	@Autowired
+	private PriorityService priorityService;
+	
 	// Constructors -------------------------------------------
 	
 	public MessageController(){
@@ -51,6 +53,7 @@ public class MessageController extends AbstractController{
 		Message messageDomain;
 		
 		messageDomain = messageService.create();
+		messageDomain.setSender(actorService.findByPrincipal());
 		result = createEditModelAndView(messageDomain);
 		
 		return result;
@@ -62,9 +65,28 @@ public class MessageController extends AbstractController{
 	public ModelAndView send(@Valid Message messageDomain, BindingResult binding){
 		ModelAndView result;
 		Actor sender;
+		Collection<Actor> recipients;
+		int folderId = 0;
 		
 		sender = actorService.findByPrincipal();
-		messageService.sendMessage(messageDomain, sender, recipients);
+		recipients = messageDomain.getRecipients();
+		
+		for (Folder f : sender.getFolders()) {
+			if (f.getName().equals("Outbox") && f.isObligatory()) {
+				folderId = f.getId();
+			}
+		}
+		
+		if (binding.hasErrors()) {
+			result = createEditModelAndView(messageDomain);
+		} else {
+			try {
+				messageService.sendMessage(messageDomain, sender, recipients);
+				result = new ModelAndView("redirect:listByFolder.do?folderId=" + folderId);
+			} catch (Throwable oops) {
+				result = createEditModelAndView(messageDomain, "message.commit.error");
+			}
+		}
 		
 		return result;
 	}
@@ -214,6 +236,8 @@ public class MessageController extends AbstractController{
 		result.addObject("messageDomain", messageDomain);
 		result.addObject("messagesList", messagesList);
 		result.addObject("message", message);
+		result.addObject("actors", actorService.findAll());
+		result.addObject("priorities", priorityService.findAll());
 			
 		return result;
 	}
