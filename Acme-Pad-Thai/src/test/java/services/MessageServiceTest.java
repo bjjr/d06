@@ -141,10 +141,12 @@ public class MessageServiceTest extends AbstractTest{
 		authenticate("nutritionist3");
 		
 		Message message;
+		Actor actor;
 
 		message = messageService.findOne(70);
+		actor = actorService.findByPrincipal();
 		
-		messageService.delete(message);
+		messageService.delete(message, actor);
 		
 		System.out.println("------- TEST DELETE -------");
 		
@@ -292,6 +294,34 @@ public class MessageServiceTest extends AbstractTest{
 		System.out.println("\n");
 		
 		unauthenticate();
+	}
+	
+	@Test
+	public void testConvertUsernameToActor(){
+		Collection<String> usernames;
+		Collection<Actor> result;
+		String s1, s2, s3;
+		
+		usernames = new ArrayList<String>();
+		s1 = "user1";
+		s2 = "nutritionist2";
+		s3 = "cook3";
+		usernames.add(s1);
+		usernames.add(s2);
+		usernames.add(s3);
+		
+		System.out.println("------- TEST CONVERT USERNAME TO ACTOR -------");
+		
+		for(String s:usernames){
+			System.out.println(s);
+		}
+		
+		result = messageService.convertUsernameToActor(usernames);
+		
+		for(Actor a:result){
+			System.out.println(a.getName() + "(id=" + a.getId() + "): " + a.getUserAccount().getUsername());
+		}
+		
 	}
 
 }

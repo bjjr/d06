@@ -44,6 +44,15 @@ public class ActorService {
 		return res;
 	}
 	
+	public Collection<Actor> findAll(){
+		Collection<Actor> result;
+		
+		result = actorRepository.findAll();
+		Assert.notNull(result);
+		
+		return result;
+	}
+	
 	public Actor save(Actor a) {
 		Assert.notNull(a);
 		
