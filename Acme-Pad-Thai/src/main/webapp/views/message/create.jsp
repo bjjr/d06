@@ -19,18 +19,18 @@
 	<form:input path="subject" />
 	<form:errors cssClass="error" path="subject" />
 	<br />
-	<br />
 	
 	<form:label path="body"><spring:message code="message.body" /></form:label>
 	<form:textarea path="body" />
 	<form:errors cssClass="error" path="body" />
 	<br />
-	<br />
 	
 	<form:label path="recipients"><spring:message code="message.recipients" /></form:label>
-	<form:textarea path="recipients" />
+	<form:select path="" >
+		<form:option label="-----" value="0" />
+		<form:options items="${actors}" itemLabel="userAccount.username" itemValue="id" multiple="multiple"/>
+	</form:select>
 	<form:errors cssClass="error" path="recipients" />
-	<br />
 	<br />
 	
 	<form:label path="priority"><spring:message code="message.priority" /></form:label>
@@ -39,14 +39,12 @@
 		 <form:option value="Neutral"><spring:message code="message.priority.Neutral"/></form:option>
 		 <form:option value="Low"><spring:message code="message.priority.Low"/></form:option>
 	</form:select>
-	
-	<br />
 	<br />
 
 	<!-- Buttons -->
 	
-	<input type="submit" name="save"
-		value="<spring:message code="message.save" />" />&nbsp; 
+	<input type="submit" name="send"
+		value="<spring:message code="message.send" />" />&nbsp;
 		
 	<input type="button" name="cancel"
 		value="<spring:message code="message.cancel" />"

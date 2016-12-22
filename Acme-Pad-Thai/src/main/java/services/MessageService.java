@@ -128,15 +128,26 @@ public class MessageService {
 		Assert.notNull(message);
 		
 		Collection<Folder> folders;
+		Folder aux;
 		
 		folders = actor.getFolders();
+		aux = folderService.create();
 		
 		for(Folder f:folders){
 			if(f.getName().equals("Trashbox") && f.isObligatory()){
-				f.removeMessage(message);
-				folderService.save(f);
+				aux = f;
+				break;
 			}
 		}
+		if(actor.getReceivedMessages().contains(message)){
+			actor.getReceivedMessages().remove(message);
+		}
+		else if(actor.getSentMessages().contains(message)){
+			actor.getSentMessages().remove(message);
+		}
+		actorService.save(actor);
+		aux.removeMessage(message);
+		folderService.save(aux);
 		
 	}
 	
@@ -205,6 +216,7 @@ public class MessageService {
 				actorService.checkAuthority("NUTRITIONIST") ||
 				actorService.checkAuthority("SPONSOR") ||
 				actorService.checkAuthority("COOK"));
+		Assert.isTrue(actor.getFolders().contains(folder));
 		
 		Folder currentFolder;
 		

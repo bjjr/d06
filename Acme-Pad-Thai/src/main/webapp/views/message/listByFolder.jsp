@@ -26,13 +26,13 @@
 	<display:column property="priority.priority" title="${priorityHeader}" sortable="true" />
 	
 	<spring:message code="message.sender" var="senderHeader" />
-	<display:column property="sender.email" title="${senderHeader}" sortable="true" />
+	<display:column property="sender.userAccount.username" title="${senderHeader}" sortable="true" />
 	
 	<jstl:if test="${outbox == true}">
 		<spring:message code="message.recipients" var="recipientsHeader" />
 		<display:column title="${recipientsHeader}" sortable="false">
 			<jstl:forEach var="r" items="${row.recipients}">
-				<jstl:out value="${r.email}"></jstl:out>
+				<jstl:out value="${r.userAccount.username}"></jstl:out>
 				<br />
 			</jstl:forEach>
 		</display:column>
@@ -40,16 +40,15 @@
 	</jstl:if>	
 	
 	<display:column>
-		<a href="message/move.do?messageId=${row.id}">
+		<a href="message/selectFolder.do?messageId=${row.id}&actualFolderId=${actualFolderId}">
 			<spring:message	code="message.move" />
 		</a>
 	</display:column>
 	
 	<display:column>
 		<jstl:if test="${trashbox == true}">
-			<input type="submit" name="delete"
-				value="<spring:message code="message.delete" />"
-				onclick="return confirm('<spring:message code="message.confirm.delete" />')" />&nbsp;
+			<a href="message/delete.do?messageId=${row.id}&actualFolderId=${actualFolderId}"
+			onclick="return confirm('<spring:message code="message.confirm.delete" />')"><spring:message code="message.delete" /></a>
 		</jstl:if>
 		<jstl:if test="${trashbox == false}">
 			<a href="message/moveToTrashbox.do?messageId=${row.id}&folderId=${folderId}"
