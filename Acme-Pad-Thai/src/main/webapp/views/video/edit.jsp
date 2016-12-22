@@ -40,7 +40,7 @@
 		<spring:message code="video.identifier" />
 	</form:label>
 	<form:input path="identifier" cssStyle="display: inline-block"/>
-	<p style="font-size: 0.6vw;font-weight: bold;display: inline-block;"><spring:message code="video.hint" />: http://*youtube.com/*</p>
+	<p style="font-size: 0.6vw;font-weight: bold;display: inline-block;"><spring:message code="video.hint" />: http://*.youtube.com/*</p>
 	<form:errors cssClass="error" path="identifier" />
 	<br />
 
