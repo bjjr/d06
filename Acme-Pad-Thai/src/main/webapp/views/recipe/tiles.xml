@@ -26,5 +26,15 @@
 		<put-attribute name="title" value="Edit recipe" />
 		<put-attribute name="body" value="/views/recipe/edit.jsp" />
 	</definition>
+	
+	<definition name="recipe/addCategory" extends="master.page">	
+		<put-attribute name="title" value="Add categories" />
+		<put-attribute name="body" value="/views/recipe/addCategory.jsp" />
+	</definition>
+	
+	<definition name="recipe/removeCategory" extends="master.page">	
+		<put-attribute name="title" value="Remove categories" />
+		<put-attribute name="body" value="/views/recipe/removeCategory.jsp" />
+	</definition>
 
 </tiles-definitions>

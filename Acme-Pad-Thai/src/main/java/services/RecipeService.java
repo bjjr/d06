@@ -452,5 +452,50 @@ public class RecipeService {
 		
 		save(recipe);
 	}
+	
+	public Collection<Category> findAvailableCategories(Recipe recipe){
+		Assert.notNull(recipe);
+		
+		Collection<Category> result;
+		
+		result = categoryService.findAll();
+		result.removeAll(recipe.getCategories());
+		
+		return result;
+	}
+	
+	public void addCategory(Recipe recipe, Category category){
+		Assert.notNull(recipe);
+		Assert.notNull(category);
+		
+		recipe.addCategory(category);
+		if(!category.getSubcategories().isEmpty()){
+		for(Category subcategory : category.getSubcategories()){
+			recipe.addCategory(subcategory);
+			categoryService.save(subcategory);
+		}
+		}
+		save(recipe);
+		categoryService.save(category);
+	
+	}
+	
+	public void removeCategory(Recipe recipe, Category category){
+		Assert.notNull(recipe);
+		Assert.notNull(category);
+		
+		recipe.removeCategory(category);
+		
+		if(!category.getSubcategories().isEmpty()){
+		for(Category subcategory : category.getSubcategories()){
+			recipe.removeCategory(subcategory);
+			categoryService.save(subcategory);
+		}
+		}
+		
+		save(recipe);
+		categoryService.save(category);
+	
+	}
 
 }

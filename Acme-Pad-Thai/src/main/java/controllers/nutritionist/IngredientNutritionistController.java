@@ -124,6 +124,7 @@ public class IngredientNutritionistController extends AbstractController {
 		properties = propertyService.findAvailableProperties(ingredient);
 	
 		result = new ModelAndView("ingredient/addProperty");
+		result.addObject("requestURI", "ingredient/nutritionist/addProperty.do");
 		result.addObject("ingredient", ingredient);
 		result.addObject("properties", properties);
 
@@ -147,6 +148,7 @@ public class IngredientNutritionistController extends AbstractController {
 			} catch (Throwable oops) {
 				properties = propertyService.findAvailableProperties(ingredient);
 				result = new ModelAndView("ingredient/addProperty");
+				result.addObject("requestURI", "ingredient/nutritionist/addProperty.do");
 				result.addObject("ingredient", ingredient);
 				result.addObject("properties", properties);
 				result.addObject("message", "ingredient.commit.error");
@@ -166,6 +168,7 @@ public class IngredientNutritionistController extends AbstractController {
 		ingredient = ingredientService.findOne(ingredientId);
 		properties = ingredient.getProperties();
 		result = new ModelAndView("ingredient/removeProperty");
+		result.addObject("requestURI", "ingredient/nutritionist/removeProperty.do");
 		result.addObject("ingredient", ingredient);
 		result.addObject("properties", properties);
 
@@ -188,6 +191,7 @@ public class IngredientNutritionistController extends AbstractController {
 			} catch (Throwable oops) {
 				properties = ingredient.getProperties();
 				result = new ModelAndView("ingredient/removeProperty");
+				result.addObject("requestURI", "ingredient/nutritionist/removeProperty.do");
 				result.addObject("ingredient", ingredient);
 				result.addObject("properties", properties);
 				result.addObject("message", "ingredient.commit.error");

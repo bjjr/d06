@@ -10,7 +10,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <!-- Listing grid -->
-<display:table pagesize="5" class="displaytag" keepStatus="true"
+<display:table pagesize="5" class="displaytag"
 	name="properties" requestURI="${requestURI}" id="row">
 	<!-- Attributes -->
 	<spring:message code="property.name" var="nameHeader" />

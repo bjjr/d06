@@ -21,15 +21,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import domain.Cook;
+import domain.User;
 
 import services.BillService;
 import services.CampaignService;
 import services.ContestService;
 import services.CookService;
+import services.IngredientService;
 import services.MasterClassService;
 import services.PresentationService;
+import services.RecipeService;
 import services.SponsorService;
+import services.StepService;
 import services.TextService;
+import services.UserService;
 import services.VideoService;
 
 @Controller
@@ -42,6 +47,18 @@ public class AdministratorController extends AbstractController {
 		super();
 	}
 	//Services ----------------------------------------------------------
+	
+	@Autowired
+	private RecipeService recipeService;
+	
+	@Autowired
+	private StepService stepService;
+	
+	@Autowired
+	private IngredientService ingredientService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private ContestService contestService;
@@ -77,6 +94,15 @@ public class AdministratorController extends AbstractController {
 		ModelAndView result;
 		Map<String,String> queries = new HashMap<String, String>();
 		
+		//Queries C
+		queries.put("administrator.minRPU", recipeService.findMinRecipesUser().toString());
+		queries.put("administrator.avgRPU", recipeService.findAvgRecipesUser().toString());
+		queries.put("administrator.maxRPU", recipeService.findMaxRecipesUser().toString());
+		queries.put("administrator.avgNSPR", stepService.findAvgStepsRecipe().toString());
+		queries.put("administrator.sdNSPR", stepService.findStandardDeviationStepsRecipe().toString());
+		queries.put("administrator.avgNIPR", ingredientService.findAvgIngredientPerRecipe().toString());
+		queries.put("administrator.sdNIPR", ingredientService.findStandardDeviationIngredientPerRecipe().toString());
+		
 		queries.put("administrator.avgRCpC",contestService.avgRecipeCopyPerContest().toString());
 		queries.put("administrator.minRCpC",contestService.minRecipeCopyPerContest().toString());
 		queries.put("administrator.maxRCpC",contestService.maxRecipeCopyPerContest().toString());
@@ -108,6 +134,13 @@ public class AdministratorController extends AbstractController {
 		
 		// List queries ----------------------------------------------------
 		
+		//Queries C
+		Collection<User> usersAuthMoRecipe = userService.findUsersAuthoredMoreRecipes();
+		Collection<User> usersOrderPop = userService.listUsersPopularity();
+		Collection<User> usersOrderLike = userService.listUsersAverageLikes();
+		Collection<User> usersOrderDislike = userService.listUsersAverageDislikes();
+		
+		//Queries B
 		Collection<String> compByCampaigns = sponsorService.companiesByNumCampaigns();
 		Collection<String> compByBills = sponsorService.companiesByNumBills();
 		Collection<String> inactiveSponsors = sponsorService.inactiveSponsors();
@@ -127,6 +160,10 @@ public class AdministratorController extends AbstractController {
 		result.addObject("compSpentLeast", compSpentLeast);
 		result.addObject("compSpentLeast", compSpentLeast);
 		result.addObject("cooksByProMC", cooksByProMC);
+		result.addObject("usersAuthMoRecipe", usersAuthMoRecipe);
+		result.addObject("usersOrderPop", usersOrderPop);
+		result.addObject("usersOrderLike", usersOrderLike);
+		result.addObject("usersOrderDislike", usersOrderDislike);
 		
 		return result;
 	}

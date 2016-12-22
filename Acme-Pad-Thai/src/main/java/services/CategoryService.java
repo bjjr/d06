@@ -53,9 +53,7 @@ public class CategoryService {
 			root = result.getRoot();
 			save(root);
 		}
-		
-		
-		
+
 		return result;
 		
 	}

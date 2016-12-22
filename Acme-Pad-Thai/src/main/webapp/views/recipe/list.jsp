@@ -55,6 +55,14 @@
 		<display:column>
 			<a href="recipe/user/edit.do?recipeId=${row.id}"><spring:message code="recipe.user.edit" /></a>
 		</display:column>
+		
+		<display:column>
+			<a href="recipe/user/addCategory.do?recipeId=${row.id}"><spring:message code="recipe.user.add.category" /></a>
+		</display:column>
+		
+		<display:column>
+			<a href="recipe/user/removeCategory.do?recipeId=${row.id}"><spring:message code="recipe.user.remove.category" /></a>
+		</display:column>
 	</jstl:if>
 	</security:authorize>
 	
