@@ -54,7 +54,8 @@ public class NutritionistController extends AbstractController{
 		ModelAndView result;
 		Nutritionist nutritionist;
 		
-		nutritionist = nutritionistService.findOne(actorService.findByPrincipal().getId());
+		
+		nutritionist = nutritionistService.findByPrincipal();
 		Assert.notNull(nutritionist);
 		result = createEditModelAndView(nutritionist);
 		
